@@ -1,0 +1,29 @@
+{
+  "name": "RoboParrot",
+  "version": "0.0.0",
+  "description": "My Component",
+  "main": "dist/RoboParrot.min.js",
+  "homepage": "https://github.com/oheneralov/motion",
+  "authors": [
+    "RoboParrot"
+  ],
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "react",
+    "react-component"
+  ],
+  "license": "MIT",
+  "ignore": [
+    ".editorconfig",
+    ".gitignore",
+    "package.json",
+    "src",
+    "node_modules",
+    "example",
+    "test"
+  ]
+}
