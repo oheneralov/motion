@@ -1,8 +1,10 @@
+//https://www.dashingd3js.com/svg-basic-shapes-and-d3js
+
 class Parrot {
     constructor(height, width) {
      console.log("creating the parrot...");
 	 //https://www.dashingd3js.com/svg-basic-shapes-and-d3js
-	 var svgContainer = d3.select("svg");
+	 var svgContainer = d3.select("svg").append("g");
 	 var head = svgContainer.append("circle")
 	                     .attr("cx", function() { return 50; })
 						 .attr("cy", function() { return 27; })
@@ -74,33 +76,48 @@ class Parrot {
                             .attr("stroke", "black")
                             .attr("stroke-width", 2)
                             .attr("fill", "none");
+							
+	this.ParrotCoordinates = [0, 0];
 						 
 						 
     }
 	
 	
+	
 	doStepForward() {
-	console.log("doing step forward");
-	//https://www.dashingd3js.com/svg-basic-shapes-and-d3js
-	 var svgContainer = d3.select("svg");
-	 
+		console.log("doing step forward");
+		var svgContainer = d3.select("svg").select("g");
+		this.ParrotCoordinates[0] = this.ParrotCoordinates[0] + 10;;
+		svgContainer.attr("transform", "translate(" + this.ParrotCoordinates[0] +", 0)");
 
 	}
 }
 
+
 var Input = React.createClass({
   getInitialState: function() {
-    return {value: "Parrot1 = new Parrot();\nParrot1.doStepForward()"};
+    return {value: "Parrot1.doStepForward();\nParrot1.doStepForward();"};
   },
   handleChange: function(event) {
     this.setState({value: event.target.value});
   },
+  componentDidMount: function(){
+	  Parrot1 = new Parrot();
+  },
+  
   onSubmit: function(event) {
      //alert('Form submitted.' + this.state.value);
 	 event.preventDefault();
+	 
 	 var interptetedCode = this.state.value;
 	 if (interptetedCode){
-		 eval(interptetedCode);
+		 //parrot life, e.g. 10 seconds
+		 var life = 10;
+		 while (life <= 10){
+			 eval(interptetedCode);
+			 life++;
+		 }
+		 
 	 }
 		 
       
