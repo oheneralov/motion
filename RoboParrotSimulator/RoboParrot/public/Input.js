@@ -1,4 +1,6 @@
-//https://www.dashingd3js.com/svg-basic-shapes-and-d3js
+/*
+* Copyright © 2016 Oleksandr Generalov
+*/
 
 class Parrot {
     constructor(height, width) {
@@ -78,6 +80,8 @@ class Parrot {
                             .attr("fill", "none");
 							
 	this.ParrotCoordinates = [0, 0];
+	this.lifeduration = 1; 
+	this.lifeid = 0;
 						 
 						 
     }
@@ -87,7 +91,8 @@ class Parrot {
 	doStepForward() {
 		console.log("doing step forward");
 		var svgContainer = d3.select("svg").select("g");
-		this.ParrotCoordinates[0] = this.ParrotCoordinates[0] + 10;;
+		//Parrot will do step forward by 3 pixels
+		this.ParrotCoordinates[0] = this.ParrotCoordinates[0] + 3;
 		svgContainer.attr("transform", "translate(" + this.ParrotCoordinates[0] +", 0)");
 
 	}
@@ -96,36 +101,45 @@ class Parrot {
 
 var Input = React.createClass({
   getInitialState: function() {
-    return {value: "Parrot1.doStepForward();\nParrot1.doStepForward();"};
+    return {value: "Parrot1.doStepForward();\n"};
   },
   handleChange: function(event) {
     this.setState({value: event.target.value});
   },
   componentDidMount: function(){
+	  //global variable
 	  Parrot1 = new Parrot();
   },
   
-  onSubmit: function(event) {
-     //alert('Form submitted.' + this.state.value);
-	 event.preventDefault();
-	 
-	 var interptetedCode = this.state.value;
-	 if (interptetedCode){
-		 //parrot life, e.g. 10 seconds
-		 var life = 10;
-		 while (life <= 10){
-			 eval(interptetedCode);
-			 life++;
-		 }
-		 
-	 }
-		 
+  repeatParrotLife: function(){
+	  var interptetedCode = this.state.value;
+	  if (interptetedCode){
+	      eval(interptetedCode);
+	      Parrot1.lifeduration++;
+	  }
+  },
+  
+  startSimulation: function(event) {
+	 //event.preventDefault();
+	 console.log("Starting simulation");
+	 Parrot1.lifeid = setInterval(this.repeatParrotLife, 300);
+
+		     
       
     },
+	stopSimulation: function(event) {
+		if (Parrot1.lifeid != 0) {
+             clearInterval(Parrot1.lifeid);
+		     console.log("Simulation is stopped!");
+		}
+      
+    },
+	
+	
   render: function () {
     return (
       <div>
-        <form onSubmit={this.onSubmit}>
+        <form>
 		  <p>
 		      <svg width="720" height="300">
 			  </svg>
@@ -133,7 +147,9 @@ var Input = React.createClass({
           <textarea rows = '10' cols = '100' className='form-control' onChange={this.handleChange}>
           {this.state.value}
           </textarea>
-          <button className='btn btn-success' type='submit'>Simulate</button>
+		  <input type = "button" onClick={this.startSimulation} value = "Start simulation"/>
+		  <input type = "button" onClick={this.stopSimulation} value = "Stop simulation"/>
+		  
         </form>
       </div>
     );
