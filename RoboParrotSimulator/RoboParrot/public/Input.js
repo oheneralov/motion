@@ -101,31 +101,40 @@ class Parrot {
 
 var Input = React.createClass({
   getInitialState: function() {
-    return {value: "Parrot1.doStepForward();\n"};
+    return {value: "Parrot1->doStepForward();\n"};
   },
+  
   handleChange: function(event) {
     this.setState({value: event.target.value});
   },
+  
   componentDidMount: function(){
 	  //global variable
 	  Parrot1 = new Parrot();
   },
   
   repeatParrotLife: function(){
-	  var interptetedCode = this.state.value;
+	  var interptetedCode = this.convertC2JS(this.state.value);
+	  
 	  if (interptetedCode){
 	      eval(interptetedCode);
 	      Parrot1.lifeduration++;
 	  }
+	  else {
+		  console.log("Code is empty");
+	  }
+  },
+  
+    convertC2JS: function(code){
+	  var CSymbol = '->';
+	  var result = code.replace(CSymbol, '.');
+	  return result;
   },
   
   startSimulation: function(event) {
-	 //event.preventDefault();
 	 console.log("Starting simulation");
 	 Parrot1.lifeid = setInterval(this.repeatParrotLife, 300);
-
-		     
-      
+  
     },
 	stopSimulation: function(event) {
 		if (Parrot1.lifeid != 0) {
