@@ -82,6 +82,7 @@ class Parrot {
 	this.ParrotCoordinates = [0, 0];
 	this.lifeduration = 1; 
 	this.lifeid = 0;
+	this.drawBlock();
 						 
 						 
     }
@@ -94,6 +95,18 @@ class Parrot {
 		//Parrot will do step forward by 3 pixels
 		this.ParrotCoordinates[0] = this.ParrotCoordinates[0] + 3;
 		svgContainer.attr("transform", "translate(" + this.ParrotCoordinates[0] +", 0)");
+
+	}
+	
+	drawBlock() {
+		console.log("drawing a block");
+		var svgContainer = d3.select("svg");
+		svgContainer.append("g")
+					.append("rect")
+		            .attr("x", 300)
+                    .attr("y", 220)
+                    .attr("width", 25)
+                    .attr("height", 35);
 
 	}
 }
@@ -156,9 +169,11 @@ var Input = React.createClass({
           <textarea rows = '10' cols = '100' className='form-control' onChange={this.handleChange}>
           {this.state.value}
           </textarea>
-		  <input type = "button" onClick={this.startSimulation} value = "Start simulation"/>
-		  <input type = "button" onClick={this.stopSimulation} value = "Stop simulation"/>
-		  
+		  <div>
+		      <input type = "button" onClick={this.startSimulation} value = "Start simulation"/>
+		      <input type = "button" onClick={this.stopSimulation} value = "Stop simulation"/>
+			  <input type = "button"  value = "Refresh"/>
+		  </div>  
         </form>
       </div>
     );
