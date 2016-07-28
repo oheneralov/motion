@@ -1,5 +1,6 @@
 /*
-* Copyright © 2016 Oleksandr Generalov
+* Copyright © 2016 by Oleksandr Generalov
+* All rights reserved.
 */
 
 class Parrot {
