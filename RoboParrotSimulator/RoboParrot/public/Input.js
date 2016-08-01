@@ -145,13 +145,35 @@ var Input = React.createClass({
 	  return result;
   },
   
+  msToTime: function (duration) {
+		var milliseconds = parseInt((duration%1000))
+			, seconds = parseInt((duration/1000)%60)
+			, minutes = parseInt((duration/(1000*60))%60)
+			, hours = parseInt((duration/(1000*60*60))%24);
+
+		return this.addLeadingZero(hours) + ":" + this.addLeadingZero(minutes) + ":" + this.addLeadingZero(seconds) + "." + milliseconds;
+	},
+
+	addLeadingZero: function (number){
+		return number > 10 ? number : "0" + number;
+	},
   
-  startSimulation: function(event) {
+  displayTime: function (startDate) {
+		var today = new Date();
+		var delta = today - startDate; //in milliseconds
+		this.setState({elapsedTime: this.msToTime(delta)});
+		Parrot1.timerId = setTimeout(function(){ 
+				this.displayTime(startDate); 
+			}, 500);
+	},
+  
+	startSimulation: function(event) {
 	 console.log("Starting simulation");
 	 Parrot1.lifeid = setInterval(this.repeatParrotLife, 300);
 	 var startDate = new Date();
-	 displayTime(startDate);
+	 this.displayTime(startDate);
     },
+	
 	stopSimulation: function(event) {
 		if (Parrot1.lifeid != 0) {
              clearInterval(Parrot1.lifeid);
@@ -160,25 +182,7 @@ var Input = React.createClass({
       clearTimeout(Parrot1.timerId);
     },
 	
-	displayTime:	function (startDate) {
-		var today = new Date();
-		var delta = today - startDate; //in milliseconds
-		this.setState({elapsedTime: msToTime(delta)});
-		Parrot1.timerId = setTimeout(function(){displayTime(startDate);}, 500);
-	},
-
-	msToTime: function (duration) {
-		var milliseconds = parseInt((duration%1000))
-			, seconds = parseInt((duration/1000)%60)
-			, minutes = parseInt((duration/(1000*60))%60)
-			, hours = parseInt((duration/(1000*60*60))%24);
-
-		return addLeadingZero(hours) + ":" + addLeadingZero(minutes) + ":" + addLeadingZero(seconds) + "." + milliseconds;
-	},
-
-	addLeadingZero: function (number){
-		return number > 10 ? number : "0" + number;
-	},
+	
 
   render: function () {
     return (
@@ -188,7 +192,7 @@ var Input = React.createClass({
 		      <svg width="720" height="300">
 			  </svg>
 		  </p>
-		  <input ref="txtTimer" type='text' value={this.state.elapsedTime} /><br/>
+		  <div>{this.state.elapsedTime}</div><br/>
           <textarea rows = '10' cols = '100' className='form-control' onChange={this.handleChange}>
           {this.state.value}
           </textarea>
