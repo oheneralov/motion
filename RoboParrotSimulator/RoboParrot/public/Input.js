@@ -84,11 +84,8 @@ class Parrot {
 	this.lifeduration = 1; 
 	this.lifeid = 0;
 	this.drawBlock();
-						 
-						 
+	this.timerId = 0;
     }
-	
-	
 	
 	doStepForward() {
 		console.log("doing step forward");
@@ -115,7 +112,10 @@ class Parrot {
 
 var Input = React.createClass({
   getInitialState: function() {
-    return {value: "Parrot1->doStepForward();\n"};
+    return {
+		value: "Parrot1->doStepForward();\n", 
+		elapsedTime: "00:00:00.000"
+	};
   },
   
   handleChange: function(event) {
@@ -145,20 +145,41 @@ var Input = React.createClass({
 	  return result;
   },
   
+  
   startSimulation: function(event) {
 	 console.log("Starting simulation");
 	 Parrot1.lifeid = setInterval(this.repeatParrotLife, 300);
-  
+	 var startDate = new Date();
+	 displayTime(startDate);
     },
 	stopSimulation: function(event) {
 		if (Parrot1.lifeid != 0) {
              clearInterval(Parrot1.lifeid);
 		     console.log("Simulation is stopped!");
 		}
-      
+      clearTimeout(Parrot1.timerId);
     },
 	
-	
+	displayTime:	function (startDate) {
+		var today = new Date();
+		var delta = today - startDate; //in milliseconds
+		this.setState({elapsedTime: msToTime(delta)});
+		Parrot1.timerId = setTimeout(function(){displayTime(startDate);}, 500);
+	},
+
+	msToTime: function (duration) {
+		var milliseconds = parseInt((duration%1000))
+			, seconds = parseInt((duration/1000)%60)
+			, minutes = parseInt((duration/(1000*60))%60)
+			, hours = parseInt((duration/(1000*60*60))%24);
+
+		return addLeadingZero(hours) + ":" + addLeadingZero(minutes) + ":" + addLeadingZero(seconds) + "." + milliseconds;
+	},
+
+	addLeadingZero: function (number){
+		return number > 10 ? number : "0" + number;
+	},
+
   render: function () {
     return (
       <div>
@@ -167,6 +188,7 @@ var Input = React.createClass({
 		      <svg width="720" height="300">
 			  </svg>
 		  </p>
+		  <input ref="txtTimer" type='text' value={this.state.elapsedTime} /><br/>
           <textarea rows = '10' cols = '100' className='form-control' onChange={this.handleChange}>
           {this.state.value}
           </textarea>
