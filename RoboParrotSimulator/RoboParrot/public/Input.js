@@ -62,6 +62,16 @@ class Parrot {
                          .attr("stroke", "black")
 						 .attr("fill", "none");
 						 
+	var Ground = d3.select("svg").append("g")
+	                     .append("line")
+                         .attr("x1", 0)
+                         .attr("y1", 250)
+                         .attr("x2", d3.select("svg").attr("width"))
+                         .attr("y2", 250)
+						 .attr("stroke-width", 4)
+                         .attr("stroke", "black")
+						 .attr("fill", "none");
+						 
 	//The data for our line
     var lineData = [ { "x": 75,   "y": 25},  
 	                 { "x": 90,  "y": 30},
@@ -79,8 +89,9 @@ class Parrot {
                             .attr("stroke", "black")
                             .attr("stroke-width", 2)
                             .attr("fill", "none");
-							
-	this.ParrotCoordinates = [0, 0];
+	
+//coordinates of the parrot in the space by x and y	
+	this.ParrotCoordinates = {x: 0, y: 0}
 	this.lifeduration = 1; 
 	this.lifeid = 0;
 	this.drawBlock();
@@ -91,8 +102,26 @@ class Parrot {
 		console.log("doing step forward");
 		var svgContainer = d3.select("svg").select("g");
 		//Parrot will do step forward by 3 pixels
-		this.ParrotCoordinates[0] = this.ParrotCoordinates[0] + 3;
-		svgContainer.attr("transform", "translate(" + this.ParrotCoordinates[0] +", 0)");
+		this.ParrotCoordinates.x = this.ParrotCoordinates.x + 3;
+		svgContainer.attr("transform", "translate(" + this.ParrotCoordinates.x +", 0)");
+
+	}
+	
+	turnLeft() {
+		console.log("turn left");
+		var svgContainer = d3.select("svg").select("g");
+		//Parrot will do step left by 3 pixels
+		this.ParrotCoordinates.y = this.ParrotCoordinates.y + 3;
+		svgContainer.attr("transform", "translate(0, " + this.ParrotCoordinates.y + ")");
+
+	}
+	
+	turnRight() {
+		console.log("turn right");
+		var svgContainer = d3.select("svg").select("g");
+		//Parrot will do step left by 3 pixels
+		this.ParrotCoordinates.y = this.ParrotCoordinates.y - 3;
+		svgContainer.attr("transform", "translate(0, " + this.ParrotCoordinates.y + ")");
 
 	}
 	
@@ -113,13 +142,13 @@ class Parrot {
 var Input = React.createClass({
   getInitialState: function() {
     return {
-		value: "Parrot1->doStepForward();\n", 
+		code: "Parrot1->doStepForward();\nParrot1->doStepForward();\nParrot1->doStepForward();\nParrot1->turnLeft();\nParrot1->doStepForward();\nParrot1->turnRight();\n", 
 		elapsedTime: "00:00:00.000"
 	};
   },
   
   handleChange: function(event) {
-    this.setState({value: event.target.value});
+    this.setState({code: event.target.value});
   },
   
   componentDidMount: function(){
@@ -128,9 +157,10 @@ var Input = React.createClass({
   },
   
   repeatParrotLife: function(startDate){
-	  var interptetedCode = this.convertC2JS(this.state.value);
+	  var interptetedCode = this.convertC2JS(this.state.code);
 	  
 	  if (interptetedCode){
+		  //console.log(interptetedCode);
 	      eval(interptetedCode);
 	      Parrot1.lifeduration++;
 	  }
@@ -144,7 +174,7 @@ var Input = React.createClass({
   },
   
     convertC2JS: function(code){
-	  var CSymbol = '->';
+	  var CSymbol = /->/g;
 	  var result = code.replace(CSymbol, '.');
 	  return result;
   },
@@ -193,7 +223,7 @@ var Input = React.createClass({
 		  </p>
 		  <div>{this.state.elapsedTime}</div><br/>
           <textarea rows = '10' cols = '100' className='form-control' onChange={this.handleChange}>
-          {this.state.value}
+          {this.state.code}
           </textarea>
 		  <div>
 		      <input type = "button" onClick={this.startSimulation} value = "Start simulation"/>
