@@ -127,7 +127,7 @@ var Input = React.createClass({
 	  Parrot1 = new Parrot();
   },
   
-  repeatParrotLife: function(){
+  repeatParrotLife: function(startDate){
 	  var interptetedCode = this.convertC2JS(this.state.value);
 	  
 	  if (interptetedCode){
@@ -137,6 +137,10 @@ var Input = React.createClass({
 	  else {
 		  console.log("Code is empty");
 	  }
+	  
+	  var today = new Date();
+	  var delta = today - startDate; //in milliseconds
+	  this.setState({elapsedTime: this.msToTime(delta)});
   },
   
     convertC2JS: function(code){
@@ -145,6 +149,7 @@ var Input = React.createClass({
 	  return result;
   },
   
+  //Think about using Date.prototype.getHours(), getMinutes()
   msToTime: function (duration) {
 		var milliseconds = parseInt((duration%1000))
 			, seconds = parseInt((duration/1000)%60)
@@ -159,24 +164,13 @@ var Input = React.createClass({
 	},
   
   displayTime: function (startDate) {
-		var today = new Date();
-		var delta = today - startDate; //in milliseconds
-		this.setState({elapsedTime: this.msToTime(delta)});
-		Parrot1.timerId = setTimeout(function(){ 
-		        //dangerous code!
-				//function setTimeout will call displayTime() which is not defined yet
-				// and which should call another setTimeout (setTimeout calls a function with a delay 500 msec)
-				//please change this.repeatParrotLife to show date
-				//For example: this.state.elapsedTime = Date() - Date_When_Simulation_Started
-				this.displayTime(startDate); 
-			}, 500);
+
 	},
   
-	startSimulation: function(event) {
+	 startSimulation: function(event) {
 	 console.log("Starting simulation");
-	 Parrot1.lifeid = setInterval(this.repeatParrotLife, 300);
 	 var startDate = new Date();
-	 this.displayTime(startDate);
+	 Parrot1.lifeid = setInterval(this.repeatParrotLife, 300, startDate);
     },
 	
 	stopSimulation: function(event) {
