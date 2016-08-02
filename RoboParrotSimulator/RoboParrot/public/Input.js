@@ -163,6 +163,11 @@ var Input = React.createClass({
 		var delta = today - startDate; //in milliseconds
 		this.setState({elapsedTime: this.msToTime(delta)});
 		Parrot1.timerId = setTimeout(function(){ 
+		        //dangerous code!
+				//function setTimeout will call displayTime() which is not defined yet
+				// and which should call another setTimeout (setTimeout calls a function with a delay 500 msec)
+				//please change this.repeatParrotLife to show date
+				//For example: this.state.elapsedTime = Date() - Date_When_Simulation_Started
 				this.displayTime(startDate); 
 			}, 500);
 	},
