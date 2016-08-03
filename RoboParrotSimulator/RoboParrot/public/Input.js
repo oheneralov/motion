@@ -91,7 +91,7 @@ class Parrot {
                             .attr("fill", "none");
 	
 //coordinates of the parrot in the space by x and y	
-	this.ParrotCoordinates = {x: 0, y: 0}
+	this.ParrotCoordinates = {x: 0, y: 0};
 	this.lifeduration = 1; 
 	this.lifeid = 0;
 	this.drawBlock();
@@ -103,7 +103,7 @@ class Parrot {
 		var svgContainer = d3.select("svg").select("g");
 		//Parrot will do step forward by 3 pixels
 		this.ParrotCoordinates.x = this.ParrotCoordinates.x + 3;
-		svgContainer.attr("transform", "translate(" + this.ParrotCoordinates.x +", 0)");
+		svgContainer.attr("transform", "translate(" + this.ParrotCoordinates.x  + ", " + this.ParrotCoordinates.y + ")");
 
 	}
 	
@@ -112,7 +112,7 @@ class Parrot {
 		var svgContainer = d3.select("svg").select("g");
 		//Parrot will do step left by 3 pixels
 		this.ParrotCoordinates.y = this.ParrotCoordinates.y + 3;
-		svgContainer.attr("transform", "translate(0, " + this.ParrotCoordinates.y + ")");
+		svgContainer.attr("transform", "translate(" + this.ParrotCoordinates.x  + ", " + this.ParrotCoordinates.y + ")");
 
 	}
 	
@@ -121,7 +121,7 @@ class Parrot {
 		var svgContainer = d3.select("svg").select("g");
 		//Parrot will do step left by 3 pixels
 		this.ParrotCoordinates.y = this.ParrotCoordinates.y - 3;
-		svgContainer.attr("transform", "translate(0, " + this.ParrotCoordinates.y + ")");
+		svgContainer.attr("transform", "translate(" + this.ParrotCoordinates.x  + ", " + this.ParrotCoordinates.y + ")");
 
 	}
 	
