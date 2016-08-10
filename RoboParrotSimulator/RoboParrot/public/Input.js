@@ -85,7 +85,8 @@ var Input = React.createClass({
 		      <svg width="720" height="300">
 			  </svg>
 		  </p>
-		  <div>{this.state.elapsedTime}</div><br/>
+		  <div>{this.state.elapsedTime}</div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+		  <br/><br/>
           <textarea rows = '10' cols = '100' className='form-control' onChange={this.handleChange}>
           {this.state.code}
           </textarea>
