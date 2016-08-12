@@ -103,17 +103,17 @@ class Parrot {
 	doStepForward() {
 		console.log("doing step forward");
 		var svgContainer = d3.select("svg").select("g");
-		//Parrot will do step forward by 3 pixels
-		this.ParrotCoordinates.x = this.ParrotCoordinates.x + 3;
+		this.ParrotCoordinates.x = this.ParrotCoordinates.x + 1;
 		svgContainer.attr("transform", "translate(" + this.ParrotCoordinates.x  + ", " + this.ParrotCoordinates.y + ")");
 
 	}
 	
+	//imitating 3d world
 	turnLeft() {
 		console.log("turn left");
 		var svgContainer = d3.select("svg").select("g");
-		//Parrot will do step left by 3 pixels
-		this.ParrotCoordinates.y = this.ParrotCoordinates.y + 3;
+		this.ParrotCoordinates.y = this.ParrotCoordinates.y - 1;
+		this.ParrotCoordinates.x = this.ParrotCoordinates.x + 1;
 		svgContainer.attr("transform", "translate(" + this.ParrotCoordinates.x  + ", " + this.ParrotCoordinates.y + ")");
 
 	}
@@ -121,10 +121,27 @@ class Parrot {
 	turnRight() {
 		console.log("turn right");
 		var svgContainer = d3.select("svg").select("g");
-		//Parrot will do step left by 3 pixels
-		this.ParrotCoordinates.y = this.ParrotCoordinates.y - 3;
+		this.ParrotCoordinates.y = this.ParrotCoordinates.y + 1;
+		this.ParrotCoordinates.x = this.ParrotCoordinates.x + 1;
 		svgContainer.attr("transform", "translate(" + this.ParrotCoordinates.x  + ", " + this.ParrotCoordinates.y + ")");
 
+	}
+	/*
+	Jump(){
+		console.log("Jump");
+		var svgContainer = d3.select("svg").select("g");
+		var JumpPath = [{x: 0, y : 0}, {x: 1, y: 1}, {x: 4, y: 2}, {x: 9 , y: 3}, {x:9, y: 5}];
+		this.ParrotCoordinates.y = this.ParrotCoordinates.y + 1;
+		this.ParrotCoordinates.x = this.ParrotCoordinates.x + 1;
+		svgContainer.attr("transform", "translate(" + this.ParrotCoordinates.x  + ", " + this.ParrotCoordinates.y + ")");
+	}
+	*/
+	
+	doStepBackwards() {
+		console.log("doing step back");
+		var svgContainer = d3.select("svg").select("g");
+		this.ParrotCoordinates.x = this.ParrotCoordinates.x - 1;
+		svgContainer.attr("transform", "translate(" + this.ParrotCoordinates.x  + ", " + this.ParrotCoordinates.y + ")");
 	}
 	
 	drawBlock() {

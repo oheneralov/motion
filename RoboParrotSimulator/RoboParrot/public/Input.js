@@ -96,6 +96,7 @@ Parrot1->turnRight();`,
 		      <input type = "button" onClick={this.startSimulation} value = "Start simulation"/>
 		      <input type = "button" onClick={this.stopSimulation} value = "Stop simulation"/>
 			  <input type = "button"  value = "Refresh"/>
+			  <input type = "range"  value = "5"/>
 		  </div>  
         </form>
       </div>
