@@ -6,8 +6,14 @@
 var Input = React.createClass({
   getInitialState: function() {
     return {
-		code: "Parrot1->doStepForward();\nParrot1->doStepForward();\nParrot1->doStepForward();\nParrot1->turnLeft();\nParrot1->doStepForward();\nParrot1->turnRight();\n", 
-		elapsedTime: "00:00:00.000"
+		code: `
+Parrot1->doStepForward();
+Parrot1->doStepForward();
+Parrot1->doStepForward();
+Parrot1->turnLeft();
+Parrot1->doStepForward();
+Parrot1->turnRight();`, 
+	    elapsedTime: "00:00:00.000"
 	};
   },
   
