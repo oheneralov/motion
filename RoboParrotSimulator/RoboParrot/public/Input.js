@@ -62,11 +62,7 @@ Parrot1->turnRight();`,
 	addLeadingZero: function (number){
 		return number > 10 ? number : "0" + number;
 	},
-  
-  displayTime: function (startDate) {
-
-	},
-  
+ 
 	 startSimulation: function(event) {
 	 console.log("Starting simulation");
 	 var startDate = new Date();
@@ -78,7 +74,6 @@ Parrot1->turnRight();`,
              clearInterval(Parrot1.lifeid);
 		     console.log("Simulation is stopped!");
 		}
-      clearTimeout(Parrot1.timerId);
     },
 	
 	
@@ -86,12 +81,13 @@ Parrot1->turnRight();`,
   render: function () {
     return (
       <div>
+	  <div>{this.state.elapsedTime}</div>
         <form>
 		  <p>
 		      <svg width="720" height="300">
 			  </svg>
 		  </p>
-		  <div>{this.state.elapsedTime}</div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+		  <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 		  <br/><br/>
           <textarea rows = '10' cols = '100' className='form-control' onChange={this.handleChange}>
           {this.state.code}
