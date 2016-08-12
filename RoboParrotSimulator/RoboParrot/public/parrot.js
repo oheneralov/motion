@@ -1,8 +1,12 @@
 class Parrot {
-    constructor(height, width) {
+    constructor(place = "body", height = 300, width = 720) {
      console.log("creating the parrot...");
 	 //https://www.dashingd3js.com/svg-basic-shapes-and-d3js
-	 var svgContainer = d3.select("svg").append("g");
+	 var svgContainer = d3.select(place)
+	                    .append("svg")
+						.style("width", width)
+						.style("height", height)
+						.append("g");
 	 var head = svgContainer.append("circle")
 	                     .attr("cx", function() { return 50; })
 						 .attr("cy", function() { return 27; })

@@ -23,7 +23,7 @@ Parrot1->turnRight();`,
   
   componentDidMount: function(){
 	  //global variable
-	  Parrot1 = new Parrot();
+	  Parrot1 = new Parrot("#parrot");
   },
   
   repeatParrotLife: function(startDate){
@@ -84,8 +84,8 @@ Parrot1->turnRight();`,
 	  <div>{this.state.elapsedTime}</div>
         <form>
 		  <p>
-		      <svg width="720" height="300">
-			  </svg>
+		      <div id = "parrot">
+			  </div>
 		  </p>
 		  <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 		  <br/><br/>
