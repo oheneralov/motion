@@ -42,37 +42,55 @@ class Parrot {
                          .attr("stroke", "black")
 						 .attr("fill", "none");					 
 	
-	var leftLeg = svgContainer.append("line")
-                         .attr("x1", 50)
-                         .attr("y1", 150)
-                         .attr("x2", 60)
-                         .attr("y2", 250)
-						 .attr("stroke-width", 2)
-                         .attr("stroke", "black")
-						 .attr("fill", "none");
 						 
 						 
-	var rightLeg = svgContainer.append("line")
-                         .attr("x1", 50)
-                         .attr("y1", 150)
-                         .attr("x2", 25)
-                         .attr("y2", 250)
-						 .attr("stroke-width", 2)
-                         .attr("stroke", "black")
-						 .attr("fill", "none");
+    var leftLegData = [ 
+	                 { "x": 50,   "y": 150},  
+	                 { "x": 60,  "y": 250},
+                     { "x": 80,  "y": 270}, 
+					 { "x": 60,  "y": 250},
+					 { "x": 70,  "y": 270},
+	                 { "x": 60,  "y": 250},
+					 { "x": 45,  "y": 270},
+					 ];
+ 
+
+    this.leftLegFunction = d3.svg.line()
+                          .x(function(d) { return d.x; })
+                          .y(function(d) { return d.y; })
+                         .interpolate("linear");
+
+    //The line SVG Path we draw
+    this.leftLeg = svgContainer.append("path")
+                            .attr("d", this.leftLegFunction(leftLegData))
+                            .attr("stroke", "black")
+                            .attr("stroke-width", 2)
+                            .attr("fill", "none");
 						 
-	/*
 						 
-	var Ground = d3.select("svg").append("g")
-	                     .append("line")
-                         .attr("x1", 0)
-                         .attr("y1", 250)
-                         .attr("x2", d3.select("svg").attr("width"))
-                         .attr("y2", 250)
-						 .attr("stroke-width", 4)
-                         .attr("stroke", "black")
-						 .attr("fill", "none");
-						 */
+    var rightLegData = [ 
+	                 { "x": 50,   "y": 150},  
+	                 { "x": 25,  "y": 250},
+                     { "x": 50,  "y": 260}, 
+					 { "x": 25,  "y": 250},
+					 { "x": 40,  "y": 270},
+	                 { "x": 25,  "y": 250},
+					 { "x": 15,  "y": 260},
+					 ];
+ 
+
+    var rightLegFunction = d3.svg.line()
+                          .x(function(d) { return d.x; })
+                          .y(function(d) { return d.y; })
+                         .interpolate("linear");
+
+    //The line SVG Path we draw
+    var rightLeg = svgContainer.append("path")
+                            .attr("d", rightLegFunction(rightLegData))
+                            .attr("stroke", "black")
+                            .attr("stroke-width", 2)
+                            .attr("fill", "none");
+						 
 						 
 	//The data for our line
     var lineData = [ { "x": 75,   "y": 25},  
@@ -93,11 +111,12 @@ class Parrot {
                             .attr("fill", "none");
 	
 //coordinates of the parrot in the space by x and y	
-	this.ParrotCoordinates = {x: 110, y: 0};
+	this.ParrotCoordinates = {x: 130, y: 0};
 	this.lifeduration = 1; 
 	this.lifeid = 0;
 	this.drawBlock();
 	this.timerId = 0;
+	this.mode = "nofly";
 	
 	svgContainer.attr("transform", "translate(" + this.ParrotCoordinates.x  + ", " + this.ParrotCoordinates.y + ")");
     }
@@ -106,8 +125,41 @@ class Parrot {
 		console.log("doing step forward");
 		var svgContainer = d3.select("svg").select("g");
 		this.ParrotCoordinates.x = this.ParrotCoordinates.x + 1;
+		var initialleftLegData = [ 
+	                 { "x": 50,   "y": 150},  
+	                 { "x": 60,  "y": 250},
+                     { "x": 80,  "y": 270}, 
+					 { "x": 60,  "y": 250},
+					 { "x": 70,  "y": 270},
+	                 { "x": 60,  "y": 250},
+					 { "x": 45,  "y": 270},
+					 ];
+					 
+		var leftLegDataafterStep = [ 
+	                 { "x": 50,   "y": 150},  
+	                 { "x": 60 + 20,  "y": 250 - 20},
+                     { "x": 80 + 20,  "y": 270 - 20}, 
+					 { "x": 60 + 20,  "y": 250 - 20},
+					 { "x": 70 + 20,  "y": 270 - 20},
+	                 { "x": 60 + 20,  "y": 250 - 20},
+					 { "x": 45 + 20,  "y": 270 - 20},
+					 ];
+					 
+		var LeftLegFunctionback = d3.svg.line()
+                          .x(function(d) { return d.x; })
+                          .y(function(d) { return d.y; })
+                         .interpolate("linear");
+					 
+        //moving left leg
+		this.leftLeg.transition()
+		.duration(300)
+		.delay(function(d, i){
+        return i * 300
+        })
+		.attr("d", this.leftLegFunction(leftLegDataafterStep));
 		svgContainer.attr("transform", "translate(" + this.ParrotCoordinates.x  + ", " + this.ParrotCoordinates.y + ")");
-
+		this.leftLeg.transition().duration(300).attr("d", LeftLegFunctionback(initialleftLegData));
+	
 	}
 	
 	//imitating 3d world
@@ -139,16 +191,18 @@ class Parrot {
 	}
 	*/
 	
-		/*
-	Fly(){
-		console.log("Jump");
+		
+	FlyForward(){
 		var svgContainer = d3.select("svg").select("g");
-		var JumpPath = [{x: 0, y : 0}, {x: 1, y: 1}, {x: 4, y: 2}, {x: 9 , y: 3}, {x:9, y: 5}];
-		this.ParrotCoordinates.y = this.ParrotCoordinates.y + 1;
-		this.ParrotCoordinates.x = this.ParrotCoordinates.x + 1;
+		if (this.mode == "nofly"){ 
+		    this.ParrotCoordinates.y = this.ParrotCoordinates.y - 15;
+			this.mode = "flying";
+		}
+		console.log(this.mode);
+		this.ParrotCoordinates.x = this.ParrotCoordinates.x + 2;
 		svgContainer.attr("transform", "translate(" + this.ParrotCoordinates.x  + ", " + this.ParrotCoordinates.y + ")");
 	}
-	*/
+	
 	
 	doStepBackwards() {
 		console.log("doing step back");
