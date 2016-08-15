@@ -1,11 +1,11 @@
 class Parrot {
-    constructor(place = "body", height = 300, width = 720) {
+    constructor(place = "body", height = 300, width = 1000) {
      console.log("creating the parrot...");
 	 //https://www.dashingd3js.com/svg-basic-shapes-and-d3js
 	 var svgContainer = d3.select(place)
 	                    .append("svg")
-						.style("width", width)
-						.style("height", height)
+						.attr("width", width)
+						.attr("height", height)
 						.append("g");
 	 var head = svgContainer.append("circle")
 	                     .attr("cx", function() { return 50; })
@@ -93,11 +93,13 @@ class Parrot {
                             .attr("fill", "none");
 	
 //coordinates of the parrot in the space by x and y	
-	this.ParrotCoordinates = {x: 0, y: 0};
+	this.ParrotCoordinates = {x: 110, y: 0};
 	this.lifeduration = 1; 
 	this.lifeid = 0;
 	this.drawBlock();
 	this.timerId = 0;
+	
+	svgContainer.attr("transform", "translate(" + this.ParrotCoordinates.x  + ", " + this.ParrotCoordinates.y + ")");
     }
 	
 	doStepForward() {
@@ -128,6 +130,17 @@ class Parrot {
 	}
 	/*
 	Jump(){
+		console.log("Jump");
+		var svgContainer = d3.select("svg").select("g");
+		var JumpPath = [{x: 0, y : 0}, {x: 1, y: 1}, {x: 4, y: 2}, {x: 9 , y: 3}, {x:9, y: 5}];
+		this.ParrotCoordinates.y = this.ParrotCoordinates.y + 1;
+		this.ParrotCoordinates.x = this.ParrotCoordinates.x + 1;
+		svgContainer.attr("transform", "translate(" + this.ParrotCoordinates.x  + ", " + this.ParrotCoordinates.y + ")");
+	}
+	*/
+	
+		/*
+	Fly(){
 		console.log("Jump");
 		var svgContainer = d3.select("svg").select("g");
 		var JumpPath = [{x: 0, y : 0}, {x: 1, y: 1}, {x: 4, y: 2}, {x: 9 , y: 3}, {x:9, y: 5}];
