@@ -3,7 +3,7 @@
 * All rights reserved.
 */
 
-var Input = React.createClass({
+var Parser = React.createClass({
   getInitialState: function() {
     return {
 		code: `
@@ -11,9 +11,16 @@ Parrot1->doStepForward();
 Parrot1->doStepForward();
 Parrot1->doStepForward();
 Parrot1->turnLeft();
+Parrot1->turnLeft();
+Parrot1->turnLeft();
 Parrot1->doStepForward();
+Parrot1->doStepForward();
+Parrot1->doStepForward();
+Parrot1->turnRight();
+Parrot1->turnRight();
 Parrot1->turnRight();`, 
-	    elapsedTime: "00:00:00.000"
+	    elapsedTime: "00:00:00.000",
+		Parrot1 : null
 	};
   },
   
@@ -23,16 +30,25 @@ Parrot1->turnRight();`,
   
   componentDidMount: function(){
 	  //global variable
-	  Parrot1 = new Parrot("#parrot");
+	  var ParrotType = this.props.type;
+	  if (this.props.type == "parrot2d"){
+		  //Parrot1 = new Parrot("#" + ParrotType);
+		  this.setState({Parrot1 : new Parrot("#" + ParrotType)});
+	  }
+	  else {
+		  //Parrot1 = new Parrot3d("#" + this.props.type);
+		  this.setState({Parrot1 : new Parrot3d(ParrotType)})
+	  }
+	  
   },
   
   repeatParrotLife: function(startDate){
 	  var interptetedCode = this.convertC2JS(this.state.code);
-	  
+	  var Parrot1 = this.state.Parrot1;
 	  if (interptetedCode){
 		  //console.log(interptetedCode);
 	      eval(interptetedCode);
-	      Parrot1.lifeduration++;
+	      this.state.Parrot1.lifeduration++;
 	  }
 	  else {
 		  console.log("Code is empty");
@@ -66,12 +82,12 @@ Parrot1->turnRight();`,
 	 startSimulation: function(event) {
 	 console.log("Starting simulation");
 	 var startDate = new Date();
-	 Parrot1.lifeid = setInterval(this.repeatParrotLife, 1000, startDate);
+	 this.state.Parrot1.lifeid = setInterval(this.repeatParrotLife, 500, startDate);
     },
 	
 	stopSimulation: function(event) {
-		if (Parrot1.lifeid != 0) {
-             clearInterval(Parrot1.lifeid);
+		if (this.state.Parrot1.lifeid != 0) {
+             clearInterval(this.state.Parrot1.lifeid);
 		     console.log("Simulation is stopped!");
 		}
     },
@@ -84,7 +100,7 @@ Parrot1->turnRight();`,
 	  <div>{this.state.elapsedTime}</div>
         <form>
 		  <p>
-		      <div id = "parrot">
+		      <div id = {this.props.type}>
 			  </div>
 		  </p>
 		  <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
@@ -104,4 +120,5 @@ Parrot1->turnRight();`,
   }
 });
 
-React.render(<Input/>, document.getElementById('app'));
+React.render(<Parser type = "parrot2d"/>, document.getElementById('2dsimulation'));
+React.render(<Parser type = "parrot3d"/>, document.getElementById('3dsimulation'));

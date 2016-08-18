@@ -1,10 +1,12 @@
 //<script src="js/three.min.js"></script>
-var scene = new THREE.Scene();
+class Parrot3d{
+	constructor(place = "body", height = 300, width = 1000) {
+		var scene = new THREE.Scene();
 			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 
 			var renderer = new THREE.WebGLRenderer();
 			renderer.setSize( window.innerWidth, window.innerHeight );
-			document.body.appendChild( renderer.domElement );
+			document.getElementById(place).appendChild( renderer.domElement );
 			var faceradius = 0.2;
 			var bodyradius = 0.2;
 
@@ -36,6 +38,12 @@ var scene = new THREE.Scene();
 			LeftLeg.position.x += 0.1;
 			RightLeg.position.x -= 0.1;
 			
+			var group = new THREE.Group();
+			group.add( face );
+			group.add( body );
+			group.add( LeftLeg );
+			group.add( RightLeg );
+			
 
 			camera.position.z = 5;
 
@@ -49,3 +57,20 @@ var scene = new THREE.Scene();
 			};
 
 			render();
+	}
+	
+	doStepForward() {
+		
+		
+	}
+	
+	turnLeft(){
+		
+	}
+	
+	turnRight(){
+		
+	}
+
+			
+}

@@ -1,4 +1,4 @@
-<!doctype html>
+<html>
 <head>
 <title>
     Simulator of robot parrot
@@ -7,20 +7,28 @@
     <script src="../build/JSXTransformer.js"></script>
 	<script src="../build/jquery-1.10.2.js"></script>
 	<script src="../build/d3.v3.min.js"></script>
+	<script src="../build/jquery-ui-1.12.0.js"></script>
+	<script src="../build/three.min.js"></script> <!-- load only on demand -->
 	<script src="parrot.js"></script>
+	<script src="parrot3d.js"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
 	<style>
-	body {
+	#tab-2d {
 		background-image: url("images/table1.png");
 		background-repeat: no-repeat;
 	}
 	</style>
+	<script>
+  $( function() {
+    $( "#tabs" ).tabs();
+  } );
+  </script>
 </head>
 <body>
-	<div class="container">
+<div class="container">
 		<h1>Simulator of robot parrot movement</h1>
-		<h2><a href="https://github.com/oheneralov/motion">View project on GitHub</a></h2>
 		<!-- the example app is rendered into this div -->
-		<div id="app"></div>
+		
 		<div class="hint">
 			<!-- put any hints about your component example here -->
 		</div>
@@ -28,5 +36,20 @@
 			Copyright &copy; 2016 RoboParrot.
 		</div>
 	</div>
+<div id = "tabs">
+  <ul>
+    <li><a href="#tab-2d">2d simulation</a></li>
+    <li><a href="#tab-3d">3d simulation</a></li>
+  </ul>
+    <div id="tab-2d">
+    <p>Two dimensional simulation</p>
+	<div id="2dsimulation"></div>
+  </div>
+  <div id="tab-3d">
+    <p>Three dimensional simulation</p>
+	<div id="3dsimulation"></div>
+  </div>
 	<script type="text/jsx" src="input.js"></script>
+	</div>
 </body>
+</html>
