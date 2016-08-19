@@ -10,14 +10,31 @@ var Parser = React.createClass({
 Parrot1->doStepForward();
 Parrot1->doStepForward();
 Parrot1->doStepForward();
-Parrot1->turnLeft();
-Parrot1->turnLeft();
-Parrot1->turnLeft();
+if (Parrot1->getdistance2obstacle() < 10){
+	Parrot1->turnLeft();
+}
+Parrot1->doStepForward();
+if (Parrot1->getdistance2obstacle() < 10){
+	Parrot1->turnLeft();
+}
 Parrot1->doStepForward();
 Parrot1->doStepForward();
 Parrot1->doStepForward();
 Parrot1->turnRight();
 Parrot1->turnRight();
+Parrot1->takeoff();
+Parrot1->flyForward();
+Parrot1->flyForward();
+Parrot1->flyForward();
+Parrot1->flyLeft();
+Parrot1->flyLeft();
+Parrot1->flyLeft();
+Parrot1->flyForward();
+Parrot1->flyForward();
+Parrot1->flyRight();
+Parrot1->flyRight();
+Parrot1->flyForward();
+Parrot1->flyForward();
 Parrot1->turnRight();`, 
 	    elapsedTime: "00:00:00.000",
 		Parrot1 : null
@@ -103,7 +120,7 @@ Parrot1->turnRight();`,
 		      <div id = {this.props.type}>
 			  </div>
 		  </p>
-		  <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+		  <br/><br/><br/><br/><br/>
 		  <br/><br/>
           <textarea rows = '10' cols = '100' className='form-control' onChange={this.handleChange}>
           {this.state.code}

@@ -84,14 +84,55 @@ class Parrot3d{
 	
 	turnLeft(){
 		console.log("turning left");
-		this.parrot.position.y += 0.02;
+		this.parrot.position.z += 0.02;
 		this.renderer.render(this.scene, this.camera);
 	}
 	
 	turnRight(){
 		console.log("turning right");
-		this.parrot.position.y -= 0.02;
+		this.parrot.position.z -= 0.02;
 		this.renderer.render(this.scene, this.camera);
+	}
+	
+	takeoff(){
+		console.log("taking off");
+	    console.log("rotation:" + this.parrot.rotation.z);
+		while (this.parrot.rotation.z > -1.5){	
+		    this.parrot.rotation.z -= 0.05;
+		    this.parrot.position.y += 0.02;
+		}
+		this.renderer.render(this.scene, this.camera);
+	}
+	
+	//land must be done when parrot is close to the earth
+	land(){
+		while (this.parrot.rotation.z < 0){	
+		    this.parrot.rotation.z += 0.05;
+		    this.parrot.position.y -= 0.02;
+		}
+		this.renderer.render(this.scene, this.camera);
+	}
+	
+	flyForward(){
+		this.parrot.position.x += 0.02;
+		this.renderer.render(this.scene, this.camera);
+	}
+	
+	flyLeft(){
+		this.parrot.position.z += 0.02;
+		this.renderer.render(this.scene, this.camera);
+	}
+	
+	flyRight(){
+		this.parrot.position.z -= 0.02;
+		this.renderer.render(this.scene, this.camera);
+	}
+	
+	
+	//return distance in cm
+	getdistance2obstacle(){
+		
+		return 100;
 	}
 
 			
