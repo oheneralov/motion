@@ -20,6 +20,16 @@ class Parrot3d{
 			var face = new THREE.Mesh( geometry, material );
 			scene.add( face );
 			
+			var Eyegeometry = new THREE.SphereGeometry( faceradius/3, 32, 32 );//sphere size
+			var Eyematerial = new THREE.MeshBasicMaterial( { color: 0x808080 } ); //red color
+			var Eye = new THREE.Mesh( Eyegeometry, Eyematerial );
+			scene.add( Eye );
+			
+			var BeakGeometry = new THREE.CylinderGeometry( 0.07, 0.02, 0.5, 32 );//beak sizes
+			var BeakMaterial = new THREE.MeshBasicMaterial( { color: 0xC624D6 } ); //red color
+			var Beak = new THREE.Mesh( BeakGeometry, BeakMaterial );
+			scene.add( Beak );
+			
 			
 			var geometrybody = new THREE.SphereGeometry( bodyradius, 32, 32 );//sphere size
 			var materialbody = new THREE.MeshBasicMaterial( { color: 0x24D69D } ); 
@@ -40,6 +50,13 @@ class Parrot3d{
 			
 			var figureoffset = 0.5;
 			face.position.y = body.scale.y*faceradius + bodyradius - figureoffset;
+			Beak.position.y = face.position.y;
+			Beak.rotation.z += 1.3;
+			Beak.position.x += 0.3;
+			Eye.position.x = face.position.x;
+			Eye.position.y = face.position.y;
+			Eye.position.z += 0.2;
+			
 			
 			body.position.y -= figureoffset; 
 			//0.5 is cylinder height, the positon of the left leg = body.position.y  - cylinder height - offset
@@ -55,6 +72,8 @@ class Parrot3d{
 			group.add( body );
 			group.add( LeftLeg );
 			group.add( RightLeg );
+			group.add(Beak);
+			group.add(Eye);
 			scene.add(group);
 			
 			this.parrot = group;
@@ -123,12 +142,12 @@ class Parrot3d{
 	}
 	
 	flyLeft(){
-		this.parrot.position.z += 0.02;
+		this.parrot.position.z -= 0.02;
 		this.renderer.render(this.scene, this.camera);
 	}
 	
 	flyRight(){
-		this.parrot.position.z -= 0.02;
+		this.parrot.position.z += 0.02;
 		this.renderer.render(this.scene, this.camera);
 	}
 	
