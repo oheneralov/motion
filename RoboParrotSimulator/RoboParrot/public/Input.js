@@ -109,6 +109,14 @@ Parrot1->turnRight();`,
 		}
     },
 	
+	rotateLeft: function(){
+		this.state.Parrot1.rotateLeft();
+	},
+	
+	rotateRight: function(){
+		this.state.Parrot1.rotateRight();
+	},
+	
 	
 
   render: function () {
@@ -128,8 +136,10 @@ Parrot1->turnRight();`,
 		  <div>
 		      <input type = "button" onClick={this.startSimulation} value = "Start simulation"/>
 		      <input type = "button" onClick={this.stopSimulation} value = "Stop simulation"/>
-			  <input type = "button"  value = "Refresh"/>
+			  <input type = "button" onClick={this.rotateLeft}  value = "<-"/>
+			  <input type = "button" onClick={this.rotateRight}  value = "->"/>
 			  <input type = "range"  value = "5"/>
+			   <input type = "button"  value = "Refresh"/>		
 		  </div>  
         </form>
       </div>

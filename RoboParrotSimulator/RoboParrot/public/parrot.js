@@ -222,4 +222,38 @@ class Parrot {
                     .attr("height", 35);
 
 	}
+	
+		takeoff(){
+		console.log("taking off");
+	    console.log("rotation:" + this.parrot.rotation.z);
+		while (this.parrot.rotation.z > -1.5){	
+		    this.parrot.rotation.z -= 0.05;
+		    this.parrot.position.y += 0.02;
+		}
+		this.renderer.render(this.scene, this.camera);
+	}
+	
+	//land must be done when parrot is close to the earth
+	land(){
+
+	}
+	
+	flyForward(){
+
+	}
+	
+	flyLeft(){
+
+	}
+	
+	flyRight(){
+
+	}
+	
+	
+	//return distance in cm
+	getdistance2obstacle(){
+		
+		return 100;
+	}
 }

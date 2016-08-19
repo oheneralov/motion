@@ -1,4 +1,6 @@
-//<script src="js/three.min.js"></script>
+/**
+ * @author Oleksandr Generalov http://robotbird.com.ua/
+ */
 class Parrot3d{
 	constructor(place = "body", height = 600, width = 1000) {
 		console.log("creating Parrot in 3d");
@@ -8,6 +10,8 @@ class Parrot3d{
 			var renderer = new THREE.WebGLRenderer();
 			renderer.setSize( width, height );
 			document.getElementById(place).appendChild( renderer.domElement );
+			
+			
 			var faceradius = 0.2;
 			var bodyradius = 0.2;
 
@@ -133,6 +137,17 @@ class Parrot3d{
 	getdistance2obstacle(){
 		
 		return 100;
+	}
+	
+	//rotate camera
+	rotateLeft(){
+		this.camera.rotation.y += 0.02;
+		this.renderer.render(this.scene, this.camera);
+	}
+	
+	rotateRight(){
+		this.camera.rotation.y -= 0.02;
+		this.renderer.render(this.scene, this.camera);
 	}
 
 			
