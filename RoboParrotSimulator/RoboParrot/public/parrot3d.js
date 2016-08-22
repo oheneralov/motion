@@ -10,41 +10,43 @@ class Parrot3d{
 			var renderer = new THREE.WebGLRenderer();
 			renderer.setSize( width, height );
 			document.getElementById(place).appendChild( renderer.domElement );
-			
-			
+						
 			var faceradius = 0.2;
 			var bodyradius = 0.2;
 
 			var geometry = new THREE.SphereGeometry( faceradius, 32, 32 );//sphere size
-			var material = new THREE.MeshBasicMaterial( { color: 0x24D69D } ); //red color
+			var material = new THREE.MeshBasicMaterial( { color: 0x4d79ff} ); //red color
 			var face = new THREE.Mesh( geometry, material );
 			scene.add( face );
 			
 			var Eyegeometry = new THREE.SphereGeometry( faceradius/3, 32, 32 );//sphere size
-			var Eyematerial = new THREE.MeshBasicMaterial( { color: 0x808080 } ); //red color
+			var Eyematerial = new THREE.MeshBasicMaterial( { color: 0x000000 } ); //red color
 			var Eye = new THREE.Mesh( Eyegeometry, Eyematerial );
 			scene.add( Eye );
 			
 			var BeakGeometry = new THREE.CylinderGeometry( 0.07, 0.02, 0.5, 32 );//beak sizes
-			var BeakMaterial = new THREE.MeshBasicMaterial( { color: 0xC624D6 } ); //red color
+			var BeakMaterial = new THREE.MeshBasicMaterial( { color: 0x000000 } ); //red color
 			var Beak = new THREE.Mesh( BeakGeometry, BeakMaterial );
 			scene.add( Beak );
-			
-			
+						
 			var geometrybody = new THREE.SphereGeometry( bodyradius, 32, 32 );//sphere size
-			var materialbody = new THREE.MeshBasicMaterial( { color: 0x24D69D } ); 
+			var materialbody = new THREE.MeshBasicMaterial( { color: 0xffffff } ); 
 			var body = new THREE.Mesh( geometrybody, materialbody );
 			body.scale.y = 3;
 			scene.add( body );
-			
-			
-			var materialLeg = new THREE.MeshBasicMaterial( { color: 0xC624D6 } );
+					
 			var LegGeometry = new THREE.CylinderGeometry( 0.02, 0.02, 1, 32 );
+			var materialLeg = new THREE.MeshBasicMaterial( { color: 0x000000 } );
 			var LeftLeg = new THREE.Mesh( LegGeometry, materialLeg );
 			var RightLeg = new THREE.Mesh( LegGeometry, materialLeg );
 			
 			scene.add( LeftLeg );
 			scene.add( RightLeg );
+			
+			var ClawGeometry = new THREE.CylinderGeometry( 0.02, 0.02, 0.5, 32 );
+			var ClawMaterisl = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+			var leftClaw = new THREE.Mesh( ClawGeometry, ClawMaterisl );
+			scene.add( leftClaw );
 			
 			
 			
@@ -65,6 +67,10 @@ class Parrot3d{
 			RightLeg.position.y = LeftLeg.position.y;
 			LeftLeg.position.x += 0.1;
 			RightLeg.position.x -= 0.1;
+			leftClaw.rotation.z += 1;
+			leftClaw.position.y = LeftLeg.position.y - 0.54;
+			leftClaw.position.x = LeftLeg.position.x + 0.1;
+			
 			
 			
 			var group = new THREE.Group();
@@ -77,6 +83,17 @@ class Parrot3d{
 			scene.add(group);
 			
 			this.parrot = group;
+			
+			
+			/* Floor  */    
+           var FloorGeometry = new THREE.PlaneGeometry( 10, 10, 1, 1 );
+           var FloorMaterial = new THREE.MeshBasicMaterial( { color: 0xA3B3E3 } );
+           var floor = new THREE.Mesh( FloorGeometry, FloorMaterial );
+		   floor.rotation.x = -1;
+		   floor.position.y += -2;
+		   floor.position.z = group.position.z;
+		   //floor.material.side = THREE.DoubleSide;
+		   scene.add(floor);
 			
 			
 
@@ -96,6 +113,18 @@ class Parrot3d{
 			this.renderer = renderer;
 			this.scene = scene;
 			this.camera = camera;
+	}
+	
+	zoomout(){
+			this.camera.fov *= 1.1;
+            this.camera.updateProjectionMatrix();
+			this.renderer.render(this.scene, this.camera);
+	}
+	
+	zoomin(){
+			this.camera.fov /= 1.1;
+            this.camera.updateProjectionMatrix();
+			this.renderer.render(this.scene, this.camera);
 	}
 	
 	doStepForward() {

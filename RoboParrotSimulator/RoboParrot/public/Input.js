@@ -8,6 +8,7 @@ var Parser = React.createClass({
     return {
 		code: `
 Parrot1->doStepForward();
+/*
 Parrot1->doStepForward();
 Parrot1->doStepForward();
 if (Parrot1->getdistance2obstacle() < 10){
@@ -35,7 +36,9 @@ Parrot1->flyRight();
 Parrot1->flyRight();
 Parrot1->flyForward();
 Parrot1->flyForward();
-Parrot1->turnRight();`, 
+Parrot1->turnRight();
+*/
+`, 
 	    elapsedTime: "00:00:00.000",
 		Parrot1 : null
 	};
@@ -117,8 +120,15 @@ Parrot1->turnRight();`,
 		this.state.Parrot1.rotateRight();
 	},
 	
+	zoomin: function(){
+		this.state.Parrot1.zoomin();
+	},
 	
-
+    zoomout: function(){
+		this.state.Parrot1.zoomout();
+	},
+	
+	
   render: function () {
     return (
       <div>
@@ -139,7 +149,9 @@ Parrot1->turnRight();`,
 			  <input type = "button" onClick={this.rotateLeft}  value = "<-"/>
 			  <input type = "button" onClick={this.rotateRight}  value = "->"/>
 			  <input type = "range"  value = "5"/>
-			   <input type = "button"  value = "Refresh"/>		
+			  <input type = "button"  value = "zoom in" onClick={this.zoomin}/>
+			  <input type = "button"  value = "zoom out" onClick={this.zoomout}/>	
+			   
 		  </div>  
         </form>
       </div>
