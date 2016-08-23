@@ -17,36 +17,41 @@ class Parrot3d{
 			var geometry = new THREE.SphereGeometry( faceradius, 32, 32 );//sphere size
 			var material = new THREE.MeshBasicMaterial( { color: 0x4d79ff} ); //red color
 			var face = new THREE.Mesh( geometry, material );
-			scene.add( face );
+			//scene.add( face );
 			
 			var Eyegeometry = new THREE.SphereGeometry( faceradius/3, 32, 32 );//sphere size
 			var Eyematerial = new THREE.MeshBasicMaterial( { color: 0x000000 } ); //red color
 			var Eye = new THREE.Mesh( Eyegeometry, Eyematerial );
-			scene.add( Eye );
+			//scene.add( Eye );
 			
 			var BeakGeometry = new THREE.CylinderGeometry( 0.07, 0.02, 0.5, 32 );//beak sizes
 			var BeakMaterial = new THREE.MeshBasicMaterial( { color: 0x000000 } ); //red color
 			var Beak = new THREE.Mesh( BeakGeometry, BeakMaterial );
-			scene.add( Beak );
+			//scene.add( Beak );
 						
 			var geometrybody = new THREE.SphereGeometry( bodyradius, 32, 32 );//sphere size
 			var materialbody = new THREE.MeshBasicMaterial( { color: 0xffffff } ); 
 			var body = new THREE.Mesh( geometrybody, materialbody );
 			body.scale.y = 3;
-			scene.add( body );
+			//scene.add( body );
 					
 			var LegGeometry = new THREE.CylinderGeometry( 0.02, 0.02, 1, 32 );
 			var materialLeg = new THREE.MeshBasicMaterial( { color: 0x000000 } );
 			var LeftLeg = new THREE.Mesh( LegGeometry, materialLeg );
 			var RightLeg = new THREE.Mesh( LegGeometry, materialLeg );
 			
-			scene.add( LeftLeg );
-			scene.add( RightLeg );
+			//scene.add( LeftLeg );
+			//scene.add( RightLeg );
 			
-			var ClawGeometry = new THREE.CylinderGeometry( 0.02, 0.02, 0.5, 32 );
+			var ClawGeometry = new THREE.CylinderGeometry( 0.02, 0.02, 0.3, 32 );
 			var ClawMaterisl = new THREE.MeshBasicMaterial( { color: 0x000000 } );
-			var leftClaw = new THREE.Mesh( ClawGeometry, ClawMaterisl );
-			scene.add( leftClaw );
+			var leftClaw1 = new THREE.Mesh( ClawGeometry, ClawMaterisl );
+			var leftClaw2 = new THREE.Mesh( ClawGeometry, ClawMaterisl );
+			var leftClaw3 = new THREE.Mesh( ClawGeometry, ClawMaterisl );
+			
+			var rightClaw1 = new THREE.Mesh( ClawGeometry, ClawMaterisl );
+			var rightClaw2 = new THREE.Mesh( ClawGeometry, ClawMaterisl );
+			var rightClaw3 = new THREE.Mesh( ClawGeometry, ClawMaterisl );
 			
 			
 			
@@ -66,10 +71,43 @@ class Parrot3d{
 			LeftLeg.position.y = body.position.y - 0.5 - figureoffset;
 			RightLeg.position.y = LeftLeg.position.y;
 			LeftLeg.position.x += 0.1;
-			RightLeg.position.x -= 0.1;
-			leftClaw.rotation.z += 1;
-			leftClaw.position.y = LeftLeg.position.y - 0.54;
-			leftClaw.position.x = LeftLeg.position.x + 0.1;
+			RightLeg.position.x -= 0.15;
+			
+			
+			leftClaw1.rotation.x = -1;
+			leftClaw1.position.y = LeftLeg.position.y - 0.55;
+			leftClaw1.position.x = LeftLeg.position.x + 0.05;
+			leftClaw1.position.z = LeftLeg.position.z + 0.15;
+			leftClaw1.rotation.z += 0.5;
+			
+			
+			leftClaw2.rotation.x = -1;
+			leftClaw2.position.x = leftClaw1.position.x + 0.1;
+			leftClaw2.position.y = leftClaw1.position.y;
+			leftClaw2.position.z = leftClaw1.position.z;
+			leftClaw2.rotation.z = leftClaw1.rotation.z + 0.5;
+			
+			
+			rightClaw1.rotation.x = -1;
+			rightClaw1.position.y = RightLeg.position.y - 0.55;
+			rightClaw1.position.x = RightLeg.position.x + 0.05;
+			rightClaw1.position.z = RightLeg.position.z + 0.15;
+			rightClaw1.rotation.z += 0.5;
+			
+			
+			rightClaw2.rotation.x = -1;
+			rightClaw2.position.x = rightClaw1.position.x + 0.1;
+			rightClaw2.position.y = rightClaw1.position.y;
+			rightClaw2.position.z = rightClaw1.position.z;
+			rightClaw2.rotation.z = rightClaw1.rotation.z + 0.5;
+
+			/*
+			leftClaw3.rotation.x = -1;
+			leftClaw3.position.x = leftClaw1.position.x - 0.3;
+			leftClaw3.position.y = leftClaw1.position.y + 0.1;
+			leftClaw3.position.z = leftClaw1.position.z + 0.1;
+			*/
+
 			
 			
 			
@@ -77,6 +115,11 @@ class Parrot3d{
 			group.add( face );
 			group.add( body );
 			group.add( LeftLeg );
+			group.add(leftClaw1);
+			group.add(leftClaw2);
+			group.add(rightClaw1);
+			group.add(rightClaw2);
+			
 			group.add( RightLeg );
 			group.add(Beak);
 			group.add(Eye);
