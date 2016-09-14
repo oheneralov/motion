@@ -2,7 +2,7 @@
  * @author Oleksandr Generalov http://robotbird.com.ua/
  */
 class Parrot3d{
-	constructor(place = "body", height = 600, width = 1000) {
+	constructor(place = "body", height = 1000, width = 1800) {
 		console.log("creating Parrot in 3d");
 		var scene = new THREE.Scene();
 			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
@@ -10,41 +10,17 @@ class Parrot3d{
 			var renderer = new THREE.WebGLRenderer();
 			renderer.setSize( width, height );
 			document.getElementById(place).appendChild( renderer.domElement );
-						
-			var faceradius = 0.2;
-			var bodyradius = 0.2;
-
-			var geometry = new THREE.SphereGeometry( faceradius, 32, 32 );//sphere size
-			var material = new THREE.MeshBasicMaterial( { color: 0x4d79ff} ); //red color
-			var face = new THREE.Mesh( geometry, material );
-			//scene.add( face );
 			
-			var Eyegeometry = new THREE.SphereGeometry( faceradius/3, 32, 32 );//sphere size
-			var Eyematerial = new THREE.MeshBasicMaterial( { color: 0x000000 } ); //red color
-			var Eye = new THREE.Mesh( Eyegeometry, Eyematerial );
-			//scene.add( Eye );
-			
-			var BeakGeometry = new THREE.CylinderGeometry( 0.07, 0.02, 0.5, 32 );//beak sizes
-			var BeakMaterial = new THREE.MeshBasicMaterial( { color: 0x000000 } ); //red color
-			var Beak = new THREE.Mesh( BeakGeometry, BeakMaterial );
-			//scene.add( Beak );
-						
-			var geometrybody = new THREE.SphereGeometry( bodyradius, 32, 32 );//sphere size
-			var materialbody = new THREE.MeshBasicMaterial( { color: 0xffffff } ); 
-			var body = new THREE.Mesh( geometrybody, materialbody );
-			body.scale.y = 3;
-			//scene.add( body );
-					
-			var LegGeometry = new THREE.CylinderGeometry( 0.02, 0.02, 1, 32 );
-			var materialLeg = new THREE.MeshBasicMaterial( { color: 0x000000 } );
-			var LeftLeg = new THREE.Mesh( LegGeometry, materialLeg );
-			var RightLeg = new THREE.Mesh( LegGeometry, materialLeg );
-			
-			//scene.add( LeftLeg );
-			//scene.add( RightLeg );
-			
-			var ClawGeometry = new THREE.CylinderGeometry( 0.02, 0.02, 0.3, 32 );
-			var ClawMaterisl = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+			/* Floor  */    
+           var FloorGeometry = new THREE.PlaneGeometry( 15, 7, 1, 1 );
+           var FloorMaterial = new THREE.MeshBasicMaterial( { color: 0xA3B3E3 } );
+           var floor = new THREE.Mesh( FloorGeometry, FloorMaterial );
+		   //rotate floor by 80 degrees
+		   floor.rotation.x -= (Math.PI / 180)*80 ;
+		   scene.add(floor);
+		   
+		    var ClawGeometry = new THREE.CylinderGeometry( 0.02, 0.02, 0.3, 32 );
+			var ClawMaterisl = new THREE.MeshBasicMaterial( { color: 0xFF0000 } );
 			var leftClaw1 = new THREE.Mesh( ClawGeometry, ClawMaterisl );
 			var leftClaw2 = new THREE.Mesh( ClawGeometry, ClawMaterisl );
 			var leftClaw3 = new THREE.Mesh( ClawGeometry, ClawMaterisl );
@@ -54,7 +30,32 @@ class Parrot3d{
 			var rightClaw3 = new THREE.Mesh( ClawGeometry, ClawMaterisl );
 			
 			
+			var LegGeometry = new THREE.CylinderGeometry( 0.02, 0.02, 1, 32 );
+			var materialLeg = new THREE.MeshBasicMaterial( { color: 0xFF0000 } );
+			var LeftLeg1 = new THREE.Mesh( LegGeometry, materialLeg );
+			var RightLeg1 = new THREE.Mesh( LegGeometry, materialLeg );
+			var LeftLeg2 = new THREE.Mesh( LegGeometry, materialLeg );
+			var RightLeg2 = new THREE.Mesh( LegGeometry, materialLeg );
 			
+			/*
+						
+			var faceradius = 0.2/4;
+			var bodyradius = 0.2/4;
+			//scene.add( face );
+			
+			var Eyegeometry = new THREE.SphereGeometry( faceradius/3, 32, 32 );//sphere size
+			var Eyematerial = new THREE.MeshBasicMaterial( { color: 0x000000 } ); //red color
+			var Eye = new THREE.Mesh( Eyegeometry, Eyematerial );
+			//scene.add( Eye );
+			
+			var BeakGeometry = new THREE.CylinderGeometry( 0.07/4, 0.02, 0.5, 32 );//beak sizes
+			var BeakMaterial = new THREE.MeshBasicMaterial( { color: 0x000000 } ); //red color
+			var Beak = new THREE.Mesh( BeakGeometry, BeakMaterial );
+			//scene.add( Beak );
+						
+			body.scale.y = 3;
+
+					
 			var figureoffset = 0.5;
 			face.position.y = body.scale.y*faceradius + bodyradius - figureoffset;
 			Beak.position.y = face.position.y;
@@ -66,82 +67,110 @@ class Parrot3d{
 			
 			
 			body.position.y -= figureoffset; 
-			//0.5 is cylinder height, the positon of the left leg = body.position.y  - cylinder height - offset
 			
+			*/
+			//0.5 is cylinder height, the positon of the left leg = body.position.y  - cylinder height - offset
+			/*
 			LeftLeg.position.y = body.position.y - 0.5 - figureoffset;
 			RightLeg.position.y = LeftLeg.position.y;
 			LeftLeg.position.x += 0.1;
 			RightLeg.position.x -= 0.15;
 			
+			this.LeftLeg = LeftLeg;
+			*/
 			
-			leftClaw1.rotation.x = -1;
-			leftClaw1.position.y = LeftLeg.position.y - 0.55;
-			leftClaw1.position.x = LeftLeg.position.x + 0.05;
-			leftClaw1.position.z = LeftLeg.position.z + 0.15;
+			var rotationDegree = (Math.PI / 180)*80;
+			leftClaw1.rotation.x = rotationDegree;
+			leftClaw1.position.x -= 0.2;
 			leftClaw1.rotation.z += 0.5;
 			
 			
-			leftClaw2.rotation.x = -1;
+			leftClaw2.rotation.x = rotationDegree;
 			leftClaw2.position.x = leftClaw1.position.x + 0.1;
-			leftClaw2.position.y = leftClaw1.position.y;
-			leftClaw2.position.z = leftClaw1.position.z;
 			leftClaw2.rotation.z = leftClaw1.rotation.z + 0.5;
 			
 			
-			rightClaw1.rotation.x = -1;
-			rightClaw1.position.y = RightLeg.position.y - 0.55;
-			rightClaw1.position.x = RightLeg.position.x + 0.05;
-			rightClaw1.position.z = RightLeg.position.z + 0.15;
+			rightClaw1.rotation.x = rotationDegree;
+			rightClaw1.position.x += 0.1;
 			rightClaw1.rotation.z += 0.5;
 			
 			
-			rightClaw2.rotation.x = -1;
+			rightClaw2.rotation.x = rotationDegree;
 			rightClaw2.position.x = rightClaw1.position.x + 0.1;
-			rightClaw2.position.y = rightClaw1.position.y;
-			rightClaw2.position.z = rightClaw1.position.z;
 			rightClaw2.rotation.z = rightClaw1.rotation.z + 0.5;
-
-			/*
-			leftClaw3.rotation.x = -1;
-			leftClaw3.position.x = leftClaw1.position.x - 0.3;
-			leftClaw3.position.y = leftClaw1.position.y + 0.1;
-			leftClaw3.position.z = leftClaw1.position.z + 0.1;
-			*/
-
 			
+			LeftLeg1.rotation.z = -(Math.PI / 180)*40;
+			LeftLeg1.position.y += 0.4;
+			LeftLeg1.position.x = leftClaw1.position.x +0.2;
 			
+			RightLeg1.rotation.z = -(Math.PI / 180)*40;
+			RightLeg1.position.y += 0.4;
+			RightLeg1.position.x = rightClaw1.position.x +0.2;
 			
+			LeftLeg2.rotation.z = (Math.PI / 180)*40;
+			LeftLeg2.position.y += 1.15;
+			LeftLeg2.position.x = LeftLeg1.position.x;
+			
+			RightLeg2.rotation.z = (Math.PI / 180)*40;
+			RightLeg2.position.y += 1.15;
+			RightLeg2.position.x = RightLeg1.position.x;
+			
+			var geometrybody = new THREE.SphereGeometry( 0.3, 32, 32 );//sphere size
+			var materialbody = new THREE.MeshBasicMaterial( { color: 0xffffff } ); 
+			var body = new THREE.Mesh( geometrybody, materialbody );
+			body.scale.y *= 2;
+			body.position.y  = RightLeg2.position.y + 0.95;
+			body.position.x -= 0.17;
+			
+			var FaceGeometry = new THREE.SphereGeometry( 0.3, 32, 32 );//sphere size
+			var FaceMaterial = new THREE.MeshBasicMaterial( { color: 0x4d79ff} ); //red color
+			var face = new THREE.Mesh( FaceGeometry, FaceMaterial );
+			face.position.y = body.position.y + 0.9;
+			
+				
 			var group = new THREE.Group();
-			group.add( face );
-			group.add( body );
-			group.add( LeftLeg );
 			group.add(leftClaw1);
 			group.add(leftClaw2);
 			group.add(rightClaw1);
 			group.add(rightClaw2);
-			
-			group.add( RightLeg );
-			group.add(Beak);
-			group.add(Eye);
+			group.add( LeftLeg1 );
+			group.add( RightLeg1 );
+			group.add( LeftLeg2 );
+			group.add( RightLeg2 );
+			group.add( body );
+			group.add(face);
+			group.position.x = -5;
+			group.position.y += 0.1;
+			group.rotation.x += (Math.PI / 180)*10 ;
 			scene.add(group);
+			
+			
+			//group.scale.y /= 2;
+			//group.scale.x /= 2;
+			//group.scale.z /= 2;
 			
 			this.parrot = group;
 			
+		  	   
+		   
+		    var texture = new THREE.TextureLoader().load( 'images/crate.gif' );
+
+			var BoxGeometry = new THREE.BoxBufferGeometry( 1, 1.5, 3 );
+			var BoxMaterial = new THREE.MeshBasicMaterial( { map: texture } );
+           
+			var cube1 = new THREE.Mesh( BoxGeometry, BoxMaterial );
+			cube1.position.x += 1;
+			scene.add( cube1 );
 			
-			/* Floor  */    
-           var FloorGeometry = new THREE.PlaneGeometry( 10, 10, 1, 1 );
-           var FloorMaterial = new THREE.MeshBasicMaterial( { color: 0xA3B3E3 } );
-           var floor = new THREE.Mesh( FloorGeometry, FloorMaterial );
-		   floor.rotation.x = -1;
-		   floor.position.y += -2;
-		   floor.position.z = group.position.z;
-		   //floor.material.side = THREE.DoubleSide;
-		   scene.add(floor);
+			var cube2 = new THREE.Mesh( BoxGeometry, BoxMaterial );
+			cube2.position.x -= 2;
+			scene.add( cube2);
 			
 			
 
 			camera.position.z = 5;
-/*
+			//camera.rotation.x += (Math.PI / 180)*60;
+
 			var render = function () {
 				requestAnimationFrame( render );
 
@@ -150,12 +179,27 @@ class Parrot3d{
 			
 
 			render();
-			*/
 			
-			renderer.render(scene, camera);
+			
+			
+			//renderer.render(scene, camera);
 			this.renderer = renderer;
 			this.scene = scene;
 			this.camera = camera;
+			this.ParrotInitialY = this.parrot.position.y;
+			
+	}
+	
+	animate() {
+
+		var renderer = this.renderer;
+		var scene = this.scene;
+		var camera = this.camera;
+		
+		var render = function () {
+		    	requestAnimationFrame( render );
+				renderer.render(scene, camera);
+		}
 	}
 	
 	zoomout(){
@@ -172,18 +216,68 @@ class Parrot3d{
 	
 	doStepForward() {
 		console.log("going forward");
-		this.parrot.position.x += 0.02;
-		this.renderer.render(this.scene, this.camera);
+		var currentRenderer = this.renderer;
+		var currentScene = this.scene;
+		var currentcamera = this.camera;
+		var LeftLeg = this.LeftLeg;
+		var parrot = this.parrot;
+		var renderer = this.renderer;
+		var scene = this.scene;
+		var camera = this.camera;
 		
+		var counter = 0;
+
+	/*	
+var render = function () {
+     var anim = requestAnimationFrame( render );
+      if (counter <= 10){
+		    //LeftLeg.rotation.z += 0.03;
+			//parrot.position.x += 0.002;
+			parrot.position.y += 0.001;
+		}
+			
+		 if ((counter > 10) && counter <= 20){
+		    //LeftLeg.rotation.z -= 0.03;
+			//parrot.position.x += 0.002;
+			parrot.position.y -= 0.001;
+
+		}
+		counter += 0.1;
+		
+		
+		
+		  if (counter > 20){
+             counter = 0;
+			 //cancelAnimationFrame(anim);
+          }
+  
+  
+       renderer.render(scene, camera);
+};
+*/
+
+
+parrot.position.x += 0.1;
+
+console.log("position current: " + parrot.position.y + "initial pos: " + this.ParrotInitialY)
+if ((parrot.position.y  - this.ParrotInitialY) == 0){
+	parrot.position.y += 0.1;
+	console.log("jump up");
+}
+else {
+	parrot.position.y -= 0.1;
+}
+this.renderer.render(this.scene, this.camera);
+			
 	}
 	
-	turnLeft(){
+	turnRight(){
 		console.log("turning left");
 		this.parrot.position.z += 0.02;
 		this.renderer.render(this.scene, this.camera);
 	}
 	
-	turnRight(){
+	turnLeft(){
 		console.log("turning right");
 		this.parrot.position.z -= 0.02;
 		this.renderer.render(this.scene, this.camera);
@@ -232,12 +326,12 @@ class Parrot3d{
 	
 	//rotate camera
 	rotateLeft(){
-		this.camera.rotation.y += 0.02;
+		this.camera.rotation.x += 0.02;
 		this.renderer.render(this.scene, this.camera);
 	}
 	
 	rotateRight(){
-		this.camera.rotation.y -= 0.02;
+		this.camera.rotation.x -= 0.02;
 		this.renderer.render(this.scene, this.camera);
 	}
 
