@@ -223,6 +223,7 @@ class Parrot3d{
 	
 	doStepForward() {
 		console.log("going forward");
+		/*
 		var currentRenderer = this.renderer;
 		var currentScene = this.scene;
 		var currentcamera = this.camera;
@@ -236,14 +237,14 @@ class Parrot3d{
 
         parrot.position.x += 0.1;
 
-        console.log("position current: " + parrot.position.y + "initial pos: " + this.ParrotInitialY)
         if ((parrot.position.y  - this.ParrotInitialY) == 0){
 	      parrot.position.y += 0.1;
         }
         else {
 	      parrot.position.y -= 0.1;
         }
-        this.renderer.render(this.scene, this.camera);	
+        this.renderer.render(this.scene, this.camera);
+*/		
 	}
 	
 	jump(count = 1) {
@@ -259,9 +260,13 @@ class Parrot3d{
 		//jump in some direction
 		var distance = 0.1;
 		var corner = this.rotationByX;//degrees
-		var x = distance*Math.cos(this.toRadians(corner));
-		var z = -1*distance*Math.sin(this.toRadians(corner));
+		
+		var result = MathLib.getCoordinatesByHypotenuse(corner, distance);
+		var x = result.x;
+		var z = -result.z;
 		console.log("jumping");
+		console.log("x: " + x);
+		console.log("z: " + z);
 		var currentRenderer = this.renderer;
 		var currentScene = this.scene;
 		var currentcamera = this.camera;
