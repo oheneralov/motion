@@ -299,9 +299,6 @@ class Parrot3d{
 		}
 	}
 	
-	toRadians (angle) {
-      return angle * (Math.PI / 180);
-    }
 	
 	//turn by degrees
 	turnLeft(degree = 10){
@@ -309,7 +306,7 @@ class Parrot3d{
 		if (this.isJumpingFinished){
 		    console.log("turning left");
 		    this.rotationByX = degree;
-		    this.parrot.rotation.y -= this.toRadians(degree);
+		    this.parrot.rotation.y -= MathLib.toRadians(degree);
 		    this.renderer.render(this.scene, this.camera);
 			//restore jumping;
 			this.jumpCount = 0;

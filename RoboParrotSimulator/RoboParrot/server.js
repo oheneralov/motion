@@ -1,10 +1,10 @@
 var express = require('express');
 var app = express();
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public'));
 
 
 app.get('/', function (req, res) {
-  res.send('go to public to see angularjs examples!');
+  res.send('go to public to see project!');
 });
 
 
