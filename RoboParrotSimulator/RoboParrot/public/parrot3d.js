@@ -145,9 +145,9 @@ class Parrot3d{
 			scene.add(group);
 			
 			
-			//group.scale.y /= 2;
-			//group.scale.x /= 2;
-			//group.scale.z /= 2;
+			group.scale.y /= 3;
+			group.scale.x /= 3;
+			group.scale.z /= 3;
 			
 			this.parrot = group;
 			
@@ -187,6 +187,13 @@ class Parrot3d{
 			this.scene = scene;
 			this.camera = camera;
 			this.ParrotInitialY = this.parrot.position.y;
+			this.rotationByX = 0;
+			this.CoordinateX = 0;
+			this.CoordinateY = 0;
+			this.CoordinateZ = 0;
+			this.jumpCount = 0;
+			this.isJumpingFinished = false;
+			
 			
 	}
 	
@@ -227,60 +234,87 @@ class Parrot3d{
 		
 		var counter = 0;
 
-	/*	
-var render = function () {
-     var anim = requestAnimationFrame( render );
-      if (counter <= 10){
-		    //LeftLeg.rotation.z += 0.03;
-			//parrot.position.x += 0.002;
-			parrot.position.y += 0.001;
-		}
-			
-		 if ((counter > 10) && counter <= 20){
-		    //LeftLeg.rotation.z -= 0.03;
-			//parrot.position.x += 0.002;
-			parrot.position.y -= 0.001;
+        parrot.position.x += 0.1;
 
-		}
-		counter += 0.1;
-		
-		
-		
-		  if (counter > 20){
-             counter = 0;
-			 //cancelAnimationFrame(anim);
-          }
-  
-  
-       renderer.render(scene, camera);
-};
-*/
-
-
-parrot.position.x += 0.1;
-
-console.log("position current: " + parrot.position.y + "initial pos: " + this.ParrotInitialY)
-if ((parrot.position.y  - this.ParrotInitialY) == 0){
-	parrot.position.y += 0.1;
-	console.log("jump up");
-}
-else {
-	parrot.position.y -= 0.1;
-}
-this.renderer.render(this.scene, this.camera);
-			
+        console.log("position current: " + parrot.position.y + "initial pos: " + this.ParrotInitialY)
+        if ((parrot.position.y  - this.ParrotInitialY) == 0){
+	      parrot.position.y += 0.1;
+        }
+        else {
+	      parrot.position.y -= 0.1;
+        }
+        this.renderer.render(this.scene, this.camera);	
 	}
 	
+	jump(count = 1) {
+		if (this.jumpCount > count){
+			this.isJumpingFinished = true;
+			console.log("stop jumping");
+			return;
+		}
+		else{
+			this.isJumpingFinished = false;
+		}
+		
+		//jump in some direction
+		var distance = 0.1;
+		var corner = this.rotationByX;//degrees
+		var x = distance*Math.cos(this.toRadians(corner));
+		var z = -1*distance*Math.sin(this.toRadians(corner));
+		console.log("jumping");
+		var currentRenderer = this.renderer;
+		var currentScene = this.scene;
+		var currentcamera = this.camera;
+		var LeftLeg = this.LeftLeg;
+		var parrot = this.parrot;
+		var renderer = this.renderer;
+		var scene = this.scene;
+		var camera = this.camera;
+		
+		var counter = 0;
+
+        parrot.position.x += x;
+		parrot.position.z += z;
+
+        console.log("position current: " + parrot.position.y + "initial pos: " + this.ParrotInitialY)
+        if ((parrot.position.y  - this.ParrotInitialY) == 0){
+	      parrot.position.y += 0.1;
+        }
+        else {
+	      parrot.position.y -= 0.1;
+		  this.jumpCount++;
+        }
+		
+        this.renderer.render(this.scene, this.camera);	
+	}
+	
+	
+	
+	//rotate body and change direction
 	turnRight(){
-		console.log("turning left");
-		this.parrot.position.z += 0.02;
-		this.renderer.render(this.scene, this.camera);
+		if (this.isJumpimgFinished()){
+		  console.log("turning right");
+		  this.parrot.position.z += 0.02;
+		  this.renderer.render(this.scene, this.camera);
+		}
 	}
 	
-	turnLeft(){
-		console.log("turning right");
-		this.parrot.position.z -= 0.02;
-		this.renderer.render(this.scene, this.camera);
+	toRadians (angle) {
+      return angle * (Math.PI / 180);
+    }
+	
+	//turn by degrees
+	turnLeft(degree = 10){
+		console.log(" this.isJumpingFinished " + this.isJumpingFinished);
+		if (this.isJumpingFinished){
+		    console.log("turning left");
+		    this.rotationByX = degree;
+		    this.parrot.rotation.y -= this.toRadians(degree);
+		    this.renderer.render(this.scene, this.camera);
+			//restore jumping;
+			this.jumpCount = 0;
+			this.isJumpingFinished = false;
+		}
 	}
 	
 	takeoff(){
