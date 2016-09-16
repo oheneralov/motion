@@ -155,15 +155,15 @@ class Parrot3d{
 		   
 		    var texture = new THREE.TextureLoader().load( 'images/crate.gif' );
 
-			var BoxGeometry = new THREE.BoxBufferGeometry( 1, 1.5, 3 );
+			var BoxGeometry = new THREE.BoxBufferGeometry( 1/2, 1.5, 3/2 );
 			var BoxMaterial = new THREE.MeshBasicMaterial( { map: texture } );
            
 			var cube1 = new THREE.Mesh( BoxGeometry, BoxMaterial );
-			cube1.position.x += 1;
+			cube1.position.x += 3;
 			scene.add( cube1 );
 			
 			var cube2 = new THREE.Mesh( BoxGeometry, BoxMaterial );
-			cube2.position.x -= 2;
+			cube2.position.x -= 1;
 			scene.add( cube2);
 			
 			
@@ -193,6 +193,7 @@ class Parrot3d{
 			this.CoordinateZ = 0;
 			this.jumpCount = 0;
 			this.isJumpingFinished = false;
+			this.rotationLeft = 0;
 			
 			
 	}
@@ -258,10 +259,11 @@ class Parrot3d{
 		}
 		
 		//jump in some direction
-		var distance = 0.1;
-		var corner = 20;//degrees
+		var distance = 0.05;
+		var corner = this.rotationLeft;//degrees
 		
-		var result = MathLib.getCoordinatesByHypotenuse(corner, distance, this.rotationByX);
+		//var result = MathLib.getCoordinatesByHypotenuse(corner, distance, this.rotationByX);
+		var result = MathLib.getGeneralCoordinatesByHypotenuse(this.rotationByX, distance);
 		var x = result.x;
 		var z = result.z;
 		//console.log("jumping");
@@ -300,6 +302,7 @@ class Parrot3d{
 	//turn by degrees
 	turnLeft(degree = 10){
 		//refactor
+		this.rotationLeft = degree;
 		if (this.isJumpingFinished){
 		    console.log("turning left");
 		    this.rotationByX += degree;

@@ -33,4 +33,10 @@ class MathLib{
 		return {"x" : x, "z" : z};
 	}
 	
+	static getGeneralCoordinatesByHypotenuse(corner, distance){
+		var x = distance*Math.cos(MathLib.toRadians(corner));
+		var z = distance*Math.sin(MathLib.toRadians(corner));
+		return {"x" : x, "z" : z};
+	}
+	
 }
