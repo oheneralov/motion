@@ -250,7 +250,7 @@ class Parrot3d{
 	jump(count = 1) {
 		if (this.jumpCount > count){
 			this.isJumpingFinished = true;
-			console.log("stop jumping");
+			//console.log("stop jumping");
 			return;
 		}
 		else{
@@ -259,34 +259,26 @@ class Parrot3d{
 		
 		//jump in some direction
 		var distance = 0.1;
-		var corner = this.rotationByX;//degrees
+		var corner = 20;//degrees
 		
-		var result = MathLib.getCoordinatesByHypotenuse(corner, distance);
+		var result = MathLib.getCoordinatesByHypotenuse(corner, distance, this.rotationByX);
 		var x = result.x;
-		var z = -result.z;
-		console.log("jumping");
+		var z = result.z;
+		//console.log("jumping");
+		console.log("this.rotationByX: " + this.rotationByX);
 		console.log("x: " + x);
 		console.log("z: " + z);
-		var currentRenderer = this.renderer;
-		var currentScene = this.scene;
-		var currentcamera = this.camera;
-		var LeftLeg = this.LeftLeg;
-		var parrot = this.parrot;
-		var renderer = this.renderer;
-		var scene = this.scene;
-		var camera = this.camera;
 		
 		var counter = 0;
 
-        parrot.position.x += x;
-		parrot.position.z += z;
+        this.parrot.position.x += x;
+		this.parrot.position.z += z;
 
-        console.log("position current: " + parrot.position.y + "initial pos: " + this.ParrotInitialY)
-        if ((parrot.position.y  - this.ParrotInitialY) == 0){
-	      parrot.position.y += 0.1;
+        if ((this.parrot.position.y  - this.ParrotInitialY) == 0){
+	      this.parrot.position.y += 0.1;
         }
         else {
-	      parrot.position.y -= 0.1;
+	      this.parrot.position.y -= 0.1;
 		  this.jumpCount++;
         }
 		
@@ -307,16 +299,19 @@ class Parrot3d{
 	
 	//turn by degrees
 	turnLeft(degree = 10){
-		console.log(" this.isJumpingFinished " + this.isJumpingFinished);
+		//refactor
 		if (this.isJumpingFinished){
 		    console.log("turning left");
-		    this.rotationByX = degree;
+		    this.rotationByX += degree;
 		    this.parrot.rotation.y -= MathLib.toRadians(degree);
 		    this.renderer.render(this.scene, this.camera);
 			//restore jumping;
 			this.jumpCount = 0;
 			this.isJumpingFinished = false;
-		}
+			if (this.rotationByX >= 360){
+			  	this.rotationByX = 0;
+		    }
+	    }
 	}
 	
 	takeoff(){
