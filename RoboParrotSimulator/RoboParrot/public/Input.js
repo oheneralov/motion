@@ -139,21 +139,18 @@ Parrot1->turnRight();
 		      <div id = {this.props.type}>
 			  </div>
 		  </p>
-		  <br/><br/><br/><br/><br/>
-		  <br/><br/>
           <textarea rows = '10' cols = '100' className='form-control' onChange={this.handleChange}>
           {this.state.code}
           </textarea>
-		  <div>
+		  <span>
 		      <input type = "button" onClick={this.startSimulation} value = "Start simulation"/>
 		      <input type = "button" onClick={this.stopSimulation} value = "Stop simulation"/>
-			  <input type = "button" onClick={this.rotateLeft}  value = "<-"/>
-			  <input type = "button" onClick={this.rotateRight}  value = "->"/>
+			  <input type = "button" onClick={this.rotateLeft}  value = "left"/><input type = "button" onClick={this.rotateRight}  value = "right"/>
 			  <input type = "range"  value = "5"/>
 			  <input type = "button"  value = "zoom in" onClick={this.zoomin}/>
 			  <input type = "button"  value = "zoom out" onClick={this.zoomout}/>	
 			   
-		  </div>  
+		  </span>  
         </form>
       </div>
     );

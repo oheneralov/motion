@@ -36,84 +36,57 @@ class Parrot3d{
 			var RightLeg1 = new THREE.Mesh( LegGeometry, materialLeg );
 			var LeftLeg2 = new THREE.Mesh( LegGeometry, materialLeg );
 			var RightLeg2 = new THREE.Mesh( LegGeometry, materialLeg );
-			
-			/*
-						
-			var faceradius = 0.2/4;
-			var bodyradius = 0.2/4;
-			//scene.add( face );
-			
-			var Eyegeometry = new THREE.SphereGeometry( faceradius/3, 32, 32 );//sphere size
-			var Eyematerial = new THREE.MeshBasicMaterial( { color: 0x000000 } ); //red color
-			var Eye = new THREE.Mesh( Eyegeometry, Eyematerial );
-			//scene.add( Eye );
-			
-			var BeakGeometry = new THREE.CylinderGeometry( 0.07/4, 0.02, 0.5, 32 );//beak sizes
-			var BeakMaterial = new THREE.MeshBasicMaterial( { color: 0x000000 } ); //red color
-			var Beak = new THREE.Mesh( BeakGeometry, BeakMaterial );
-			//scene.add( Beak );
-						
-			body.scale.y = 3;
 
-					
-			var figureoffset = 0.5;
-			face.position.y = body.scale.y*faceradius + bodyradius - figureoffset;
-			Beak.position.y = face.position.y;
-			Beak.rotation.z += 1.3;
-			Beak.position.x += 0.3;
-			Eye.position.x = face.position.x;
-			Eye.position.y = face.position.y;
-			Eye.position.z += 0.2;
 			
-			
-			body.position.y -= figureoffset; 
-			
-			*/
-			//0.5 is cylinder height, the positon of the left leg = body.position.y  - cylinder height - offset
-			/*
-			LeftLeg.position.y = body.position.y - 0.5 - figureoffset;
-			RightLeg.position.y = LeftLeg.position.y;
-			LeftLeg.position.x += 0.1;
-			RightLeg.position.x -= 0.15;
-			
-			this.LeftLeg = LeftLeg;
-			*/
-			
-			var rotationDegree = (Math.PI / 180)*80;
-			leftClaw1.rotation.x = rotationDegree;
-			leftClaw1.position.x -= 0.2;
-			leftClaw1.rotation.z += 0.5;
-			
-			
-			leftClaw2.rotation.x = rotationDegree;
-			leftClaw2.position.x = leftClaw1.position.x + 0.1;
-			leftClaw2.rotation.z = leftClaw1.rotation.z + 0.5;
-			
-			
-			rightClaw1.rotation.x = rotationDegree;
-			rightClaw1.position.x += 0.1;
-			rightClaw1.rotation.z += 0.5;
-			
-			
-			rightClaw2.rotation.x = rotationDegree;
-			rightClaw2.position.x = rightClaw1.position.x + 0.1;
-			rightClaw2.rotation.z = rightClaw1.rotation.z + 0.5;
 			
 			LeftLeg1.rotation.z = -(Math.PI / 180)*40;
+			LeftLeg1.position.z -= 0.14; 
 			LeftLeg1.position.y += 0.4;
 			LeftLeg1.position.x = leftClaw1.position.x +0.2;
 			
-			RightLeg1.rotation.z = -(Math.PI / 180)*40;
-			RightLeg1.position.y += 0.4;
-			RightLeg1.position.x = rightClaw1.position.x +0.2;
-			
 			LeftLeg2.rotation.z = (Math.PI / 180)*40;
+			LeftLeg2.position.z -= 0.14;
 			LeftLeg2.position.y += 1.15;
 			LeftLeg2.position.x = LeftLeg1.position.x;
 			
-			RightLeg2.rotation.z = (Math.PI / 180)*40;
-			RightLeg2.position.y += 1.15;
-			RightLeg2.position.x = RightLeg1.position.x;
+			var LegsDistance = 0.2;
+			
+			RightLeg1.position.x = LeftLeg1.position.x;
+			RightLeg1.position.y = LeftLeg1.position.y;
+			RightLeg1.position.z = LeftLeg1.position.z + LegsDistance;
+			RightLeg1.rotation.z = LeftLeg1.rotation.z;
+			
+			RightLeg2.position.x = LeftLeg2.position.x;
+			RightLeg2.position.y = LeftLeg2.position.y;
+			RightLeg2.position.z = LeftLeg2.position.z + LegsDistance;
+			RightLeg2.rotation.z = LeftLeg2.rotation.z;
+			
+			var rotationDegree = (Math.PI / 180)*80;
+			leftClaw1.position.x = LeftLeg1.position.x;
+			leftClaw1.rotation.z += MathLib.toRadians(90);
+			leftClaw1.position.z -= 0.1;
+			leftClaw1.rotation.y += MathLib.toRadians(30);
+			leftClaw1.scale.y *= 3;
+			
+			
+			leftClaw2.position.x = LeftLeg1.position.x;
+			leftClaw2.rotation.z += MathLib.toRadians(90);
+			leftClaw1.position.z += 0.1;
+			leftClaw2.scale.y *= 3;
+			//leftClaw2.rotation.y += MathLib.toRadians(40);
+			
+			
+			rightClaw1.position.x = RightLeg1.position.x;
+			rightClaw1.rotation.z += MathLib.toRadians(90);
+			rightClaw1.position.z -= 0.1;
+			rightClaw1.rotation.y += MathLib.toRadians(30);
+			rightClaw1.scale.y *= 3;
+			
+			
+			rightClaw2.position.x = RightLeg1.position.x;
+			rightClaw2.rotation.z += MathLib.toRadians(90);
+			rightClaw2.position.z += 0.1;
+			rightClaw2.scale.y *= 3;
 			
 			var geometrybody = new THREE.SphereGeometry( 0.3, 32, 32 );//sphere size
 			var materialbody = new THREE.MeshBasicMaterial( { color: 0xffffff } ); 
@@ -127,6 +100,29 @@ class Parrot3d{
 			var face = new THREE.Mesh( FaceGeometry, FaceMaterial );
 			face.position.y = body.position.y + 0.9;
 			
+			var Eyegeometry = new THREE.SphereGeometry( 0.3/3, 32, 32 );//sphere size
+			var Eyematerial = new THREE.MeshBasicMaterial( { color: 0xFF0000 } ); //red color
+			var Eye1 = new THREE.Mesh( Eyegeometry, Eyematerial );
+			Eye1.position.y = face.position.y;
+			Eye1.position.x = face.position.x + 0.1;
+			Eye1.position.z += 0.2;
+			
+			var Eye2 = new THREE.Mesh( Eyegeometry, Eyematerial );
+		    Eye2.position.x = Eye1.position.x;
+			Eye2.position.y = Eye1.position.y;
+			Eye2.position.z = Eye1.position.z - 0.4;
+			
+			
+			var BeakGeometry = new THREE.CylinderGeometry( 0.07, 0.02, 0.5, 32 );//beak sizes
+			var BeakMaterial = new THREE.MeshBasicMaterial( { color: 0xFF0000 } ); //red color
+			var Beak = new THREE.Mesh( BeakGeometry, BeakMaterial );
+			Beak.position.x = Eye1.position.x + 0.06;
+			Beak.position.y = Eye1.position.y;
+			Beak.rotation.x = MathLib.toRadians(90);
+			Beak.position.z -= face.position.z;
+			Beak.rotation.z += MathLib.toRadians(90);
+			//Beak.rotation.y += MathLib.toRadians(30);
+			
 				
 			var group = new THREE.Group();
 			group.add(leftClaw1);
@@ -139,7 +135,10 @@ class Parrot3d{
 			group.add( RightLeg2 );
 			group.add( body );
 			group.add(face);
-			group.position.x = -5;
+			group.add(Eye1);
+			group.add(Eye2);
+			group.add(Beak);
+			group.position.x = -3;
 			group.position.y += 0.1;
 			group.rotation.x += (Math.PI / 180)*10 ;
 			scene.add(group);
@@ -259,7 +258,7 @@ class Parrot3d{
 		}
 		
 		//jump in some direction
-		var distance = 0.05;
+		var distance = 0.1;
 		var corner = this.rotationLeft;//degrees
 		
 		//var result = MathLib.getCoordinatesByHypotenuse(corner, distance, this.rotationByX);
@@ -360,12 +359,12 @@ class Parrot3d{
 	
 	//rotate camera
 	rotateLeft(){
-		this.camera.rotation.x += 0.02;
+		this.parrot.rotation.y -= (Math.PI / 180)*10;
 		this.renderer.render(this.scene, this.camera);
 	}
 	
 	rotateRight(){
-		this.camera.rotation.x -= 0.02;
+		this.parrot.rotation.y += (Math.PI / 180)*10;
 		this.renderer.render(this.scene, this.camera);
 	}
 
