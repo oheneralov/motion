@@ -19,7 +19,7 @@ class Parrot3d{
 		   floor.rotation.x -= (Math.PI / 180)*80 ;
 		   scene.add(floor);
 		   
-		    var ClawGeometry = new THREE.CylinderGeometry( 0.02, 0.02, 0.3, 32 );
+		    var ClawGeometry = new THREE.CylinderGeometry( 0.02, 0.02, 0.2, 32 );
 			var ClawMaterisl = new THREE.MeshBasicMaterial( { color: 0xFF0000 } );
 			var leftClaw1 = new THREE.Mesh( ClawGeometry, ClawMaterisl );
 			var leftClaw2 = new THREE.Mesh( ClawGeometry, ClawMaterisl );
@@ -62,31 +62,32 @@ class Parrot3d{
 			RightLeg2.rotation.z = LeftLeg2.rotation.z;
 			
 			var rotationDegree = (Math.PI / 180)*80;
-			leftClaw1.position.x = LeftLeg1.position.x;
+			leftClaw1.position.x = LeftLeg1.position.x - 0.03;
 			leftClaw1.rotation.z += MathLib.toRadians(90);
-			leftClaw1.position.z -= 0.1;
-			leftClaw1.rotation.y += MathLib.toRadians(30);
+			leftClaw1.position.z -= 0.04;
+			leftClaw1.rotation.y += MathLib.toRadians(15);
 			leftClaw1.scale.y *= 3;
 			
 			
-			leftClaw2.position.x = LeftLeg1.position.x;
+			leftClaw2.position.x = LeftLeg1.position.x - 0.03;
 			leftClaw2.rotation.z += MathLib.toRadians(90);
-			leftClaw1.position.z += 0.1;
+			leftClaw2.position.z += 0.06;
 			leftClaw2.scale.y *= 3;
 			//leftClaw2.rotation.y += MathLib.toRadians(40);
 			
 			
-			rightClaw1.position.x = RightLeg1.position.x;
+			rightClaw1.position.x = RightLeg1.position.x - 0.03;
 			rightClaw1.rotation.z += MathLib.toRadians(90);
-			rightClaw1.position.z -= 0.1;
-			rightClaw1.rotation.y += MathLib.toRadians(30);
+			rightClaw1.position.z = leftClaw1.position.z - 0.2;
+			rightClaw1.rotation.y += MathLib.toRadians(15);
 			rightClaw1.scale.y *= 3;
 			
 			
-			rightClaw2.position.x = RightLeg1.position.x;
+			rightClaw2.position.x = RightLeg1.position.x - 0.03;
 			rightClaw2.rotation.z += MathLib.toRadians(90);
-			rightClaw2.position.z += 0.1;
+			rightClaw2.position.z = leftClaw1.position.z - 0.13;
 			rightClaw2.scale.y *= 3;
+			rightClaw2.rotation.y += MathLib.toRadians(5);
 			
 			var geometrybody = new THREE.SphereGeometry( 0.3, 32, 32 );//sphere size
 			var materialbody = new THREE.MeshBasicMaterial( { color: 0xffffff } ); 
