@@ -15,7 +15,7 @@ class Parrot3d{
            var FloorGeometry = new THREE.PlaneGeometry( 15, 7, 1, 1 );
            var FloorMaterial = new THREE.MeshBasicMaterial( { color: 0xA3B3E3 } );
            var floor = new THREE.Mesh( FloorGeometry, FloorMaterial );
-		   //rotate floor by 80 degrees
+		   //rotate floor by 90 degrees
 		   floor.rotation.x = MathLib.toRadians(-90);
 		   scene.add(floor);
 		   
@@ -96,6 +96,25 @@ class Parrot3d{
 			body.position.y  = RightLeg2.position.y + 0.95;
 			body.position.x -= 0.17;
 			
+			var WingGeometry = new THREE.SphereGeometry( 0.3, 32, 32 );//sphere size
+			var WingMaterial = new THREE.MeshBasicMaterial( { color: 0xB1CCA7 } ); 
+			var wing1 = new THREE.Mesh( WingGeometry, WingMaterial );
+			wing1.position.y = body.position.y + 0.15; 
+			wing1.position.x = body.position.x + 0.1;
+			wing1.scale.y *= 1.5;
+			wing1.scale.x /= 1.3;
+			wing1.scale.z /= 4;
+			wing1.position.z += 0.34;
+			
+			
+			var wing2 = new THREE.Mesh( WingGeometry, WingMaterial );
+			wing2.position.y = body.position.y + 0.15; 
+			wing2.position.x = body.position.x + 0.1;
+			wing2.scale.y *= 1.5;
+			wing2.scale.x /= 1.3;
+			wing2.scale.z /= 4;
+			wing2.position.z -= 0.4;
+			
 			var FaceGeometry = new THREE.SphereGeometry( 0.3, 32, 32 );//sphere size
 			var FaceMaterial = new THREE.MeshBasicMaterial( { color: 0x4d79ff} ); //red color
 			var face = new THREE.Mesh( FaceGeometry, FaceMaterial );
@@ -139,6 +158,10 @@ class Parrot3d{
 			group.add(Eye1);
 			group.add(Eye2);
 			group.add(Beak);
+			group.add(wing1);
+			group.add(wing2);
+			
+			
 			group.position.x = -3;
 			group.position.y += 0.1;
 			//group.rotation.x += (Math.PI / 180)*10 ;
