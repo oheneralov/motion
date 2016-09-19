@@ -121,12 +121,24 @@ Parrot1->turnRight();
 		this.state.Parrot1.rotateRight();
 	},
 	
+	rotateCameraUp: function(){
+		this.state.Parrot1.rotateCameraUp();
+	},
+	
+	rotateCameraDown: function(){
+		this.state.Parrot1.rotateCameraDown();
+	},
+	
 	zoomin: function(){
 		this.state.Parrot1.zoomin();
 	},
 	
     zoomout: function(){
 		this.state.Parrot1.zoomout();
+	},
+	
+	rotateFloor: function(){
+		this.state.Parrot1.rotateFloor();
 	},
 	
 	
@@ -145,10 +157,14 @@ Parrot1->turnRight();
 		  <span>
 		      <input type = "button" onClick={this.startSimulation} value = "Start simulation"/>
 		      <input type = "button" onClick={this.stopSimulation} value = "Stop simulation"/>
-			  <input type = "button" onClick={this.rotateLeft}  value = "left"/><input type = "button" onClick={this.rotateRight}  value = "right"/>
+			  <input type = "button" onClick={this.rotateLeft}  value = "parrot left"/>
+			  <input type = "button" onClick={this.rotateRight}  value = "parrot right"/>
+			  <input type = "button" onClick={this.rotateCameraUp}  value = "camera up"/>
+			  <input type = "button" onClick={this.rotateCameraDown}  value = "camera down"/>
 			  <input type = "range"  value = "5"/>
 			  <input type = "button"  value = "zoom in" onClick={this.zoomin}/>
-			  <input type = "button"  value = "zoom out" onClick={this.zoomout}/>	
+			  <input type = "button"  value = "zoom out" onClick={this.zoomout}/>
+			  <input type = "button"  value = "rotate floor" onClick={this.rotateFloor}/>
 			   
 		  </span>  
         </form>

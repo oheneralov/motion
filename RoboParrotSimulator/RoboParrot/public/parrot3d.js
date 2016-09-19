@@ -16,7 +16,7 @@ class Parrot3d{
            var FloorMaterial = new THREE.MeshBasicMaterial( { color: 0xA3B3E3 } );
            var floor = new THREE.Mesh( FloorGeometry, FloorMaterial );
 		   //rotate floor by 80 degrees
-		   floor.rotation.x -= (Math.PI / 180)*80 ;
+		   floor.rotation.x = MathLib.toRadians(-90);
 		   scene.add(floor);
 		   
 		    var ClawGeometry = new THREE.CylinderGeometry( 0.02, 0.02, 0.2, 32 );
@@ -141,7 +141,7 @@ class Parrot3d{
 			group.add(Beak);
 			group.position.x = -3;
 			group.position.y += 0.1;
-			group.rotation.x += (Math.PI / 180)*10 ;
+			//group.rotation.x += (Math.PI / 180)*10 ;
 			scene.add(group);
 			
 			
@@ -160,14 +160,19 @@ class Parrot3d{
            
 			var cube1 = new THREE.Mesh( BoxGeometry, BoxMaterial );
 			cube1.position.x += 3;
+			cube1.position.y += 0.75;
 			scene.add( cube1 );
 			
 			var cube2 = new THREE.Mesh( BoxGeometry, BoxMaterial );
 			cube2.position.x -= 1;
+			cube2.position.y += 0.75;
 			scene.add( cube2);
 			
+			camera.position.y += MathLib.toRadians(50);
+			this.parrot.position.y -= 0.1;
+            //this.floor.position.y *= 10;	
 			
-
+		
 			camera.position.z = 5;
 			//camera.rotation.x += (Math.PI / 180)*60;
 
@@ -194,7 +199,9 @@ class Parrot3d{
 			this.jumpCount = 0;
 			this.isJumpingFinished = false;
 			this.rotationLeft = 0;
-			
+			this.floor = floor;
+					
+    			
 			
 	}
 	
@@ -368,6 +375,20 @@ class Parrot3d{
 		this.parrot.rotation.y += (Math.PI / 180)*10;
 		this.renderer.render(this.scene, this.camera);
 	}
-
-			
+	
+	rotateFloor(){
+		this.floor.rotation.x -= MathLib.toRadians(10);
+		this.renderer.render(this.scene, this.camera);
+	}
+	
+    rotateCameraUp(){
+		this.camera.position.y += MathLib.toRadians(5);
+		this.renderer.render(this.scene, this.camera);
+	}
+	
+	rotateCameraDown(){
+		this.camera.position.y -= MathLib.toRadians(5);
+		this.renderer.render(this.scene, this.camera);
+	}
+		
 }
