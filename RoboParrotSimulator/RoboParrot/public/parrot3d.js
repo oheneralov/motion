@@ -161,6 +161,8 @@ class Parrot3d{
 			group.add(wing1);
 			group.add(wing2);
 			
+			this.Beak = Beak;
+						
 			
 			group.position.x = -3;
 			group.position.y += 0.1;
@@ -173,6 +175,23 @@ class Parrot3d{
 			group.scale.z /= 3;
 			
 			this.parrot = group;
+			this.ok = true;
+			/*
+			
+			var points = [];
+for (var i = 0; i < 10; i++) {
+    points[i] = new THREE.Vector3(
+    2.5 * Math.sin(i),
+    2.5 * Math.sin(i * 1.15 + 1.1),
+    2.5 * Math.sin(i * 1.7 + 1.5));
+}
+var extrudePath = new THREE.ClosedSplineCurve3(points);
+var material = new THREE.MeshLambertMaterial();
+material.color = new THREE.Color("red");
+var geometry = new THREE.TubeGeometry(extrudePath, 3, 0.6, 2, true, false);
+var tubeMesh = new THREE.Mesh(geometry, BeakMaterial);
+scene.add(tubeMesh);
+*/
 			
 		  	   
 		   
@@ -205,11 +224,8 @@ class Parrot3d{
 				renderer.render(scene, camera);
 			};
 			
-
 			render();
-			
-			
-			
+									
 			//renderer.render(scene, camera);
 			this.renderer = renderer;
 			this.scene = scene;
@@ -223,9 +239,8 @@ class Parrot3d{
 			this.isJumpingFinished = false;
 			this.rotationLeft = 0;
 			this.floor = floor;
+			this.obstacles = [cube1, cube2];
 					
-    			
-			
 	}
 	
 	animate() {
@@ -278,7 +293,62 @@ class Parrot3d{
 */		
 	}
 	
+	collisiton(){
+		for (var obstacle of this.obstacles){
+		  var ObstacleXMin = obstacle.position.x - 1/4;
+		  var ObstacleXMax = obstacle.position.x + 1/4;
+		  var ObstacleYMin = obstacle.position.y - 1.5/2;
+		  var ObstacleYMax = obstacle.position.y + 1.5/2;
+		  var ObstacleZMin = obstacle.position.z - 3/4;
+		  var ObstacleZMax = obstacle.position.z + 3/4;
+		  
+		  console.log("ObstacleXMin: " + ObstacleXMin);
+		  console.log("ObstacleXMax: " + ObstacleXMax);
+		  console.log("ObstacleYMin: " + ObstacleYMin);
+		  console.log("ObstacleYMax: " + ObstacleYMax);
+		  console.log("ObstacleZMin: " + ObstacleZMin);
+		  console.log("ObstacleZMax: " + ObstacleZMax);
+		  var ParrotX = this.parrot.position.x + 0.2;
+		  var ParrotY = this.parrot.position.y;
+		  var ParrotZ = this.parrot.position.z;
+		  
+		  console.log("x: " + ParrotX);
+		  console.log("y: " + ParrotY);
+		  console.log("z: " + ParrotZ);
+		
+		
+		  if (ParrotX >= ObstacleXMin && ParrotX <= ObstacleXMax
+		  && ParrotY >= ObstacleYMin && ParrotY <= ObstacleYMax
+		  && ParrotZ >= ObstacleZMin && ParrotZ <= ObstacleZMax
+		  )
+		  {
+			  return true;
+		  }
+		  
+		  
+		
+		}
+		return false;
+	}
+	
+	fall(){
+		this.parrot.rotation.z = MathLib.toRadians(85);
+		//this.parrot.position.y = 0.1;
+	}
+	
 	jump(count = 1) {
+		if (this.ok === false)
+		{
+			return;
+		}
+		
+		if (this.collisiton()){
+			this.fall();
+			this.ok = false;
+			alert("There was a collision! Damage!");
+			return;
+		}
+		
 		if (this.jumpCount > count){
 			this.isJumpingFinished = true;
 			//console.log("stop jumping");
@@ -296,10 +366,6 @@ class Parrot3d{
 		var result = MathLib.getGeneralCoordinatesByHypotenuse(this.rotationByX, distance);
 		var x = result.x;
 		var z = result.z;
-		//console.log("jumping");
-		console.log("this.rotationByX: " + this.rotationByX);
-		console.log("x: " + x);
-		console.log("z: " + z);
 		
 		var counter = 0;
 
@@ -320,17 +386,33 @@ class Parrot3d{
 	
 	
 	//rotate body and change direction
-	turnRight(){
-		if (this.isJumpimgFinished()){
-		  console.log("turning right");
-		  this.parrot.position.z += 0.02;
-		  this.renderer.render(this.scene, this.camera);
+	turnLeft(degree = 10){
+		if (this.ok === false)
+		{
+			return;
 		}
+		//refactor
+		this.rotationLeft = degree;
+		if (this.isJumpingFinished){
+		    console.log("turning right");
+		    this.rotationByX -= degree;
+		    this.parrot.rotation.y += MathLib.toRadians(degree);
+		    this.renderer.render(this.scene, this.camera);
+			//restore jumping;
+			this.jumpCount = 0;
+			this.isJumpingFinished = false;
+			if (this.rotationByX <= -360){
+			  	this.rotationByX = 0;
+		    }
+	    }
 	}
 	
-	
 	//turn by degrees
-	turnLeft(degree = 10){
+	turnRight(degree = 10){
+		if (this.ok === false)
+		{
+			return;
+		}
 		//refactor
 		this.rotationLeft = degree;
 		if (this.isJumpingFinished){
