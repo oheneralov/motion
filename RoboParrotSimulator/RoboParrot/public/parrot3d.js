@@ -11,6 +11,12 @@ class Parrot3d{
 			renderer.setSize( width, height );
 			document.getElementById(place).appendChild( renderer.domElement );
 			
+			var axis = new THREE.AxisHelper(10);
+			scene.add(axis);
+			
+			//var grid = new THREE.GridHelper(50, 50);
+			//scene.add(grid);
+			
 			/* Floor  */    
            var FloorGeometry = new THREE.PlaneGeometry( 15, 7, 1, 1 );
            var FloorMaterial = new THREE.MeshBasicMaterial( { color: 0xA3B3E3 } );
@@ -162,6 +168,8 @@ class Parrot3d{
 			group.add(wing2);
 			
 			this.Beak = Beak;
+			this.wing1 = wing1;
+			this.wing2 = wing2;
 						
 			
 			group.position.x = -3;
@@ -212,11 +220,8 @@ scene.add(tubeMesh);
 			
 			camera.position.y += MathLib.toRadians(50);
 			this.parrot.position.y -= 0.1;
-            //this.floor.position.y *= 10;	
-			
 		
 			camera.position.z = 5;
-			//camera.rotation.x += (Math.PI / 180)*60;
 
 			var render = function () {
 				requestAnimationFrame( render );
@@ -237,6 +242,9 @@ scene.add(tubeMesh);
 			this.CoordinateZ = 0;
 			this.jumpCount = 0;
 			this.isJumpingFinished = false;
+
+			this.flyForwardCount = 0;
+			this.isflyForwardFinished = false;
 			this.rotationLeft = 0;
 			this.floor = floor;
 			this.obstacles = [cube1, cube2];
@@ -244,14 +252,12 @@ scene.add(tubeMesh);
 	}
 	
 	animate() {
-
 		var renderer = this.renderer;
 		var scene = this.scene;
 		var camera = this.camera;
-		
 		var render = function () {
-		    	requestAnimationFrame( render );
-				renderer.render(scene, camera);
+		requestAnimationFrame( render );
+		renderer.render(scene, camera);
 		}
 	}
 	
@@ -333,7 +339,7 @@ scene.add(tubeMesh);
 	
 	fall(){
 		this.parrot.rotation.z = MathLib.toRadians(85);
-		//this.parrot.position.y = 0.1;
+		this.parrot.position.y = 0;
 	}
 	
 	jump(count = 1) {
@@ -405,6 +411,22 @@ scene.add(tubeMesh);
 			  	this.rotationByX = 0;
 		    }
 	    }
+		
+		if (this.isflyForwardFinished){
+		    console.log("turning right");
+		    this.rotationByX -= degree;
+		    this.parrot.rotation.y += MathLib.toRadians(degree);
+		    this.renderer.render(this.scene, this.camera);
+			//restore flying;
+			this.flyForwardCount = 0;
+			this.isflyForwardFinished = false;
+			if (this.rotationByX <= -360){
+			  	this.rotationByX = 0;
+		    }
+	    }
+		
+
+		
 	}
 	
 	//turn by degrees
@@ -427,30 +449,127 @@ scene.add(tubeMesh);
 			  	this.rotationByX = 0;
 		    }
 	    }
+		
+		if (this.isflyForwardFinished){
+		    console.log("turning right");
+		    this.rotationByX -= degree;
+		    this.parrot.rotation.y += MathLib.toRadians(degree);
+		    this.renderer.render(this.scene, this.camera);
+			//restore flying;
+			this.flyForwardCount = 0;
+			this.isflyForwardFinished = false;
+			if (this.rotationByX <= -360){
+			  	this.rotationByX = 0;
+		    }
+	    }
 	}
 	
 	takeoff(){
 		console.log("taking off");
-	    console.log("rotation:" + this.parrot.rotation.z);
-		while (this.parrot.rotation.z > -1.5){	
-		    this.parrot.rotation.z -= 0.05;
-		    this.parrot.position.y += 0.02;
+	    this.parrot.rotation.z = MathLib.toRadians(-90);
+		this.parrot.position.y = 2;
+		this.renderer.render(this.scene, this.camera);	
+	}
+	
+	moveWings(num){
+		console.log("moving wings");
+		console.log("flying number: " + num);
+		//beginning of moving wings
+		if (num == 0){	
+			this.parrot.rotation.z = MathLib.toRadians(-90);
+		    this.parrot.position.y = 2;
+			console.log("lifting wings");
+		    this.wing1.rotation.x = MathLib.toRadians(90);
+		    this.wing2.rotation.x = MathLib.toRadians(90);
+		    this.wing1.rotation.y = MathLib.toRadians(90);
+		    this.wing2.rotation.y = MathLib.toRadians(90);
+			//distance of wings from body
+			this.wing1.position.z += 1.2;
+		    this.wing2.position.z -= 1.2;
+			
+            //distance form head			
+			this.wing1.position.y -= 1;
+		    this.wing2.position.y -= 1;
+			this.wing1.scale.y *= 5;
+		    this.wing2.scale.y *= 5;
+			this.wing1.scale.x *= 2;
+		    this.wing2.scale.x *= 2;
+			
+			this.wing1.rotation.z = MathLib.toRadians(60);
+		    this.wing2.rotation.z = MathLib.toRadians(-60);
 		}
-		this.renderer.render(this.scene, this.camera);
+		else{
+		  if (num % 2 == 0){
+			//this.wing1.rotation.z = MathLib.toRadians(40);
+		    //this.wing2.rotation.z = MathLib.toRadians(-40);
+		  }
+		  else{
+		    //this.wing1.rotation.x = MathLib.toRadians(0);
+		    //this.wing2.rotation.x = MathLib.toRadians(0);
+		  }
+		}
+
 	}
 	
 	//land must be done when parrot is close to the earth
 	land(){
-		while (this.parrot.rotation.z < 0){	
-		    this.parrot.rotation.z += 0.05;
-		    this.parrot.position.y -= 0.02;
-		}
+		this.parrot.position.y = 0;
+		this.parrot.rotation.z = MathLib.toRadians(0);
+		this.wing1.position.z -= 0.2;
+		this.wing2.position.z += 0.2;
+		this.wing1.scale.y /= 3;
+		this.wing2.scale.y /= 3;
 		this.renderer.render(this.scene, this.camera);
 	}
 	
-	flyForward(){
-		this.parrot.position.x += 0.02;
-		this.renderer.render(this.scene, this.camera);
+	flyForward(count = 10){
+	if (this.ok === false)
+		{
+			return;
+		}
+		
+		if (this.collisiton()){
+			this.fall();
+			this.ok = false;
+			alert("There was a collision! Damage!");
+			return;
+		}
+		
+		//parrot is on earch and must take off
+		if (this.flyForwardCount == 0){
+			this.takeoff();
+		}
+		
+		//moving wings
+		this.moveWings(this.flyForwardCount);
+		
+		if (this.flyForwardCount > count){
+			this.isflyForwardFinished = true;
+			this.land();	
+			//console.log("stop jumping");
+			return;
+		}
+		
+		if (this.flyForwardCount > 0 && this.flyForwardCount < count){
+			this.isflyForwardFinished = false;
+		}
+		
+		this.flyForwardCount++;
+		
+		//fly in some direction
+		var distance = 0.1;
+		var corner = this.rotationLeft;//degrees
+		
+		var result = MathLib.getGeneralCoordinatesByHypotenuse(this.rotationByX, distance);
+		var x = result.x;
+		var z = result.z;
+		
+		var counter = 0;
+
+        this.parrot.position.x += x;
+		this.parrot.position.z += z;		
+		
+        this.renderer.render(this.scene, this.camera);	
 	}
 	
 	flyLeft(){

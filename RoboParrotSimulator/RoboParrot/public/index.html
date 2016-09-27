@@ -13,6 +13,7 @@
 	<script src="parrot.js"></script>
 	<script src="parrot3d.js"></script>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+    <link href="css/bootstrap.css" rel="stylesheet">
 	<style>
 	#tab-2d {
 		background-image: url("images/table1.png");
@@ -26,16 +27,11 @@
   </script>
 </head>
 <body>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../build/bootstrap.min.js"></script>
 <div class="container">
-		<h1>Simulator of robot parrot movement</h1>
+		<h2>Simulator of robot parrot movement</h2>
 		<!-- the example app is rendered into this div -->
-		
-		<div class="hint">
-			<!-- put any hints about your component example here -->
-		</div>
-		<div class="footer">
-			Copyright &copy; 2016 RoboParrot.
-		</div>
 	</div>
 <div id = "tabs">
   <ul>
@@ -47,10 +43,13 @@
 	<div id="2dsimulation"></div>
   </div>
   <div id="tab-3d">
-    <p>Three dimensional simulation. Used to test robot in general</p>
+    <p>Three dimensional simulation. Used to test a robot in general</p>
 	<div id="3dsimulation"></div>
   </div>
 	<script type="text/jsx" src="input.js"></script>
 	</div>
+	<footer>
+		Copyright &copy; 2016 by Oleksandr Generalov. All Rights Reserved.
+	</footer>
 </body>
 </html>

@@ -7,8 +7,7 @@ var Parser = React.createClass({
   getInitialState: function() {
     return {
 		code: `
-Parrot1->jump(3);
-Parrot1->turnLeft(30);
+Parrot1->moveWings(0);
 /*
 Parrot1->doStepForward();
 Parrot1->doStepForward();
@@ -50,6 +49,15 @@ Parrot1->turnRight();
   },
   
   componentDidMount: function(){
+	  
+	  
+	    (function f(f){
+			console.log("type");
+			console.log(typeof f());
+          return typeof f();
+        })(function(){ return 1; });
+		
+		
 	  //global variable
 	  var ParrotType = this.props.type;
 	  if (this.props.type == "parrot2d"){
@@ -103,7 +111,7 @@ Parrot1->turnRight();
 	 startSimulation: function(event) {
 	 console.log("Starting simulation");
 	 var startDate = new Date();
-	 this.state.Parrot1.lifeid = setInterval(this.repeatParrotLife, 500, startDate);
+	 this.state.Parrot1.lifeid = setInterval(this.repeatParrotLife, 1000, startDate);
     },
 	
 	stopSimulation: function(event) {
@@ -151,20 +159,19 @@ Parrot1->turnRight();
 		      <div id = {this.props.type}>
 			  </div>
 		  </p>
-          <textarea rows = '10' cols = '100' className='form-control' onChange={this.handleChange}>
-          {this.state.code}
-          </textarea>
+            <textarea rows = '10' cols = '100' className='form-control' onChange={this.handleChange}>
+              {this.state.code}
+            </textarea>
 		  <span>
-		      <input type = "button" onClick={this.startSimulation} value = "Start simulation"/>
-		      <input type = "button" onClick={this.stopSimulation} value = "Stop simulation"/>
-			  <input type = "button" onClick={this.rotateLeft}  value = "parrot left"/>
-			  <input type = "button" onClick={this.rotateRight}  value = "parrot right"/>
-			  <input type = "button" onClick={this.rotateCameraUp}  value = "camera up"/>
-			  <input type = "button" onClick={this.rotateCameraDown}  value = "camera down"/>
-			  <input type = "range"  value = "5"/>
-			  <input type = "button"  value = "zoom in" onClick={this.zoomin}/>
-			  <input type = "button"  value = "zoom out" onClick={this.zoomout}/>
-			  <input type = "button"  value = "rotate floor" onClick={this.rotateFloor}/>
+		      <button type = "button" className = "btn btn-primary" onClick={this.startSimulation}>Start simulation</button>
+		      <input type = "button" className = "btn btn-success" onClick={this.stopSimulation} value = "Stop simulation"/>
+			  <input type = "button" className = "btn btn-info" onClick={this.rotateLeft}  value = "parrot left"/>
+			  <input type = "button" className = "btn btn-warning" onClick={this.rotateRight}  value = "parrot right"/>
+			  <input type = "button" className = "btn btn-danger" onClick={this.rotateCameraUp}  value = "camera up"/>
+			  <input type = "button" className = "btn btn-link" onClick={this.rotateCameraDown}  value = "camera down"/>
+			  <input type = "button" className = "btn btn-primary"  value = "zoom in" onClick={this.zoomin}/>
+			  <input type = "button" className = "btn btn-success"  value = "zoom out" onClick={this.zoomout}/>
+			  <input type = "button" className = "btn"  value = "rotate floor" onClick={this.rotateFloor}/>
 			   
 		  </span>  
         </form>
