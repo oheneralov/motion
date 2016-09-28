@@ -8,6 +8,7 @@ var Parser = React.createClass({
     return {
 		code: `
 Parrot1->flyForward(10);
+Parrot1->turnLeft();
 /*
 Parrot1->doStepForward();
 Parrot1->doStepForward();

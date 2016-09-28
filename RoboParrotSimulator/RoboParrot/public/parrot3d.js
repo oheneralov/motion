@@ -164,12 +164,9 @@ class Parrot3d{
 			group.add(Eye1);
 			group.add(Eye2);
 			group.add(Beak);
-			//group.add(wing1);
-			//group.add(wing2);
 			
 			this.Beak = Beak;
-			this.wing1 = wing1;
-			this.wing2 = wing2;
+			
 						
 			
 			group.position.x = -3;
@@ -184,6 +181,22 @@ class Parrot3d{
 			
 			this.parrot = group;
 			this.ok = true;
+			this.renderer = renderer;
+			this.scene = scene;
+			this.camera = camera;
+			this.ParrotInitialY = this.parrot.position.y;
+			this.rotationByX = 0;
+			this.CoordinateX = 0;
+			this.CoordinateY = 0;
+			this.CoordinateZ = 0;
+			this.jumpCount = 0;
+			this.isJumpingFinished = false;
+
+			this.flyForwardCount = 0;
+			this.isflyForwardFinished = false;
+			this.rotationLeft = 0;
+			this.floor = floor;
+			
 			/*
 			
 			var points = [];
@@ -221,8 +234,12 @@ scene.add(tubeMesh);
 			camera.position.y += MathLib.toRadians(50);
 			this.parrot.position.y -= 0.1;
 		
+			this.obstacles = [cube1, cube2];
 			camera.position.z = 5;
 			camera.position.y += MathLib.toRadians(100);
+			
+			
+			
 
 			var render = function () {
 				requestAnimationFrame( render );
@@ -232,23 +249,7 @@ scene.add(tubeMesh);
 			
 			render();
 									
-			//renderer.render(scene, camera);
-			this.renderer = renderer;
-			this.scene = scene;
-			this.camera = camera;
-			this.ParrotInitialY = this.parrot.position.y;
-			this.rotationByX = 0;
-			this.CoordinateX = 0;
-			this.CoordinateY = 0;
-			this.CoordinateZ = 0;
-			this.jumpCount = 0;
-			this.isJumpingFinished = false;
 
-			this.flyForwardCount = 0;
-			this.isflyForwardFinished = false;
-			this.rotationLeft = 0;
-			this.floor = floor;
-			this.obstacles = [cube1, cube2];
 					
 	}
 	
@@ -472,7 +473,9 @@ scene.add(tubeMesh);
 		this.renderer.render(this.scene, this.camera);	
 	}
 	
-	addWings(){   
+	addWings(){
+           this.parrot.remove(this.parrot.children[13]);
+		   this.parrot.remove(this.parrot.children[14]);		
            var WingGeometry = new THREE.PlaneGeometry( 3, 1, 1, 1 );
            var WingMaterial = new THREE.MeshBasicMaterial( { color: 0xE14915 } );
            var wing1 = new THREE.Mesh( WingGeometry, WingMaterial );
@@ -481,11 +484,14 @@ scene.add(tubeMesh);
 		   wing1.position.z += 1.7;
 		   this.parrot.add(wing1);
 		   
-		   var wing2 = new THREE.Mesh( WingGeometry, WingMaterial );
+		   var WingGeometry2 = new THREE.PlaneGeometry( 3, 1, 1, 1 );
+		   var WingMaterial2 = new THREE.MeshBasicMaterial( { color: 0xE14915 } );
+		   var wing2 = new THREE.Mesh( WingGeometry2, WingMaterial2 );
 		   wing2.rotation.y = MathLib.toRadians(-90);
 		   wing2.position.y += 2;
 		   wing2.position.z -= 1.7;
 		   this.parrot.add(wing2);
+		   
 		   this.wing1 = wing1;
 		   this.wing2 = wing2;
 		   this.renderer.render(this.scene, this.camera);	
@@ -494,12 +500,15 @@ scene.add(tubeMesh);
 	
 	moveWings(num){
 		console.log("moving wings");
+		
 		//beginning of moving wings
 		if (num == 0){
 			this.parrot.rotation.z = MathLib.toRadians(-90);
 		    this.parrot.position.y = 2;
 			console.log("lifting wings");
 			this.addWings();
+			
+			//console.log(this.parrot.children[13]);
 		}
 		else{
 		  if (num % 2 == 0){
@@ -520,14 +529,13 @@ scene.add(tubeMesh);
 
 	}
 	
-	//land must be done when parrot is close to the earth
+    //land on the earth
 	land(){
 		this.parrot.position.y = 0;
 		this.parrot.rotation.z = MathLib.toRadians(0);
-		this.wing1.position.z -= 0.2;
-		this.wing2.position.z += 0.2;
-		//this.wing1.scale.y /= 3;
-		//this.wing2.scale.y /= 3;
+		//removing wings
+		this.parrot.remove(this.parrot.children[13]);
+		this.parrot.remove(this.parrot.children[14]);
 		this.renderer.render(this.scene, this.camera);
 	}
 	
