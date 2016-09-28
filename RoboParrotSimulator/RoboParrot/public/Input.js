@@ -7,7 +7,7 @@ var Parser = React.createClass({
   getInitialState: function() {
     return {
 		code: `
-Parrot1->moveWings(0);
+Parrot1->flyForward(10);
 /*
 Parrot1->doStepForward();
 Parrot1->doStepForward();

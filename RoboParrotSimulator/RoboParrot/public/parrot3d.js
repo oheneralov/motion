@@ -164,8 +164,8 @@ class Parrot3d{
 			group.add(Eye1);
 			group.add(Eye2);
 			group.add(Beak);
-			group.add(wing1);
-			group.add(wing2);
+			//group.add(wing1);
+			//group.add(wing2);
 			
 			this.Beak = Beak;
 			this.wing1 = wing1;
@@ -222,6 +222,7 @@ scene.add(tubeMesh);
 			this.parrot.position.y -= 0.1;
 		
 			camera.position.z = 5;
+			camera.position.y += MathLib.toRadians(100);
 
 			var render = function () {
 				requestAnimationFrame( render );
@@ -471,41 +472,49 @@ scene.add(tubeMesh);
 		this.renderer.render(this.scene, this.camera);	
 	}
 	
+	addWings(){   
+           var WingGeometry = new THREE.PlaneGeometry( 3, 1, 1, 1 );
+           var WingMaterial = new THREE.MeshBasicMaterial( { color: 0xE14915 } );
+           var wing1 = new THREE.Mesh( WingGeometry, WingMaterial );
+		   wing1.rotation.y = MathLib.toRadians(-90);
+		   wing1.position.y += 2;
+		   wing1.position.z += 1.7;
+		   this.parrot.add(wing1);
+		   
+		   var wing2 = new THREE.Mesh( WingGeometry, WingMaterial );
+		   wing2.rotation.y = MathLib.toRadians(-90);
+		   wing2.position.y += 2;
+		   wing2.position.z -= 1.7;
+		   this.parrot.add(wing2);
+		   this.wing1 = wing1;
+		   this.wing2 = wing2;
+		   this.renderer.render(this.scene, this.camera);	
+		   
+	}
+	
 	moveWings(num){
 		console.log("moving wings");
-		console.log("flying number: " + num);
 		//beginning of moving wings
-		if (num == 0){	
+		if (num == 0){
 			this.parrot.rotation.z = MathLib.toRadians(-90);
 		    this.parrot.position.y = 2;
 			console.log("lifting wings");
-		    this.wing1.rotation.x = MathLib.toRadians(90);
-		    this.wing2.rotation.x = MathLib.toRadians(90);
-		    this.wing1.rotation.y = MathLib.toRadians(90);
-		    this.wing2.rotation.y = MathLib.toRadians(90);
-			//distance of wings from body
-			this.wing1.position.z += 1.2;
-		    this.wing2.position.z -= 1.2;
-			
-            //distance form head			
-			this.wing1.position.y -= 1;
-		    this.wing2.position.y -= 1;
-			this.wing1.scale.y *= 5;
-		    this.wing2.scale.y *= 5;
-			this.wing1.scale.x *= 2;
-		    this.wing2.scale.x *= 2;
-			
-			this.wing1.rotation.z = MathLib.toRadians(60);
-		    this.wing2.rotation.z = MathLib.toRadians(-60);
+			this.addWings();
 		}
 		else{
 		  if (num % 2 == 0){
-			//this.wing1.rotation.z = MathLib.toRadians(40);
-		    //this.wing2.rotation.z = MathLib.toRadians(-40);
+			this.wing1.rotation.y = MathLib.toRadians(-90);
+			this.wing1.position.x -= 0.4;
+			
+			this.wing2.rotation.y = MathLib.toRadians(-90);
+			this.wing2.position.x -= 0.4;
 		  }
 		  else{
-		    //this.wing1.rotation.x = MathLib.toRadians(0);
-		    //this.wing2.rotation.x = MathLib.toRadians(0);
+            this.wing1.rotation.y = MathLib.toRadians(-70);
+			this.wing1.position.x += 0.4;
+			
+			this.wing2.rotation.y = MathLib.toRadians(-110);
+			this.wing2.position.x += 0.4;
 		  }
 		}
 
@@ -517,8 +526,8 @@ scene.add(tubeMesh);
 		this.parrot.rotation.z = MathLib.toRadians(0);
 		this.wing1.position.z -= 0.2;
 		this.wing2.position.z += 0.2;
-		this.wing1.scale.y /= 3;
-		this.wing2.scale.y /= 3;
+		//this.wing1.scale.y /= 3;
+		//this.wing2.scale.y /= 3;
 		this.renderer.render(this.scene, this.camera);
 	}
 	
