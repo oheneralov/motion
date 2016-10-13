@@ -5,6 +5,7 @@ class Parrot3d{
 	constructor(place = "body", height = 1000, width = 1800) {
 		console.log("creating Parrot in 3d");
 		var scene = new THREE.Scene();
+		scene.background = new THREE.Color( 0xB1FAEF );
 			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 
 			var renderer = new THREE.WebGLRenderer();
@@ -26,7 +27,7 @@ class Parrot3d{
 		   scene.add(floor);
 		   
 		    var ClawGeometry = new THREE.CylinderGeometry( 0.02, 0.02, 0.2, 32 );
-			var ClawMaterisl = new THREE.MeshBasicMaterial( { color: 0xFF0000 } );
+			var ClawMaterisl = new THREE.MeshBasicMaterial( { color: 0x49484F } );
 			var leftClaw1 = new THREE.Mesh( ClawGeometry, ClawMaterisl );
 			var leftClaw2 = new THREE.Mesh( ClawGeometry, ClawMaterisl );
 			var leftClaw3 = new THREE.Mesh( ClawGeometry, ClawMaterisl );
@@ -37,7 +38,7 @@ class Parrot3d{
 			
 			
 			var LegGeometry = new THREE.CylinderGeometry( 0.02, 0.02, 1, 32 );
-			var materialLeg = new THREE.MeshBasicMaterial( { color: 0xFF0000 } );
+			var materialLeg = new THREE.MeshBasicMaterial( { color: 0x49484F } );
 			var LeftLeg1 = new THREE.Mesh( LegGeometry, materialLeg );
 			var RightLeg1 = new THREE.Mesh( LegGeometry, materialLeg );
 			var LeftLeg2 = new THREE.Mesh( LegGeometry, materialLeg );
@@ -96,14 +97,14 @@ class Parrot3d{
 			rightClaw2.rotation.y += MathLib.toRadians(5);
 			
 			var geometrybody = new THREE.SphereGeometry( 0.3, 32, 32 );//sphere size
-			var materialbody = new THREE.MeshBasicMaterial( { color: 0xffffff } ); 
+			var materialbody = new THREE.MeshBasicMaterial( { color: 0x49484F} ); 
 			var body = new THREE.Mesh( geometrybody, materialbody );
 			body.scale.y *= 2;
 			body.position.y  = RightLeg2.position.y + 0.95;
 			body.position.x -= 0.17;
 			
 			var WingGeometry = new THREE.SphereGeometry( 0.3, 32, 32 );//sphere size
-			var WingMaterial = new THREE.MeshBasicMaterial( { color: 0xB1CCA7 } ); 
+			var WingMaterial = new THREE.MeshBasicMaterial( { color: 0x49484F } ); 
 			var wing1 = new THREE.Mesh( WingGeometry, WingMaterial );
 			wing1.position.y = body.position.y + 0.15; 
 			wing1.position.x = body.position.x + 0.1;
@@ -122,7 +123,7 @@ class Parrot3d{
 			wing2.position.z -= 0.4;
 			
 			var FaceGeometry = new THREE.SphereGeometry( 0.3, 32, 32 );//sphere size
-			var FaceMaterial = new THREE.MeshBasicMaterial( { color: 0x4d79ff} ); //red color
+			var FaceMaterial = new THREE.MeshBasicMaterial( { color: 0x201E2E} ); //red color
 			var face = new THREE.Mesh( FaceGeometry, FaceMaterial );
 			face.position.y = body.position.y + 0.9;
 			
@@ -140,7 +141,7 @@ class Parrot3d{
 			
 			
 			var BeakGeometry = new THREE.CylinderGeometry( 0.07, 0.02, 0.5, 32 );//beak sizes
-			var BeakMaterial = new THREE.MeshBasicMaterial( { color: 0xFF0000 } ); //red color
+			var BeakMaterial = new THREE.MeshBasicMaterial( { color: 0xBDBBC8 } ); //red color
 			var Beak = new THREE.Mesh( BeakGeometry, BeakMaterial );
 			Beak.position.x = Eye1.position.x + 0.06;
 			Beak.position.y = Eye1.position.y;
@@ -164,6 +165,8 @@ class Parrot3d{
 			group.add(Eye1);
 			group.add(Eye2);
 			group.add(Beak);
+			//group.add(wing1);
+			//group.add(wing2);
 			
 			this.Beak = Beak;
 			
@@ -196,6 +199,7 @@ class Parrot3d{
 			this.isflyForwardFinished = false;
 			this.rotationLeft = 0;
 			this.floor = floor;
+			this.flyingid = 0;
 			
 			/*
 			
@@ -309,20 +313,24 @@ scene.add(tubeMesh);
 		  var ObstacleYMax = obstacle.position.y + 1.5/2;
 		  var ObstacleZMin = obstacle.position.z - 3/4;
 		  var ObstacleZMax = obstacle.position.z + 3/4;
-		  
+		 
+/*		 
 		  console.log("ObstacleXMin: " + ObstacleXMin);
 		  console.log("ObstacleXMax: " + ObstacleXMax);
 		  console.log("ObstacleYMin: " + ObstacleYMin);
 		  console.log("ObstacleYMax: " + ObstacleYMax);
 		  console.log("ObstacleZMin: " + ObstacleZMin);
 		  console.log("ObstacleZMax: " + ObstacleZMax);
+		  */
 		  var ParrotX = this.parrot.position.x + 0.2;
 		  var ParrotY = this.parrot.position.y;
 		  var ParrotZ = this.parrot.position.z;
 		  
+		  /*
 		  console.log("x: " + ParrotX);
 		  console.log("y: " + ParrotY);
 		  console.log("z: " + ParrotZ);
+		  */
 		
 		
 		  if (ParrotX >= ObstacleXMin && ParrotX <= ObstacleXMax
@@ -345,6 +353,7 @@ scene.add(tubeMesh);
 	}
 	
 	jump(count = 1) {
+		console.log("count = " + this.jumpCount);
 		if (this.ok === false)
 		{
 			return;
@@ -359,7 +368,7 @@ scene.add(tubeMesh);
 		
 		if (this.jumpCount > count){
 			this.isJumpingFinished = true;
-			//console.log("stop jumping");
+			console.log("stop jumping");
 			return;
 		}
 		else{
@@ -380,13 +389,13 @@ scene.add(tubeMesh);
         this.parrot.position.x += x;
 		this.parrot.position.z += z;
 
-        if ((this.parrot.position.y  - this.ParrotInitialY) == 0){
+        if ((this.jumpCount % 2) == 0){
 	      this.parrot.position.y += 0.1;
         }
         else {
 	      this.parrot.position.y -= 0.1;
-		  this.jumpCount++;
         }
+		this.jumpCount++;
 		
         this.renderer.render(this.scene, this.camera);	
 	}
@@ -477,7 +486,7 @@ scene.add(tubeMesh);
            this.parrot.remove(this.parrot.children[13]);
 		   this.parrot.remove(this.parrot.children[14]);		
            var WingGeometry = new THREE.PlaneGeometry( 3, 1, 1, 1 );
-           var WingMaterial = new THREE.MeshBasicMaterial( { color: 0xE14915 } );
+           var WingMaterial = new THREE.MeshBasicMaterial( { color: 0x49484F } );
            var wing1 = new THREE.Mesh( WingGeometry, WingMaterial );
 		   wing1.rotation.y = MathLib.toRadians(-90);
 		   wing1.position.y += 2;
@@ -485,7 +494,7 @@ scene.add(tubeMesh);
 		   this.parrot.add(wing1);
 		   
 		   var WingGeometry2 = new THREE.PlaneGeometry( 3, 1, 1, 1 );
-		   var WingMaterial2 = new THREE.MeshBasicMaterial( { color: 0xE14915 } );
+		   var WingMaterial2 = new THREE.MeshBasicMaterial( { color: 0x49484F } );
 		   var wing2 = new THREE.Mesh( WingGeometry2, WingMaterial2 );
 		   wing2.rotation.y = MathLib.toRadians(-90);
 		   wing2.position.y += 2;
@@ -587,6 +596,63 @@ scene.add(tubeMesh);
 		this.parrot.position.z += z;		
 		
         this.renderer.render(this.scene, this.camera);	
+	}
+	
+	
+flyForward2(count = 10){
+	var self = this;
+	self.flyingid = setInterval(function(){
+		if (self.ok === false)
+		{
+			return;
+		}
+		
+		if (self.collisiton()){
+			self.fall();
+			self.ok = false;
+			alert("There was a collision! Damage!");
+			return;
+		}
+		
+		//parrot is on earch and must take off
+		if (self.flyForwardCount == 0){
+			self.takeoff();
+		}
+		
+		//moving wings
+		self.moveWings(self.flyForwardCount);
+		
+		if (self.flyForwardCount > count){
+			self.isflyForwardFinished = true;
+			self.land();	
+			clearInterval(self.flyingid);
+			return;
+		}
+		
+		if (self.flyForwardCount > 0 && self.flyForwardCount < count){
+			self.isflyForwardFinished = false;
+		}
+		
+		self.flyForwardCount++;
+		
+		//fly in some direction
+		var distance = 0.1;
+		var corner = self.rotationLeft;//degrees
+		
+		var result = MathLib.getGeneralCoordinatesByHypotenuse(self.rotationByX, distance);
+		var x = result.x;
+		var z = result.z;
+		
+		var counter = 0;
+
+        self.parrot.position.x += x;
+		self.parrot.position.z += z;		
+		
+        self.renderer.render(self.scene, self.camera);	
+		
+		
+	}, 1000);
+	
 	}
 	
 	flyLeft(){

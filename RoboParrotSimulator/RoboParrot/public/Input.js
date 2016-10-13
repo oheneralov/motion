@@ -112,14 +112,17 @@ Parrot1->turnRight();
 	 startSimulation: function(event) {
 	 console.log("Starting simulation");
 	 var startDate = new Date();
-	 this.state.Parrot1.lifeid = setInterval(this.repeatParrotLife, 1000, startDate);
+	 this.repeatParrotLife(startDate);
+	 //this.state.Parrot1.lifeid = setInterval(this.repeatParrotLife, 1000, startDate);
     },
 	
 	stopSimulation: function(event) {
+		/*
 		if (this.state.Parrot1.lifeid != 0) {
              clearInterval(this.state.Parrot1.lifeid);
 		     console.log("Simulation is stopped!");
 		}
+		*/
     },
 	
 	rotateLeft: function(){
