@@ -547,7 +547,7 @@ scene.add(tubeMesh);
 		this.parrot.remove(this.parrot.children[14]);
 		this.renderer.render(this.scene, this.camera);
 	}
-	
+	/*
 	flyForward(count = 10){
 	if (this.ok === false)
 		{
@@ -598,8 +598,10 @@ scene.add(tubeMesh);
         this.renderer.render(this.scene, this.camera);	
 	}
 	
+	*/
 	
-flyForward2(count = 10){
+	
+flyForward(count = 10){
 	var self = this;
 	self.flyingid = setInterval(function(){
 		if (self.ok === false)
