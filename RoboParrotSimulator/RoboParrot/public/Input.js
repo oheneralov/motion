@@ -50,23 +50,12 @@ Parrot1->turnRight();
   },
   
   componentDidMount: function(){
-	  
-	  
-	    (function f(f){
-			console.log("type");
-			console.log(typeof f());
-          return typeof f();
-        })(function(){ return 1; });
-		
-		
 	  //global variable
 	  var ParrotType = this.props.type;
 	  if (this.props.type == "parrot2d"){
-		  //Parrot1 = new Parrot("#" + ParrotType);
 		  this.setState({Parrot1 : new Parrot("#" + ParrotType)});
 	  }
 	  else {
-		  //Parrot1 = new Parrot3d("#" + this.props.type);
 		  this.setState({Parrot1 : new Parrot3d(ParrotType)})
 	  }
 	  
@@ -76,7 +65,6 @@ Parrot1->turnRight();
 	  var interptetedCode = this.convertC2JS(this.state.code);
 	  var Parrot1 = this.state.Parrot1;
 	  if (interptetedCode){
-		  //console.log(interptetedCode);
 	      eval(interptetedCode);
 	      this.state.Parrot1.lifeduration++;
 	  }
@@ -117,12 +105,6 @@ Parrot1->turnRight();
     },
 	
 	stopSimulation: function(event) {
-		/*
-		if (this.state.Parrot1.lifeid != 0) {
-             clearInterval(this.state.Parrot1.lifeid);
-		     console.log("Simulation is stopped!");
-		}
-		*/
     },
 	
 	rotateLeft: function(){

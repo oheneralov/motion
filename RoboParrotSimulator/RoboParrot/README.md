@@ -8,10 +8,10 @@ __COMPONENT DESCRIPTION GOES HERE__
 Live demo: [oheneralov.github.io/motion](http://oheneralov.github.io/motion/)
 
 To build the examples locally, run:
-
-```
 node server
-```
+
+To run jshint (https://www.sitepoint.com/introduction-gulp-js/) :
+gulp jshint
 
 Then open [`localhost:8000`](http://localhost:8000) in a browser.
 

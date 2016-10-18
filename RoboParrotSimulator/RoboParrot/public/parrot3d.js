@@ -257,15 +257,6 @@ scene.add(tubeMesh);
 					
 	}
 	
-	animate() {
-		var renderer = this.renderer;
-		var scene = this.scene;
-		var camera = this.camera;
-		var render = function () {
-		requestAnimationFrame( render );
-		renderer.render(scene, camera);
-		}
-	}
 	
 	zoomout(){
 			this.camera.fov *= 1.1;
@@ -313,30 +304,11 @@ scene.add(tubeMesh);
 		  var ObstacleYMax = obstacle.position.y + 1.5/2;
 		  var ObstacleZMin = obstacle.position.z - 3/4;
 		  var ObstacleZMax = obstacle.position.z + 3/4;
-		 
-/*		 
-		  console.log("ObstacleXMin: " + ObstacleXMin);
-		  console.log("ObstacleXMax: " + ObstacleXMax);
-		  console.log("ObstacleYMin: " + ObstacleYMin);
-		  console.log("ObstacleYMax: " + ObstacleYMax);
-		  console.log("ObstacleZMin: " + ObstacleZMin);
-		  console.log("ObstacleZMax: " + ObstacleZMax);
-		  */
 		  var ParrotX = this.parrot.position.x + 0.2;
 		  var ParrotY = this.parrot.position.y;
 		  var ParrotZ = this.parrot.position.z;
-		  
-		  /*
-		  console.log("x: " + ParrotX);
-		  console.log("y: " + ParrotY);
-		  console.log("z: " + ParrotZ);
-		  */
-		
-		
-		  if (ParrotX >= ObstacleXMin && ParrotX <= ObstacleXMax
-		  && ParrotY >= ObstacleYMin && ParrotY <= ObstacleYMax
-		  && ParrotZ >= ObstacleZMin && ParrotZ <= ObstacleZMax
-		  )
+		  	
+		  if ((ParrotX >= ObstacleXMin) && (ParrotX <= ObstacleXMax) && (ParrotY >= ObstacleYMin) && (ParrotY <= ObstacleYMax) && (ParrotZ >= ObstacleZMin) && (ParrotZ <= ObstacleZMax))
 		  {
 			  return true;
 		  }
@@ -389,7 +361,7 @@ scene.add(tubeMesh);
         this.parrot.position.x += x;
 		this.parrot.position.z += z;
 
-        if ((this.jumpCount % 2) == 0){
+        if ((this.jumpCount % 2) === 0){
 	      this.parrot.position.y += 0.1;
         }
         else {
@@ -511,7 +483,7 @@ scene.add(tubeMesh);
 		console.log("moving wings");
 		
 		//beginning of moving wings
-		if (num == 0){
+		if (num === 0){
 			this.parrot.rotation.z = MathLib.toRadians(-90);
 		    this.parrot.position.y = 2;
 			console.log("lifting wings");
@@ -520,7 +492,7 @@ scene.add(tubeMesh);
 			//console.log(this.parrot.children[13]);
 		}
 		else{
-		  if (num % 2 == 0){
+		  if (num % 2 === 0){
 			this.wing1.rotation.y = MathLib.toRadians(-90);
 			this.wing1.position.x -= 0.4;
 			
@@ -617,7 +589,7 @@ flyForward(count = 10){
 		}
 		
 		//parrot is on earch and must take off
-		if (self.flyForwardCount == 0){
+		if (self.flyForwardCount === 0){
 			self.takeoff();
 		}
 		

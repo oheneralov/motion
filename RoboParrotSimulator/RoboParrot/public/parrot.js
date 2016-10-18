@@ -154,7 +154,7 @@ class Parrot {
 		this.leftLeg.transition()
 		.duration(300)
 		.delay(function(d, i){
-        return i * 300
+        return i * 300;
         })
 		.attr("d", this.leftLegFunction(leftLegDataafterStep));
 		svgContainer.attr("transform", "translate(" + this.ParrotCoordinates.x  + ", " + this.ParrotCoordinates.y + ")");
