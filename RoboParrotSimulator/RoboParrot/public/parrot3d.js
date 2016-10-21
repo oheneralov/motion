@@ -200,6 +200,7 @@ class Parrot3d{
 			this.rotationLeft = 0;
 			this.floor = floor;
 			this.flyingid = 0;
+			this.isPreviousActionfinished = false;
 			
 			/*
 			
@@ -255,6 +256,10 @@ scene.add(tubeMesh);
 									
 
 					
+	}
+	
+	restoreAllStates(){
+		this.flyForwardCount = 0;
 	}
 	
 	
@@ -374,42 +379,23 @@ scene.add(tubeMesh);
 	
 	
 	
-	//rotate body and change direction
+	//turn left 
 	turnLeft(degree = 10){
+		
 		if (this.ok === false)
 		{
 			return;
 		}
-		//refactor
+		
 		this.rotationLeft = degree;
-		if (this.isJumpingFinished){
-		    console.log("turning right");
-		    this.rotationByX -= degree;
-		    this.parrot.rotation.y += MathLib.toRadians(degree);
-		    this.renderer.render(this.scene, this.camera);
-			//restore jumping;
-			this.jumpCount = 0;
-			this.isJumpingFinished = false;
-			if (this.rotationByX <= -360){
-			  	this.rotationByX = 0;
-		    }
-	    }
-		
-		if (this.isflyForwardFinished){
-		    console.log("turning right");
-		    this.rotationByX -= degree;
-		    this.parrot.rotation.y += MathLib.toRadians(degree);
-		    this.renderer.render(this.scene, this.camera);
-			//restore flying;
-			this.flyForwardCount = 0;
-			this.isflyForwardFinished = false;
-			if (this.rotationByX <= -360){
-			  	this.rotationByX = 0;
-		    }
-	    }
-		
+		this.rotationByX -= degree;
+		this.parrot.rotation.y += MathLib.toRadians(degree);
+		this.renderer.render(this.scene, this.camera);
 
-		
+		if (this.rotationByX <= -360){
+		  	this.rotationByX = 0;
+		}	    
+		console.log("turned left");
 	}
 	
 	//turn by degrees
@@ -418,37 +404,23 @@ scene.add(tubeMesh);
 		{
 			return;
 		}
+			
 		//refactor
 		this.rotationLeft = degree;
-		if (this.isJumpingFinished){
-		    console.log("turning left");
-		    this.rotationByX += degree;
-		    this.parrot.rotation.y -= MathLib.toRadians(degree);
-		    this.renderer.render(this.scene, this.camera);
-			//restore jumping;
-			this.jumpCount = 0;
-			this.isJumpingFinished = false;
-			if (this.rotationByX >= 360){
-			  	this.rotationByX = 0;
-		    }
-	    }
-		
-		if (this.isflyForwardFinished){
-		    console.log("turning right");
-		    this.rotationByX -= degree;
-		    this.parrot.rotation.y += MathLib.toRadians(degree);
-		    this.renderer.render(this.scene, this.camera);
-			//restore flying;
-			this.flyForwardCount = 0;
-			this.isflyForwardFinished = false;
-			if (this.rotationByX <= -360){
-			  	this.rotationByX = 0;
-		    }
-	    }
+		console.log("turning right");
+		this.rotationByX -= degree;
+		this.parrot.rotation.y += MathLib.toRadians(degree);
+		this.renderer.render(this.scene, this.camera);
+		//restore flying;
+		if (this.rotationByX <= -360){
+		    this.rotationByX = 0;
+		}
+		console.log("turned right");	
 	}
 	
 	takeoff(){
 		console.log("taking off");
+		this.flyForwardCount = 0;
 	    this.parrot.rotation.z = MathLib.toRadians(-90);
 		this.parrot.position.y = 2;
 		this.renderer.render(this.scene, this.camera);	
@@ -512,6 +484,7 @@ scene.add(tubeMesh);
 	
     //land on the earth
 	land(){
+		console.log("landing");
 		this.parrot.position.y = 0;
 		this.parrot.rotation.z = MathLib.toRadians(0);
 		//removing wings
@@ -519,63 +492,13 @@ scene.add(tubeMesh);
 		this.parrot.remove(this.parrot.children[14]);
 		this.renderer.render(this.scene, this.camera);
 	}
-	/*
-	flyForward(count = 10){
-	if (this.ok === false)
-		{
-			return;
-		}
-		
-		if (this.collisiton()){
-			this.fall();
-			this.ok = false;
-			alert("There was a collision! Damage!");
-			return;
-		}
-		
-		//parrot is on earch and must take off
-		if (this.flyForwardCount == 0){
-			this.takeoff();
-		}
-		
-		//moving wings
-		this.moveWings(this.flyForwardCount);
-		
-		if (this.flyForwardCount > count){
-			this.isflyForwardFinished = true;
-			this.land();	
-			//console.log("stop jumping");
-			return;
-		}
-		
-		if (this.flyForwardCount > 0 && this.flyForwardCount < count){
-			this.isflyForwardFinished = false;
-		}
-		
-		this.flyForwardCount++;
-		
-		//fly in some direction
-		var distance = 0.1;
-		var corner = this.rotationLeft;//degrees
-		
-		var result = MathLib.getGeneralCoordinatesByHypotenuse(this.rotationByX, distance);
-		var x = result.x;
-		var z = result.z;
-		
-		var counter = 0;
 
-        this.parrot.position.x += x;
-		this.parrot.position.z += z;		
-		
-        this.renderer.render(this.scene, this.camera);	
-	}
-	
-	*/
 	
 	
 flyForward(count = 10){
+	console.log("flying");
+	this.isPreviousActionfinished = false;
 	var self = this;
-	self.flyingid = setInterval(function(){
 		if (self.ok === false)
 		{
 			return;
@@ -599,7 +522,7 @@ flyForward(count = 10){
 		if (self.flyForwardCount > count){
 			self.isflyForwardFinished = true;
 			self.land();	
-			clearInterval(self.flyingid);
+			self.isPreviousActionfinished = true;
 			return;
 		}
 		
@@ -624,8 +547,6 @@ flyForward(count = 10){
 		
         self.renderer.render(self.scene, self.camera);	
 		
-		
-	}, 1000);
 	
 	}
 	

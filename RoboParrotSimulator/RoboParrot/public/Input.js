@@ -8,37 +8,6 @@ var Parser = React.createClass({
     return {
 		code: `
 Parrot1->flyForward(10);
-Parrot1->turnLeft();
-/*
-Parrot1->doStepForward();
-Parrot1->doStepForward();
-if (Parrot1->getdistance2obstacle() < 10){
-	Parrot1->turnLeft();
-}
-Parrot1->doStepForward();
-if (Parrot1->getdistance2obstacle() < 10){
-	Parrot1->turnLeft();
-}
-Parrot1->doStepForward();
-Parrot1->doStepForward();
-Parrot1->doStepForward();
-Parrot1->turnRight();
-Parrot1->turnRight();
-Parrot1->takeoff();
-Parrot1->flyForward();
-Parrot1->flyForward();
-Parrot1->flyForward();
-Parrot1->flyLeft();
-Parrot1->flyLeft();
-Parrot1->flyLeft();
-Parrot1->flyForward();
-Parrot1->flyForward();
-Parrot1->flyRight();
-Parrot1->flyRight();
-Parrot1->flyForward();
-Parrot1->flyForward();
-Parrot1->turnRight();
-*/
 `, 
 	    elapsedTime: "00:00:00.000",
 		Parrot1 : null
@@ -100,11 +69,13 @@ Parrot1->turnRight();
 	 startSimulation: function(event) {
 	 console.log("Starting simulation");
 	 var startDate = new Date();
+	 this.state.Parrot1.restoreAllStates();
 	 this.repeatParrotLife(startDate);
-	 //this.state.Parrot1.lifeid = setInterval(this.repeatParrotLife, 1000, startDate);
+	 this.state.Parrot1.lifeid = setInterval(this.repeatParrotLife, 1000, startDate);
     },
 	
 	stopSimulation: function(event) {
+		clearInterval(this.state.Parrot1.lifeid);
     },
 	
 	rotateLeft: function(){
@@ -145,10 +116,11 @@ Parrot1->turnRight();
 		      <div id = {this.props.type}>
 			  </div>
 		  </p>
-            <textarea rows = '10' cols = '100' className='form-control' onChange={this.handleChange}>
-              {this.state.code}
-            </textarea>
-		  <span>
+		  <div>
+		  Code:
+		  </div>
+			<input type = "text" className='form-control' onChange={this.handleChange} value = {this.state.code} />
+		  <div>
 		      <button type = "button" className = "btn btn-primary" onClick={this.startSimulation}>Start simulation</button>
 		      <input type = "button" className = "btn btn-success" onClick={this.stopSimulation} value = "Stop simulation"/>
 			  <input type = "button" className = "btn btn-info" onClick={this.rotateLeft}  value = "parrot left"/>
@@ -158,9 +130,16 @@ Parrot1->turnRight();
 			  <input type = "button" className = "btn btn-primary"  value = "zoom in" onClick={this.zoomin}/>
 			  <input type = "button" className = "btn btn-success"  value = "zoom out" onClick={this.zoomout}/>
 			  <input type = "button" className = "btn"  value = "rotate floor" onClick={this.rotateFloor}/>
-			   
-		  </span>  
+		  </div>  
         </form>
+		<div>
+		Supported commands:
+		<ol>
+		    <li>Parrot1-&gt;flyForward(30);</li>
+			<li>Parrot1-&gt;turnLeft(30);</li>
+			<li>Parrot1-&gt;turnRight(30);</li>
+		</ol>
+		</div>
       </div>
     );
   }
