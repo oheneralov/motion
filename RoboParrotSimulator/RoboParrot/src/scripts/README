@@ -1,0 +1,4 @@
+You must have node.js installed.
+cd ../
+npm install express
+node server
