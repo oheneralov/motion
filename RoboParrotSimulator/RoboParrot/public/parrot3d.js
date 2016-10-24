@@ -15,9 +15,6 @@ class Parrot3d{
 			var axis = new THREE.AxisHelper(10);
 			scene.add(axis);
 			
-			//var grid = new THREE.GridHelper(50, 50);
-			//scene.add(grid);
-			
 			/* Floor  */    
            var FloorGeometry = new THREE.PlaneGeometry( 15, 7, 1, 1 );
            var FloorMaterial = new THREE.MeshBasicMaterial( { color: 0xA3B3E3 } );
@@ -44,57 +41,7 @@ class Parrot3d{
 			var LeftLeg2 = new THREE.Mesh( LegGeometry, materialLeg );
 			var RightLeg2 = new THREE.Mesh( LegGeometry, materialLeg );
 
-			
-			
-			LeftLeg1.rotation.z = -(Math.PI / 180)*40;
-			LeftLeg1.position.z -= 0.14; 
-			LeftLeg1.position.y += 0.4;
-			LeftLeg1.position.x = leftClaw1.position.x +0.2;
-			
-			LeftLeg2.rotation.z = (Math.PI / 180)*40;
-			LeftLeg2.position.z -= 0.14;
-			LeftLeg2.position.y += 1.15;
-			LeftLeg2.position.x = LeftLeg1.position.x;
-			
-			var LegsDistance = 0.2;
-			
-			RightLeg1.position.x = LeftLeg1.position.x;
-			RightLeg1.position.y = LeftLeg1.position.y;
-			RightLeg1.position.z = LeftLeg1.position.z + LegsDistance;
-			RightLeg1.rotation.z = LeftLeg1.rotation.z;
-			
-			RightLeg2.position.x = LeftLeg2.position.x;
-			RightLeg2.position.y = LeftLeg2.position.y;
-			RightLeg2.position.z = LeftLeg2.position.z + LegsDistance;
-			RightLeg2.rotation.z = LeftLeg2.rotation.z;
-			
-			var rotationDegree = (Math.PI / 180)*80;
-			leftClaw1.position.x = LeftLeg1.position.x - 0.03;
-			leftClaw1.rotation.z += MathLib.toRadians(90);
-			leftClaw1.position.z -= 0.04;
-			leftClaw1.rotation.y += MathLib.toRadians(15);
-			leftClaw1.scale.y *= 3;
-			
-			
-			leftClaw2.position.x = LeftLeg1.position.x - 0.03;
-			leftClaw2.rotation.z += MathLib.toRadians(90);
-			leftClaw2.position.z += 0.06;
-			leftClaw2.scale.y *= 3;
-			//leftClaw2.rotation.y += MathLib.toRadians(40);
-			
-			
-			rightClaw1.position.x = RightLeg1.position.x - 0.03;
-			rightClaw1.rotation.z += MathLib.toRadians(90);
-			rightClaw1.position.z = leftClaw1.position.z - 0.2;
-			rightClaw1.rotation.y += MathLib.toRadians(15);
-			rightClaw1.scale.y *= 3;
-			
-			
-			rightClaw2.position.x = RightLeg1.position.x - 0.03;
-			rightClaw2.rotation.z += MathLib.toRadians(90);
-			rightClaw2.position.z = leftClaw1.position.z - 0.13;
-			rightClaw2.scale.y *= 3;
-			rightClaw2.rotation.y += MathLib.toRadians(5);
+			this.setLegsPos(LeftLeg1, LeftLeg2, RightLeg1, RightLeg2, leftClaw1, leftClaw2, rightClaw1, rightClaw2);			
 			
 			var geometrybody = new THREE.SphereGeometry( 0.3, 32, 32 );//sphere size
 			var materialbody = new THREE.MeshBasicMaterial( { color: 0x49484F} ); 
@@ -138,8 +85,7 @@ class Parrot3d{
 		    Eye2.position.x = Eye1.position.x;
 			Eye2.position.y = Eye1.position.y;
 			Eye2.position.z = Eye1.position.z - 0.4;
-			
-			
+						
 			var BeakGeometry = new THREE.CylinderGeometry( 0.07, 0.02, 0.5, 32 );//beak sizes
 			var BeakMaterial = new THREE.MeshBasicMaterial( { color: 0xBDBBC8 } ); //red color
 			var Beak = new THREE.Mesh( BeakGeometry, BeakMaterial );
@@ -148,9 +94,8 @@ class Parrot3d{
 			Beak.rotation.x = MathLib.toRadians(90);
 			Beak.position.z -= face.position.z;
 			Beak.rotation.z += MathLib.toRadians(90);
-			//Beak.rotation.y += MathLib.toRadians(30);
-			
-				
+
+						
 			var group = new THREE.Group();
 			group.add(leftClaw1);
 			group.add(leftClaw2);
@@ -165,13 +110,9 @@ class Parrot3d{
 			group.add(Eye1);
 			group.add(Eye2);
 			group.add(Beak);
-			//group.add(wing1);
-			//group.add(wing2);
 			
 			this.Beak = Beak;
-			
-						
-			
+				
 			group.position.x = -3;
 			group.position.y += 0.1;
 			//group.rotation.x += (Math.PI / 180)*10 ;
@@ -201,26 +142,7 @@ class Parrot3d{
 			this.floor = floor;
 			this.flyingid = 0;
 			this.isPreviousActionfinished = false;
-			
-			/*
-			
-			var points = [];
-for (var i = 0; i < 10; i++) {
-    points[i] = new THREE.Vector3(
-    2.5 * Math.sin(i),
-    2.5 * Math.sin(i * 1.15 + 1.1),
-    2.5 * Math.sin(i * 1.7 + 1.5));
-}
-var extrudePath = new THREE.ClosedSplineCurve3(points);
-var material = new THREE.MeshLambertMaterial();
-material.color = new THREE.Color("red");
-var geometry = new THREE.TubeGeometry(extrudePath, 3, 0.6, 2, true, false);
-var tubeMesh = new THREE.Mesh(geometry, BeakMaterial);
-scene.add(tubeMesh);
-*/
-			
-		  	   
-		   
+					   
 		    var texture = new THREE.TextureLoader().load( 'images/crate.gif' );
 
 			var BoxGeometry = new THREE.BoxBufferGeometry( 1/2, 1.5, 3/2 );
@@ -243,9 +165,6 @@ scene.add(tubeMesh);
 			camera.position.z = 5;
 			camera.position.y += MathLib.toRadians(100);
 			
-			
-			
-
 			var render = function () {
 				requestAnimationFrame( render );
 
@@ -258,8 +177,59 @@ scene.add(tubeMesh);
 					
 	}
 	
+	setLegsPos(LeftLeg1, LeftLeg2, RightLeg1, RightLeg2, leftClaw1, leftClaw2, rightClaw1, rightClaw2){
+		LeftLeg1.rotation.z = -(Math.PI / 180)*40;
+			LeftLeg1.position.z -= 0.14; 
+			LeftLeg1.position.y += 0.4;
+			LeftLeg1.position.x = leftClaw1.position.x +0.2;
+			
+			LeftLeg2.rotation.z = (Math.PI / 180)*40;
+			LeftLeg2.position.z -= 0.14;
+			LeftLeg2.position.y += 1.15;
+			LeftLeg2.position.x = LeftLeg1.position.x;
+			
+			var LegsDistance = 0.2;
+			
+			RightLeg1.position.x = LeftLeg1.position.x;
+			RightLeg1.position.y = LeftLeg1.position.y;
+			RightLeg1.position.z = LeftLeg1.position.z + LegsDistance;
+			RightLeg1.rotation.z = LeftLeg1.rotation.z;
+			
+			RightLeg2.position.x = LeftLeg2.position.x;
+			RightLeg2.position.y = LeftLeg2.position.y;
+			RightLeg2.position.z = LeftLeg2.position.z + LegsDistance;
+			RightLeg2.rotation.z = LeftLeg2.rotation.z;
+			
+			var rotationDegree = (Math.PI / 180)*80;
+			leftClaw1.position.x = LeftLeg1.position.x - 0.03;
+			leftClaw1.rotation.z += MathLib.toRadians(90);
+			leftClaw1.position.z -= 0.04;
+			leftClaw1.rotation.y += MathLib.toRadians(15);
+			leftClaw1.scale.y *= 3;
+			
+			
+			leftClaw2.position.x = LeftLeg1.position.x - 0.03;
+			leftClaw2.rotation.z += MathLib.toRadians(90);
+			leftClaw2.position.z += 0.06;
+			leftClaw2.scale.y *= 3;
+			
+			rightClaw1.position.x = RightLeg1.position.x - 0.03;
+			rightClaw1.rotation.z += MathLib.toRadians(90);
+			rightClaw1.position.z = leftClaw1.position.z - 0.2;
+			rightClaw1.rotation.y += MathLib.toRadians(15);
+			rightClaw1.scale.y *= 3;
+			
+			
+			rightClaw2.position.x = RightLeg1.position.x - 0.03;
+			rightClaw2.rotation.z += MathLib.toRadians(90);
+			rightClaw2.position.z = leftClaw1.position.z - 0.13;
+			rightClaw2.scale.y *= 3;
+			rightClaw2.rotation.y += MathLib.toRadians(5);
+	}
+	
 	restoreAllStates(){
 		this.flyForwardCount = 0;
+		this.jumpCount = 0;
 	}
 	
 	
@@ -330,7 +300,6 @@ scene.add(tubeMesh);
 	}
 	
 	jump(count = 1) {
-		console.log("count = " + this.jumpCount);
 		if (this.ok === false)
 		{
 			return;

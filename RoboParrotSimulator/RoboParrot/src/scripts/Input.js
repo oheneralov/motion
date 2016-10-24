@@ -135,9 +135,10 @@ Parrot1->flyForward(10);
 		<div>
 		Supported commands:
 		<ol>
-		    <li>Parrot1-&gt;flyForward(30);</li>
-			<li>Parrot1-&gt;turnLeft(30);</li>
-			<li>Parrot1-&gt;turnRight(30);</li>
+		    <li>Parrot1-&gt;flyForward(10);</li>
+			<li>Parrot1-&gt;turnLeft(10);</li>
+			<li>Parrot1-&gt;turnRight(10);</li>
+			<li>Parrot1-&gt;jump(10);</li>
 		</ol>
 		</div>
       </div>
