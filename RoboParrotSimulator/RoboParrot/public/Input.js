@@ -71,11 +71,12 @@ Parrot1->flyForward(10);
 	 var startDate = new Date();
 	 this.state.Parrot1.restoreAllStates();
 	 this.repeatParrotLife(startDate);
-	 this.state.Parrot1.lifeid = setInterval(this.repeatParrotLife, 1000, startDate);
+	 this.state.Parrot1.lifeid = setInterval(this.repeatParrotLife, 300, startDate);
     },
 	
 	stopSimulation: function(event) {
 		clearInterval(this.state.Parrot1.lifeid);
+		$(".btn-success").attr("disabled", true);
     },
 	
 	rotateLeft: function(){
@@ -119,17 +120,10 @@ Parrot1->flyForward(10);
 		  <div>
 		  Code:
 		  </div>
-			<input type = "text" className='form-control' onChange={this.handleChange} value = {this.state.code} />
+			<input type = "text" className='code-input' onChange={this.handleChange} value = {this.state.code} />
 		  <div>
 		      <button type = "button" className = "btn btn-primary" onClick={this.startSimulation}>Start simulation</button>
 		      <input type = "button" className = "btn btn-success" onClick={this.stopSimulation} value = "Stop simulation"/>
-			  <input type = "button" className = "btn btn-info" onClick={this.rotateLeft}  value = "parrot left"/>
-			  <input type = "button" className = "btn btn-warning" onClick={this.rotateRight}  value = "parrot right"/>
-			  <input type = "button" className = "btn btn-danger" onClick={this.rotateCameraUp}  value = "camera up"/>
-			  <input type = "button" className = "btn btn-link" onClick={this.rotateCameraDown}  value = "camera down"/>
-			  <input type = "button" className = "btn btn-primary"  value = "zoom in" onClick={this.zoomin}/>
-			  <input type = "button" className = "btn btn-success"  value = "zoom out" onClick={this.zoomout}/>
-			  <input type = "button" className = "btn"  value = "rotate floor" onClick={this.rotateFloor}/>
 		  </div>  
         </form>
 		<div>
