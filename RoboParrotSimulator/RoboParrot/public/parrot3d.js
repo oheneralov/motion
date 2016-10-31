@@ -16,9 +16,11 @@ class Parrot3d {
         var axis = new THREE.AxisHelper(10);
         scene.add(axis);
 
+		
         /* Floor  */
+		var FloorTexture = new THREE.TextureLoader().load('images/grass.jpg');
         var FloorGeometry = new THREE.PlaneGeometry(15, 7, 1, 1);
-        var FloorMaterial = new THREE.MeshBasicMaterial({color: 0xA3B3E3});
+        var FloorMaterial = new THREE.MeshBasicMaterial({map: FloorTexture});
         var floor = new THREE.Mesh(FloorGeometry, FloorMaterial);
         //rotate floor by 90 degrees
         floor.rotation.x = MathLib.toRadians(-90);
@@ -116,13 +118,12 @@ class Parrot3d {
 
         group.position.x = -3;
         group.position.y += 0.1;
-        //group.rotation.x += (Math.PI / 180)*10 ;
         scene.add(group);
 
 
-        group.scale.y /= 3;
-        group.scale.x /= 3;
-        group.scale.z /= 3;
+        group.scale.y /= 5;
+        group.scale.x /= 5;
+        group.scale.z /= 5;
 
         this.parrot = group;
         this.ok = true;
@@ -144,9 +145,9 @@ class Parrot3d {
         this.flyingid = 0;
         this.isPreviousActionfinished = false;
 
-        var texture = new THREE.TextureLoader().load('images/crate.gif');
+        var texture = new THREE.TextureLoader().load('images/house.jpg');
 
-        var BoxGeometry = new THREE.BoxBufferGeometry(1 / 2, 1.5, 3 / 2);
+        var BoxGeometry = new THREE.BoxBufferGeometry(2, 3, 3);
         var BoxMaterial = new THREE.MeshBasicMaterial({map: texture});
 
         var cube1 = new THREE.Mesh(BoxGeometry, BoxMaterial);
