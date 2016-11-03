@@ -12,6 +12,7 @@ gulp.task('jshint', function() {
 });
 
 var changed = require('gulp-changed');
+var cleanDest = require('gulp-clean-dest');
 
 // include plug-ins
 var minifyHTML = require('gulp-minify-html');
@@ -23,7 +24,7 @@ gulp.task('htmlpage', function() {
 
   gulp.src(htmlSrc)
     .pipe(changed(htmlDst))
-    .pipe(minifyHTML())
+    //.pipe(minifyHTML())
     .pipe(gulp.dest(htmlDst));
 });
 
@@ -34,7 +35,7 @@ var uglify = require('gulp-uglify');
 
 // JS concat, strip debugging and minify
 gulp.task('scripts', function() {
-  gulp.src('./src/scripts/*.js')
+  gulp.src('./src/scripts/input.js')
     //.pipe(concat('script.js'))
     //.pipe(stripDebug())
     //.pipe(uglify())
@@ -59,10 +60,11 @@ gulp.task('styles', function() {
 var babel = require('gulp-babel');
  
 gulp.task('babel', function() {
-    gulp.src('./src/scripts/parrot3d.js')
+    gulp.src(['./src/scripts/parrot3d.js', './src/scripts/MathLib.js', './src/scripts/parrot.js'])
       .pipe(babel({
             presets: ['es2015']
         }))
+	  //.pipe(cleanDest('out'))
       .pipe(gulp.dest('./public/'));
 });
 
@@ -74,6 +76,7 @@ gulp.task('beautify', function() {
     .pipe(gulp.dest('./public/'))
 });
 
+
 // default gulp task
-gulp.task('default', ['jshint', 'htmlpage', 'scripts', 'beautify'], function() {
+gulp.task('default', ['jshint', 'htmlpage', 'scripts', 'babel'], function() {
 });
