@@ -6,7 +6,7 @@ class Parrot3d {
         console.log("creating Parrot in 3d");
         $(".btn-success").attr("disabled", true);
         var scene = new THREE.Scene();
-        scene.background = new THREE.Color(0xB1FAEF);
+        scene.background = new THREE.Color(0x5ad9f9);
         var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
         var renderer = new THREE.WebGLRenderer();
@@ -14,7 +14,7 @@ class Parrot3d {
         document.getElementById(place).appendChild(renderer.domElement);
 
         var axis = new THREE.AxisHelper(10);
-        scene.add(axis);
+        //scene.add(axis);
 
 		
         /* Floor  */
@@ -116,7 +116,7 @@ class Parrot3d {
 
         this.Beak = Beak;
 
-        group.position.x = -3;
+        group.position.x = -4;
         group.position.y += 0.1;
         scene.add(group);
 
@@ -367,7 +367,7 @@ class Parrot3d {
         console.log("taking off");
         this.flyForwardCount = 0;
         this.parrot.rotation.z = MathLib.toRadians(-90);
-        this.parrot.position.y = 2;
+        this.parrot.position.y = 6;
         this.renderer.render(this.scene, this.camera);
     }
 
@@ -402,7 +402,7 @@ class Parrot3d {
         //beginning of moving wings
         if (num === 0) {
             this.parrot.rotation.z = MathLib.toRadians(-90);
-            this.parrot.position.y = 2;
+            this.parrot.position.y = 3;
             console.log("lifting wings");
             this.addWings();
 

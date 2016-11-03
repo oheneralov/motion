@@ -407,7 +407,7 @@ var Parrot3d = function () {
                         console.log("taking off");
                         this.flyForwardCount = 0;
                         this.parrot.rotation.z = MathLib.toRadians(-90);
-                        this.parrot.position.y = 2;
+                        this.parrot.position.y = 6;
                         this.renderer.render(this.scene, this.camera);
                 }
         }, {
@@ -443,7 +443,7 @@ var Parrot3d = function () {
                         //beginning of moving wings
                         if (num === 0) {
                                 this.parrot.rotation.z = MathLib.toRadians(-90);
-                                this.parrot.position.y = 2;
+                                this.parrot.position.y = 3;
                                 console.log("lifting wings");
                                 this.addWings();
 
