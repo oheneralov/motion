@@ -2,14 +2,13 @@
 
 It is a flying robot simulator. It is tested under Chrome and Firefox.
 
-Then open [`localhost:8000`](http://localhost:8000) in a browser.
-
 ## Installation
 
-The easiest way to use RoboParrot is to copy it from github
+The easiest way to use RoboParrot is to copy it from github.
 
 To run the examples locally, run:
 node server
+Then open [`localhost:8000`](http://localhost:8000) in a browser.
 
 To rebuild the application run:
 gulp
