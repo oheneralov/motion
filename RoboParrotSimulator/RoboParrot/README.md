@@ -1,4 +1,4 @@
-# My Component
+# Flying robot simulator
 
 It is a flying robot simulator. It is tested under Chrome and Firefox.
 
