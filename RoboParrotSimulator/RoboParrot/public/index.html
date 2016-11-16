@@ -18,14 +18,22 @@
 	<link href="css/robotbirds.css" rel="stylesheet">
 	<style>
 	#tab-2d {
+	/*
 		background-image: url("images/table1.png");
 		background-repeat: no-repeat;
+		*/
 	}
+    #map {
+        height: 600px;
+        width: 100%;
+       }
+	   
 	</style>
 	<script>
   $( function() {
     $( "#tabs" ).tabs();
   } );
+  
   </script>
 </head>
 <body>
@@ -37,12 +45,13 @@
 	</div>
 <div id = "tabs">
   <ul>
-    <li><a href="#tab-3d">3d simulation</a></li>
     <li><a href="#tab-2d">2d simulation</a></li>
+	<li><a href="#tab-3d">3d simulation</a></li>
   </ul>
     <div id="tab-2d">
     <p>Two dimensional simulation. Used for testing simple actions</p>
-	<div id="2dsimulation"></div>
+	<div id="map"></div>
+	<div id="2dsimulation" style = "position : absolute; top: 100px;"></div>
   </div>
   <div id="tab-3d">
     <p>Three dimensional simulation. Used to test a robot in general</p>
@@ -53,5 +62,19 @@
 	<footer>
 		Copyright &copy; 2016 by Oleksandr Generalov. All Rights Reserved.
 	</footer>
+	
+	<script>
+    function initMap() {
+        var uluru = {lat: 49.8397, lng: 24.0297};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 20,
+          center: uluru,
+		  mapTypeId: 'satellite'
+        });
+      }
+  </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjBFyQeB2jN6BpbMr7plXIxTupe__yiog1&callback=initMap">
+    </script>
 </body>
 </html>

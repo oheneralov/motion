@@ -16,43 +16,56 @@ var Parrot = function () {
 		//https://www.dashingd3js.com/svg-basic-shapes-and-d3js
 		var svgContainer = d3.select(place).append("svg").attr("width", width).attr("height", height).append("g");
 		var head = svgContainer.append("circle").attr("cx", function () {
-			return 50;
+			return 65;
 		}).attr("cy", function () {
 			return 27;
 		}).attr("r", function () {
-			return 25;
-		}).attr("stroke-width", 2).attr("stroke", "black").attr("fill", "none");
+			return 5;
+		}).attr("stroke-width", 2).attr("stroke", "black").attr("fill", "yellow");
 		console.log(head.attr("cy"));
 
-		var eye = svgContainer.append("circle").attr("cx", function () {
-			return 53;
-		}).attr("cy", function () {
-			return 20;
-		}).attr("r", function () {
-			return 5;
-		}).attr("stroke-width", 2).attr("stroke", "black").attr("fill", "none");
+		/*
+  					 
+     var eye = svgContainer.append("circle")
+                       .attr("cx", function() { return 53; })
+  					 .attr("cy", function() { return 20; })
+  					 .attr("r", function() { return 5; })
+  					 .attr("stroke-width", 2)
+                          .attr("stroke", "black")
+  					 .attr("fill", "yellow");
+  					 */
 
 		var body = svgContainer.append("ellipse").attr("cx", function () {
-			return 50;
+			return 65;
 		}).attr("cy", function () {
-			return 100;
+			return 43;
 		}).attr("rx", function () {
-			return 25;
+			return 5;
 		}).attr("ry", function () {
-			return 50;
-		}).attr("stroke-width", 2).attr("stroke", "black").attr("fill", "none");
+			return 10;
+		}).attr("stroke-width", 2).attr("stroke", "black").attr("fill", "yellow");
 
-		var wing = svgContainer.append("ellipse").attr("cx", function () {
-			return 50;
+		var wing1 = svgContainer.append("ellipse").attr("cx", function () {
+			return 43;
 		}).attr("cy", function () {
-			return 90;
-		}).attr("rx", function () {
-			return 20;
-		}).attr("ry", function () {
 			return 40;
-		}).attr("stroke-width", 2).attr("stroke", "black").attr("fill", "none");
+		}).attr("rx", function () {
+			return 16;
+		}).attr("ry", function () {
+			return 6;
+		}).attr("stroke-width", 2).attr("stroke", "black").attr("fill", "yellow");
 
-		var leftLegData = [{ "x": 50, "y": 150 }, { "x": 60, "y": 250 }, { "x": 80, "y": 270 }, { "x": 60, "y": 250 }, { "x": 70, "y": 270 }, { "x": 60, "y": 250 }, { "x": 45, "y": 270 }];
+		var wing2 = svgContainer.append("ellipse").attr("cx", function () {
+			return 85;
+		}).attr("cy", function () {
+			return 40;
+		}).attr("rx", function () {
+			return 16;
+		}).attr("ry", function () {
+			return 6;
+		}).attr("stroke-width", 2).attr("stroke", "black").attr("fill", "yellow");
+
+		var leftLegData = [{ "x": 62, "y": 50 }, { "x": 62, "y": 70 }];
 
 		this.leftLegFunction = d3.svg.line().x(function (d) {
 			return d.x;
@@ -61,9 +74,9 @@ var Parrot = function () {
 		}).interpolate("linear");
 
 		//The line SVG Path we draw
-		this.leftLeg = svgContainer.append("path").attr("d", this.leftLegFunction(leftLegData)).attr("stroke", "black").attr("stroke-width", 2).attr("fill", "none");
+		this.leftLeg = svgContainer.append("path").attr("d", this.leftLegFunction(leftLegData)).attr("stroke", "yellow").attr("stroke-width", 2).attr("fill", "yellow");
 
-		var rightLegData = [{ "x": 50, "y": 150 }, { "x": 25, "y": 250 }, { "x": 50, "y": 260 }, { "x": 25, "y": 250 }, { "x": 40, "y": 270 }, { "x": 25, "y": 250 }, { "x": 15, "y": 260 }];
+		var rightLegData = [{ "x": 67, "y": 50 }, { "x": 67, "y": 70 }];
 
 		var rightLegFunction = d3.svg.line().x(function (d) {
 			return d.x;
@@ -72,7 +85,7 @@ var Parrot = function () {
 		}).interpolate("linear");
 
 		//The line SVG Path we draw
-		var rightLeg = svgContainer.append("path").attr("d", rightLegFunction(rightLegData)).attr("stroke", "black").attr("stroke-width", 2).attr("fill", "none");
+		var rightLeg = svgContainer.append("path").attr("d", rightLegFunction(rightLegData)).attr("stroke", "yellow").attr("stroke-width", 2).attr("fill", "yellow");
 
 		//The data for our line
 		var lineData = [{ "x": 75, "y": 25 }, { "x": 90, "y": 30 }, { "x": 75, "y": 35 }];
@@ -85,17 +98,22 @@ var Parrot = function () {
 		}).interpolate("linear");
 
 		//The line SVG Path we draw
-		var beak = svgContainer.append("path").attr("d", lineFunction(lineData)).attr("stroke", "black").attr("stroke-width", 2).attr("fill", "none");
+		/*
+     var beak = svgContainer.append("path")
+                             .attr("d", lineFunction(lineData))
+                             .attr("stroke", "black")
+                             .attr("stroke-width", 2)
+                             .attr("fill", "yellow");
+  						*/
 
 		//coordinates of the parrot in the space by x and y	
-		this.ParrotCoordinates = { x: 130, y: 0 };
+		this.ParrotCoordinates = { x: 50, y: 0 };
 		this.lifeduration = 1;
 		this.lifeid = 0;
-		this.drawBlock();
 		this.timerId = 0;
 		this.mode = "nofly";
 
-		svgContainer.attr("transform", "translate(" + this.ParrotCoordinates.x + ", " + this.ParrotCoordinates.y + ")");
+		this.parrot = svgContainer.attr("transform", "translate(" + this.ParrotCoordinates.x + ", " + this.ParrotCoordinates.y + ")");
 	}
 
 	_createClass(Parrot, [{
@@ -131,7 +149,7 @@ var Parrot = function () {
 			var svgContainer = d3.select("svg").select("g");
 			this.ParrotCoordinates.y = this.ParrotCoordinates.y - 1;
 			this.ParrotCoordinates.x = this.ParrotCoordinates.x + 1;
-			svgContainer.attr("transform", "translate(" + this.ParrotCoordinates.x + ", " + this.ParrotCoordinates.y + ")");
+			this.parrot.attr("transform", "translate(" + this.ParrotCoordinates.x + ", " + this.ParrotCoordinates.y + ")");
 		}
 	}, {
 		key: "turnRight",
@@ -140,30 +158,25 @@ var Parrot = function () {
 			var svgContainer = d3.select("svg").select("g");
 			this.ParrotCoordinates.y = this.ParrotCoordinates.y + 1;
 			this.ParrotCoordinates.x = this.ParrotCoordinates.x + 1;
-			svgContainer.attr("transform", "translate(" + this.ParrotCoordinates.x + ", " + this.ParrotCoordinates.y + ")");
+			this.parrot.attr("transform", "translate(" + this.ParrotCoordinates.x + ", " + this.ParrotCoordinates.y + ")");
 		}
-		/*
-  Jump(){
-  	console.log("Jump");
-  	var svgContainer = d3.select("svg").select("g");
-  	var JumpPath = [{x: 0, y : 0}, {x: 1, y: 1}, {x: 4, y: 2}, {x: 9 , y: 3}, {x:9, y: 5}];
-  	this.ParrotCoordinates.y = this.ParrotCoordinates.y + 1;
-  	this.ParrotCoordinates.x = this.ParrotCoordinates.x + 1;
-  	svgContainer.attr("transform", "translate(" + this.ParrotCoordinates.x  + ", " + this.ParrotCoordinates.y + ")");
-  }
-  */
-
 	}, {
-		key: "FlyForward",
-		value: function FlyForward() {
-			var svgContainer = d3.select("svg").select("g");
-			if (this.mode == "nofly") {
-				this.ParrotCoordinates.y = this.ParrotCoordinates.y - 15;
-				this.mode = "flying";
+		key: "restoreAllStates",
+		value: function restoreAllStates() {}
+	}, {
+		key: "flyForward",
+		value: function flyForward() {
+			var count = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10;
+
+			console.log("flying");
+			$(".btn-success").attr("disabled", false);
+			for (var i = 0; i <= 10; i++) {
+				this.ParrotCoordinates.y = this.ParrotCoordinates.y - 1;
+				//console.log("coordy = ".this.ParrotCoordinates.y);
+				this.parrot.attr("transform", "translate(" + this.ParrotCoordinates.x + ", " + this.ParrotCoordinates.y + ")");
 			}
-			console.log(this.mode);
-			this.ParrotCoordinates.x = this.ParrotCoordinates.x + 2;
-			svgContainer.attr("transform", "translate(" + this.ParrotCoordinates.x + ", " + this.ParrotCoordinates.y + ")");
+			clearInterval(this.lifeid);
+			$(".btn-primary").attr("disabled", false);
 		}
 	}, {
 		key: "doStepBackwards",
@@ -197,9 +210,6 @@ var Parrot = function () {
 	}, {
 		key: "land",
 		value: function land() {}
-	}, {
-		key: "flyForward",
-		value: function flyForward() {}
 	}, {
 		key: "flyLeft",
 		value: function flyLeft() {}
