@@ -4,11 +4,6 @@
 */
 
 var Parser = React.createClass({
-	
-  propTypes: {
-	  type : React.PropTypes.string.isRequired
-  },
-  
   getInitialState: function() {
     return {
 		code: `
