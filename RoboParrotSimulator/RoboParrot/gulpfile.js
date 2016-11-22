@@ -35,7 +35,7 @@ var uglify = require('gulp-uglify');
 
 // JS concat, strip debugging and minify
 gulp.task('scripts', function() {
-  gulp.src('./src/scripts/input.js')
+  gulp.src(['./src/scripts/input.js', './src/scripts/commandspanel.js'])
     //.pipe(concat('script.js'))
     //.pipe(stripDebug())
     //.pipe(uglify())

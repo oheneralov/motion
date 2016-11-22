@@ -28,7 +28,6 @@ var Parrot3d = function () {
                 var axis = new THREE.AxisHelper(10);
                 //scene.add(axis);
 
-
                 /* Floor  */
                 var FloorTexture = new THREE.TextureLoader().load('images/grass.jpg');
                 var FloorGeometry = new THREE.PlaneGeometry(15, 7, 1, 1);

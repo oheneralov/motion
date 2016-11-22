@@ -15,7 +15,6 @@ class Parrot3d {
 
         var axis = new THREE.AxisHelper(10);
         //scene.add(axis);
-
 		
         /* Floor  */
 		var FloorTexture = new THREE.TextureLoader().load('images/grass.jpg');

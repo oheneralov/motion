@@ -1,9 +1,9 @@
 {
-  "name": "RoboParrot",
+  "name": "RobotParrot",
   "version": "1.0.0",
   "description": "My Component",
   "main": "lib/MyComponent.js",
-  "author": "RoboParrot",
+  "author": "Oleksandr Generalov",
   "homepage": "https://github.com/oheneralov/motion",
   "repository": {
     "type": "git",

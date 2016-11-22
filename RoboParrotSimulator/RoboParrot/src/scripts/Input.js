@@ -15,6 +15,8 @@ Parrot1->flyForward(10);
   },
   
   handleChange: function(event) {
+	console.log("handleChange");
+	console.log(code)
     this.setState({code: event.target.value});
   },
   
@@ -109,6 +111,7 @@ Parrot1->flyForward(10);
 	
 	
   render: function () {
+	
     return (
       <div>
 	  <div>{this.state.elapsedTime}</div>
@@ -117,14 +120,7 @@ Parrot1->flyForward(10);
 		      <div id = {this.props.type}>
 			  </div>
 		  </p>
-		  <div>
-		  Code:
-		  </div>
-			<input type = "text" className='code-input' onChange={this.handleChange} value = {this.state.code} />
-		  <div>
-		      <button type = "button" className = "btn btn-primary" onClick={this.startSimulation}>Start simulation</button>
-		      <input type = "button" className = "btn btn-success" onClick={this.stopSimulation} value = "Stop simulation"/>
-		  </div>  
+		  <CommandPanel handleChange = {this.handleChange.bind(this)}  code = {this.state.code} startSimulation = {this.startSimulation.bind(this)} stopSimulation = {this.stopSimulation.bind(this)}/>
         </form>
 		<div>
 		Supported commands:

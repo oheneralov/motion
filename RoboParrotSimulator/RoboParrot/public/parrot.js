@@ -24,17 +24,6 @@ var Parrot = function () {
 		}).attr("stroke-width", 2).attr("stroke", "black").attr("fill", "yellow");
 		console.log(head.attr("cy"));
 
-		/*
-  					 
-     var eye = svgContainer.append("circle")
-                       .attr("cx", function() { return 53; })
-  					 .attr("cy", function() { return 20; })
-  					 .attr("r", function() { return 5; })
-  					 .attr("stroke-width", 2)
-                          .attr("stroke", "black")
-  					 .attr("fill", "yellow");
-  					 */
-
 		var body = svgContainer.append("ellipse").attr("cx", function () {
 			return 65;
 		}).attr("cy", function () {
@@ -107,11 +96,12 @@ var Parrot = function () {
   						*/
 
 		//coordinates of the parrot in the space by x and y	
-		this.ParrotCoordinates = { x: 50, y: 0 };
+		this.ParrotCoordinates = { x: 50, y: 100 };
 		this.lifeduration = 1;
 		this.lifeid = 0;
 		this.timerId = 0;
 		this.mode = "nofly";
+		this.rotationByX = 0;
 
 		this.parrot = svgContainer.attr("transform", "translate(" + this.ParrotCoordinates.x + ", " + this.ParrotCoordinates.y + ")");
 	}
@@ -139,18 +129,6 @@ var Parrot = function () {
 			svgContainer.attr("transform", "translate(" + this.ParrotCoordinates.x + ", " + this.ParrotCoordinates.y + ")");
 			this.leftLeg.transition().duration(300).attr("d", LeftLegFunctionback(initialleftLegData));
 		}
-
-		//imitating 3d world
-
-	}, {
-		key: "turnLeft",
-		value: function turnLeft() {
-			console.log("turn left");
-			var svgContainer = d3.select("svg").select("g");
-			this.ParrotCoordinates.y = this.ParrotCoordinates.y - 1;
-			this.ParrotCoordinates.x = this.ParrotCoordinates.x + 1;
-			this.parrot.attr("transform", "translate(" + this.ParrotCoordinates.x + ", " + this.ParrotCoordinates.y + ")");
-		}
 	}, {
 		key: "turnRight",
 		value: function turnRight() {
@@ -171,7 +149,13 @@ var Parrot = function () {
 			console.log("flying");
 			$(".btn-success").attr("disabled", false);
 			for (var i = 0; i <= 10; i++) {
-				this.ParrotCoordinates.y = this.ParrotCoordinates.y - 1;
+				var distance = 0.1;
+
+				var result = MathLib.getGeneralCoordinatesByHypotenuse(this.rotationByX, distance);
+				var x = result.x;
+				var z = result.z;
+				this.ParrotCoordinates.y = this.ParrotCoordinates.y - x;
+				this.ParrotCoordinates.x = this.ParrotCoordinates.x + z;
 				//console.log("coordy = ".this.ParrotCoordinates.y);
 				this.parrot.attr("transform", "translate(" + this.ParrotCoordinates.x + ", " + this.ParrotCoordinates.y + ")");
 			}
@@ -186,36 +170,26 @@ var Parrot = function () {
 			this.ParrotCoordinates.x = this.ParrotCoordinates.x - 1;
 			svgContainer.attr("transform", "translate(" + this.ParrotCoordinates.x + ", " + this.ParrotCoordinates.y + ")");
 		}
+
+		//turn left
+
 	}, {
-		key: "drawBlock",
-		value: function drawBlock() {
-			console.log("drawing a block");
-			var svgContainer = d3.select("svg");
-			svgContainer.append("g").append("rect").attr("x", 300).attr("y", 216).attr("width", 25).attr("height", 35);
-		}
-	}, {
-		key: "takeoff",
-		value: function takeoff() {
-			console.log("taking off");
-			console.log("rotation:" + this.parrot.rotation.z);
-			while (this.parrot.rotation.z > -1.5) {
-				this.parrot.rotation.z -= 0.05;
-				this.parrot.position.y += 0.02;
+		key: "turnLeft",
+		value: function turnLeft() {
+			var degree = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10;
+
+			$(".btn-success").attr("disabled", false);
+
+			this.rotationByX -= degree;
+
+			if (this.rotationByX <= -360) {
+				this.rotationByX = 0;
 			}
-			this.renderer.render(this.scene, this.camera);
+
+			this.parrot.attr("transform", "rotate(" + this.rotationByX + ", " + 10 + ", " + 10 + "7)");
+			console.log("turned left");
+			clearInterval(this.lifeid);
 		}
-
-		//land must be done when parrot is close to the earth
-
-	}, {
-		key: "land",
-		value: function land() {}
-	}, {
-		key: "flyLeft",
-		value: function flyLeft() {}
-	}, {
-		key: "flyRight",
-		value: function flyRight() {}
 
 		//return distance in cm
 
