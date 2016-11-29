@@ -186,7 +186,7 @@ var Parrot = function () {
 				this.rotationByX = 0;
 			}
 
-			this.parrot.attr("transform", "rotate(" + this.rotationByX + ", " + 10 + ", " + 10 + "7)");
+			this.parrot.attr("transform", "rotate(" + this.rotationByX + ", " + this.ParrotCoordinates.x + ", " + (0 - this.ParrotCoordinates.y) + "7)");
 			console.log("turned left");
 			clearInterval(this.lifeid);
 		}

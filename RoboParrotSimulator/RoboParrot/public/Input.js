@@ -16,8 +16,8 @@ Parrot1->flyForward(10);
   
   handleChange: function(event) {
 	console.log("handleChange");
-	console.log(code)
     this.setState({code: event.target.value});
+		console.log(this.state.code);
   },
   
   componentDidMount: function(){
@@ -69,11 +69,11 @@ Parrot1->flyForward(10);
 	},
  
 	 startSimulation: function(event) {
-	 console.log("Starting simulation");
-	 var startDate = new Date();
-	 this.state.Parrot1.restoreAllStates();
-	 this.repeatParrotLife(startDate);
-	 this.state.Parrot1.lifeid = setInterval(this.repeatParrotLife, 300, startDate);
+	     console.log("Starting simulation");
+	     var startDate = new Date();
+	     this.state.Parrot1.restoreAllStates();
+	     this.repeatParrotLife(startDate);
+	     this.state.Parrot1.lifeid = setInterval(this.repeatParrotLife, 300, startDate);
     },
 	
 	stopSimulation: function(event) {
@@ -120,7 +120,7 @@ Parrot1->flyForward(10);
 		      <div id = {this.props.type}>
 			  </div>
 		  </p>
-		  <CommandPanel handleChange = {this.handleChange.bind(this)}  code = {this.state.code} startSimulation = {this.startSimulation.bind(this)} stopSimulation = {this.stopSimulation.bind(this)}/>
+		  <CommandPanel handleChange = {this.handleChange.bind(this)}  code = {this.state.code} type = {this.props.type} startSimulation = {this.startSimulation.bind(this)} stopSimulation = {this.stopSimulation.bind(this)}/>
         </form>
 		<div>
 		Supported commands:
