@@ -80,3 +80,6 @@ gulp.task('beautify', function() {
 // default gulp task
 gulp.task('default', ['jshint', 'htmlpage', 'scripts', 'babel'], function() {
 });
+
+gulp.task('dev', ['jshint', 'htmlpage', 'scripts', 'babel'], function() {
+});

@@ -16,6 +16,8 @@ class Parrot {
 						 .attr("fill", "yellow");
 						 console.log(head.attr("cy"));
 						 
+						 
+		/*				 
 						
      var body = svgContainer.append("ellipse")
 	                     .attr("cx", function() { return 65; })
@@ -25,6 +27,8 @@ class Parrot {
 						 .attr("stroke-width", 2)
                          .attr("stroke", "black")
 						 .attr("fill", "yellow");
+						 
+						 /*
 						 
 	var wing1 = svgContainer.append("ellipse")
 	                     .attr("cx", function() { return 43; })
@@ -57,7 +61,7 @@ class Parrot {
                           .y(function(d) { return d.y; })
                          .interpolate("linear");
 
-    //The line SVG Path we draw
+
     this.leftLeg = svgContainer.append("path")
                             .attr("d", this.leftLegFunction(leftLegData))
                             .attr("stroke", "yellow")
@@ -76,7 +80,7 @@ class Parrot {
                           .y(function(d) { return d.y; })
                          .interpolate("linear");
 
-    //The line SVG Path we draw
+
     var rightLeg = svgContainer.append("path")
                             .attr("d", rightLegFunction(rightLegData))
                             .attr("stroke", "yellow")
@@ -84,16 +88,17 @@ class Parrot {
                             .attr("fill", "yellow");
 						 
 						 
-	//The data for our line
+
     var lineData = [ { "x": 75,   "y": 25},  
 	                 { "x": 90,  "y": 30},
                      { "x": 75,  "y": 35}, ];
  
-    //This is the accessor function
+
     var lineFunction = d3.svg.line()
                           .x(function(d) { return d.x; })
                           .y(function(d) { return d.y; })
                          .interpolate("linear");
+						 */
 
     //The line SVG Path we draw
 	/*
@@ -158,14 +163,6 @@ class Parrot {
 	}
 	
 	
-	turnRight() {
-		console.log("turn right");
-		var svgContainer = d3.select("svg").select("g");
-		this.ParrotCoordinates.y = this.ParrotCoordinates.y + 1;
-		this.ParrotCoordinates.x = this.ParrotCoordinates.x + 1;
-		this.parrot.attr("transform", "translate(" + this.ParrotCoordinates.x  + ", " + this.ParrotCoordinates.y + ")");
-
-	}
 	
 	restoreAllStates() {
     }
@@ -173,7 +170,7 @@ class Parrot {
 	flyForward(count = 10){
 		console.log("flying");
 		$(".btn-success").attr("disabled", false);
-		for (var i = 0; i <= 10; i++){
+		for (var i = 0; i <= count; i++){
 			var distance = 0.1;
 
             var result = MathLib.getGeneralCoordinatesByHypotenuse(this.rotationByX, distance);
@@ -184,7 +181,7 @@ class Parrot {
 			//console.log("coordy = ".this.ParrotCoordinates.y);
 		    this.parrot.attr("transform", "translate(" + this.ParrotCoordinates.x  + ", " + this.ParrotCoordinates.y + ")");
 		}
-		clearInterval(this.lifeid);
+		//clearInterval(this.lifeid);
 		$(".btn-primary").attr("disabled", false);
 	}
 	
@@ -197,7 +194,7 @@ class Parrot {
 	}
 	
 	
-	    //turn left
+	//turn left
     turnLeft(degree = 10) {
         $(".btn-success").attr("disabled", false);
 
@@ -207,9 +204,23 @@ class Parrot {
             this.rotationByX = 0;
         }
 		
-		this.parrot.attr("transform", "rotate(" + this.rotationByX  + ", " + this.ParrotCoordinates.x + ", " + (0 - this.ParrotCoordinates.y) + "7)");
+		//this.parrot.attr("transform", "rotate(" + this.rotationByX  + ", " + this.ParrotCoordinates.x + ", " + (0 - this.ParrotCoordinates.y) + "7)");
         console.log("turned left");
-        clearInterval(this.lifeid);
+        //clearInterval(this.lifeid);
+    }
+	
+	turnRight(degree = 10) {
+        $(".btn-success").attr("disabled", false);
+
+        this.rotationByX += degree;
+
+        if (this.rotationByX <= -360) {
+            this.rotationByX = 0;
+        }
+		
+		//this.parrot.attr("transform", "rotate(" + this.rotationByX  + ", " + this.ParrotCoordinates.x + ", " + (0 - this.ParrotCoordinates.y) + "7)");
+        console.log("turned left");
+        //clearInterval(this.lifeid);
     }
 	
 	

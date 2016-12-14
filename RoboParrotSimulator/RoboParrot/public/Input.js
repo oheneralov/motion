@@ -122,15 +122,6 @@ Parrot1->flyForward(10);
 		  </p>
 		  <CommandPanel handleChange = {this.handleChange.bind(this)}  code = {this.state.code} type = {this.props.type} startSimulation = {this.startSimulation.bind(this)} stopSimulation = {this.stopSimulation.bind(this)}/>
         </form>
-		<div>
-		Supported commands:
-		<ol>
-		    <li>Parrot1-&gt;flyForward(10);</li>
-			<li>Parrot1-&gt;turnLeft(10);</li>
-			<li>Parrot1-&gt;turnRight(10);</li>
-			<li>Parrot1-&gt;jump(10);</li>
-		</ol>
-		</div>
       </div>
     );
   }
